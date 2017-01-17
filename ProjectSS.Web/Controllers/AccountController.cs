@@ -69,7 +69,7 @@ namespace ProjectSS.Web.Controllers
                             AuthenticationManager.SignOut();
                             ModelState.AddModelError("", "Account is not yet activated.");
                             return View(model);
-                        }
+                        } 
                     }
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
