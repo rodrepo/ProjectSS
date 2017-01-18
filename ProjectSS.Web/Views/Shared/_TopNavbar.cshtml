@@ -111,10 +111,11 @@
                         </div>
                      </a>
                      <!-- last list item -->
-                     <a href="#" class="list-group-item">
-                        <small>More notifications</small>
-                        @*<span class="label label-danger pull-right">14</span>*@
-                     </a>
+                      @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @class = "", role = "form" }))
+                      {
+                          @Html.AntiForgeryToken()
+                          <button type="Submit" class="list-group-item"><small>Logout</small></button>
+                      }
                   </div>
                   <!-- END list group-->
                </li>

@@ -3,6 +3,7 @@
 @using Microsoft.AspNet.Identity
 @{
     var canAccessAdmin = User.IsInRole(RoleType.Om.ToString());
+    var currentUserName = User.Identity.Name;
 }
 <!-- START Sidebar (left)-->
 <div class="aside-inner">
@@ -22,12 +23,7 @@
                         </div>
                         <!-- Name and Job-->
                         <div class="user-block-info">
-                            <span class="user-block-name">Hello, Mike</span>
-                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @class = "", role = "form" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <button type="Submit" class="list-group-item"><small>Logout</small></button>
-                            }
+                            <span class="user-block-name">Hello, @currentUserName</span>
                         </div>
                     </div>
                 </div>
@@ -46,12 +42,19 @@
 
             @if (canAccessAdmin)
             {
+                <li class="@Html.isActive(controller: "Project")">
+                    <a href="/Project">
+                        <em class="icon-chart"></em>
+                        <span>Projects</span>
+                    </a>
+                </li>
                 <li class="@Html.isActive(controller: "User")">
                     <a href="/User">
                         <em class="icon-user"></em>
                         <span>Users</span>
                     </a>
                 </li>
+            
             }
         </ul>
         <!-- END sidebar nav-->
