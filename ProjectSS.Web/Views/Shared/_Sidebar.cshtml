@@ -1,5 +1,9 @@
 @using ProjectSS.Web.Helpers
-
+@using ProjectSS.Common
+@using Microsoft.AspNet.Identity
+@{
+    var canAccessAdmin = User.IsInRole(RoleType.Om.ToString());
+}
 <!-- START Sidebar (left)-->
 <div class="aside-inner">
     <nav class="sidebar" data-sidebar-anyclick-close="">
@@ -34,37 +38,21 @@
                 <span>Main Navigation</span>
             </li>
             <li class="@Html.isActive(controller: "Home")">
-                <a href="@Url.Action("Index", "Home")" title="Dashboard" data-toggle="collapse">
-                    @*<div class="label label-info pull-right">3</div>*@
+                <a href="/Home">
                     <em class="icon-speedometer"></em>
-                    <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
-                </a>
-                @*<ul id="dashboard" class="nav sidebar-subnav collapse">
-                        <li class="sidebar-subnav-header">Dashboard</li>
-                        <li class="@Html.isActive("Dashboard", "Dashboard_v1")">
-                            <a href="@Url.Action("Dashboard_v1", "Dashboard")" title="Dashboard v1">
-                                <span>Dashboard v1</span>
-                            </a>
-                        </li>
-                        <li class="@Html.isActive("Dashboard", "Dashboard_v2")">
-                            <a href="@Url.Action("Dashboard_v2", "Dashboard")" title="Dashboard v2">
-                                <span>Dashboard v2</span>
-                            </a>
-                        </li>
-                        <li class="@Html.isActive("Dashboard", "Dashboard_v3")">
-                            <a href="@Url.Action("Dashboard_v3", "Dashboard")" title="Dashboard v3">
-                                <span>Dashboard v3</span>
-                            </a>
-                        </li>
-                    </ul>*@
-            </li>
-            <li class="@Html.isActive(controller: "Home")">
-                <a href="@Url.Action("Index", "Home")" title="Users" data-toggle="collapse">
-                    @*<div class="label label-info pull-right">3</div>*@
-                    <em class="icon-user"></em>
-                    <span>Users</span>
+                    <span>Dashboard</span>
                 </a>
             </li>
+
+            @if (canAccessAdmin)
+            {
+                <li class="@Html.isActive(controller: "User")">
+                    <a href="/User">
+                        <em class="icon-user"></em>
+                        <span>Users</span>
+                    </a>
+                </li>
+            }
         </ul>
         <!-- END sidebar nav-->
     </nav>

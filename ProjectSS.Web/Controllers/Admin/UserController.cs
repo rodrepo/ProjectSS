@@ -5,10 +5,10 @@ using System.Web.Mvc;
 
 namespace ProjectSS.Web.Controllers.Admin
 {
-    [Authorize(Roles = "OM")]
-    public class User : BaseController
+    [Authorize]
+    public class UserController : BaseController
     {
-        public User(IMapper mapper, IDataRepo repo, TelemetryClient telemetryClient)
+        public UserController(IMapper mapper, IDataRepo repo, TelemetryClient telemetryClient)
             : base(repo, mapper)
         {
             _mapper = mapper;
@@ -18,7 +18,7 @@ namespace ProjectSS.Web.Controllers.Admin
         public ActionResult Index()
         {
 
-            return View()
-        };
+            return View();
+        }
     }
 }
