@@ -19,7 +19,11 @@
                         <!-- Name and Job-->
                         <div class="user-block-info">
                             <span class="user-block-name">Hello, Mike</span>
-                            <span class="user-block-role">Designer</span>
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @class = "", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button type="Submit" class="list-group-item"><small>Logout</small></button>
+                            }
                         </div>
                     </div>
                 </div>
@@ -57,7 +61,7 @@
             <li class="@Html.isActive(controller: "Widgets")">
                 <a href="@Url.Action("Index", "Widgets")" title="Widgets">
                     <div class="label label-success pull-right">30</div>
-                    <em class="icon-grid"></em>                    
+                    <em class="icon-grid"></em>
                     <span data-localize="sidebar.nav.WIDGETS">Widgets</span>
                 </a>
             </li>
