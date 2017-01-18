@@ -1,35 +1,53 @@
 ﻿@using ProjectSS.Web.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
-<section id="auth-form">
-    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-        @Html.AntiForgeryToken()
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <!-- START panel-->
-        <form role="form">
-            <div class="form-group">
-                <label>Email address</label>
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-lg btn-auth">Login</button>
-            </div>
-            <div class="row">
-                <div class="pull-right">
-                    <a href="@Url.Action("ForgotPassword", "Account")">Forgot Password ?</a>
-                </div>
-            </div>
-        </form>
-                    <!-- END panel-->
-    }
-</section>
+<div class="block-center mt-xl wd-xl">
+    <!-- START panel-->
+    <div class="panel panel-dark panel-flat">
+        <div class="panel-heading text-center">
+            <a href="#">
+                <h1>Project SS</h1>
+            </a>
+        </div>
+        <div class="panel-body">
+            <p class="text-center pv">SIGN IN TO CONTINUE.</p>
+
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <form role="form" data-parsley-validate="" novalidate="" class="mb-lg">
+                    <div class="form-group has-feedback">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email Address" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        <span class="fa fa-envelope form-control-feedback text-muted"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        <span class="fa fa-lock form-control-feedback text-muted"></span>
+                    </div>
+                    <div class="clearfix">
+                        <div class="checkbox c-checkbox pull-left mt0">
+                            <label>
+                                <input type="checkbox" value="" name="remember" />
+                                <span class="fa fa-check"></span>Remember Me
+                            </label>
+                        </div>
+                        <div class="pull-right">
+                            <a href="@Url.Action("ForgotPassword", "Account")" class="text-muted">Forgot your password?</a>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-block btn-primary mt-lg">Login</button>
+                </form>
+            }
+            <p class="pt-lg text-center">Need to Signup?</p><a href="@Url.Action("Register", "Pages")" class="btn btn-block btn-default">Register Now</a>
+        </div>
+    </div>
+    <!-- END panel-->
+</div>
