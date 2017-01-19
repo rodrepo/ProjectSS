@@ -37,6 +37,14 @@ namespace ProjectSS.Web.Models.admin
 
         public int AccountId { get; set; }
         public string AccountName { get; set; }
+
+        public string Displayname
+        {
+            get
+            {
+                return (FirstName +" "+ MiddleName +" "+ LastName );
+            }
+        }
     }
 
     public class ActivateViewModel

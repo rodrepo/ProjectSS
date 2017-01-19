@@ -1,0 +1,136 @@
+﻿@model ProjectSS.Web.Models.admin.UserViewModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.AccountId)
+
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- START panel-->
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Edit User</h4></div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label>Email address</label>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @type = "email", @placeholder = "Enter email", @disabled = "" })
+                        </div>
+                        <div class="form-group">
+                            <label>First Name</label>
+                            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @type = "text", @placeholder = "Enter Firstname" })
+                        </div>
+                        <div class="form-group">
+                            <label>Middle Name</label>
+                            @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control", @type = "text", @placeholder = "Enter Middlename" })
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @type = "text", @placeholder = "Enter Lastname" })
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile Number</label>
+                            @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", @type = "number", @placeholder = "Enter Mobile" })
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            @Html.EnumDropDownListFor(model => model.Gender, new { @class = "form-control", @type = "text", @id = "gender" })
+                        </div>
+                        <div class="form-group">
+                            <label>Birthday</label>
+                            <div class="input-group date">
+                                @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control datepicker" })
+                                <span class="input-group-addon">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Role Type</label>
+                            @Html.DropDownListFor(model => model.RoleId, (List<SelectListItem>)ViewBag.Roles, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select class="form-control" id="IsActive" name="IsActive">
+                                <option value=""></option>
+                                <option @(Model.IsActive == true ? "selected" : " ") value="true">Activate</option>
+                                <option @(Model.IsActive == false ? "selected" : " ") value="false">Deactivate</option>
+                            </select>
+                        </div>
+                        <div class="pull-right">
+                            <div class="right">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="button" data-toggle="modal" data-target="#deletemodal" class="btn btn-danger">Delete</button>
+                                <a type="button" class="btn btn-default" href="@Url.Action("Index", "User")">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- END panel-->
+        </div>
+    </div>
+}
+
+@section BodyArea {
+    <div id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
+            <div class="modal-dialog modal-sm">
+                @using (Html.BeginForm("Delete", "User", new { @id = Model.Id }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 id="myModalLabelSmall" class="modal-title">Delete</h4>
+                        </div>
+                        <div class="modal-body"><span>Are you sure you want to delete this User?</span></div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Yes</button>
+                            <a href="" type="button" class="btn btn-default" data-dismiss="modal">No</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+}
+
+@section Styles {
+    @Styles.Render("~/bundles/datetimePickerCss")
+}
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/datetimePicker")
+    @Scripts.Render("~/bundles/demoForms")
+    @Scripts.Render("~/bundles/parsley")
+    @Scripts.Render("~/bundles/notify")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ('@TempData["Error"]' != "") {
+                $.notify('@TempData["Error"]', "danger");
+            }
+            if ('@TempData["Success"]' != "") {
+                $.notify('@TempData["Success"]', "success");
+            }
+            if ('@TempData["Info"]' != "") {
+                $.notify('@TempData["Info"]', "info");
+            }
+            if ('@TempData["Warning"]' != "") {
+                $.notify('@TempData["Warning"]', "warning");
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('.datepicker').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+        });
+    </script>
+}

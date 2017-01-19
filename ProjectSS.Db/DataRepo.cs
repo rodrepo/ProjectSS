@@ -52,11 +52,11 @@ namespace ProjectSS.Db
 
         #region Users
 
+
         public async Task<List<User>> GetUsersAsync()
         {
             return await _db.Users.Where(u => !u.IsDeleted).ToListAsync();
         }
-
         public async Task<User> GetUserByIdAsync(string id)
         {
             return await _db.Users.Where(u => u.Id == id && !u.IsDeleted).FirstOrDefaultAsync();
@@ -74,6 +74,7 @@ namespace ProjectSS.Db
                 usr.Gender = user.Gender;
                 usr.Birthday = user.Birthday;
                 usr.Mobile = user.Mobile;
+                usr.IsActive = user.IsActive;
                 var result = await userManager.UpdateAsync(usr);
                 if (result.Succeeded)
                 {
@@ -115,6 +116,20 @@ namespace ProjectSS.Db
         public IdentityRole GetRoleById(string Id)
         {
             return _db.Roles.FirstOrDefault(u => u.Id == Id);
+        }
+
+        public async Task<List<IdentityRole>> GetRolesAsync()
+        {
+            return await _db.Roles.ToListAsync();
+        }
+
+        public async Task<List<IdentityRole>> GetRolesByUserId(string userId)
+        {
+            return await (from ur in _db.UserRoles
+                          join r in _db.Roles on ur.RoleId equals r.Id
+                          where ur.UserId == userId
+                          select r
+                          ).ToListAsync();
         }
         #endregion
     }
