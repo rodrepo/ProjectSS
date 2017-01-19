@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ProjectSS.Db.Contracts;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,14 +17,16 @@ namespace ProjectSS.Web.Controllers
         protected IMapper _mapper;
         protected IDataRepo _repo;
 
+        protected TelemetryClient _telemetryClient;
         public Func<string> GetUserId;
         private UserManager _userManager;
         private ApplicationSignInManager _signInManager;
 
-        public BaseController(IDataRepo repo, IMapper mapper)
+        public BaseController(IDataRepo repo, IMapper mapper, TelemetryClient telemetryClient)
         {
             _repo = repo;
             _mapper = mapper;
+            _telemetryClient = telemetryClient;
             GetUserId = () => User.Identity.GetUserId();
         }
 
@@ -66,5 +71,41 @@ namespace ProjectSS.Web.Controllers
             }
         }
 
+        public ActionResult ServerError()
+        {
+            return RedirectToAction("ServerError", "Error");
+        }
+
+        #region SetListItems
+        protected async Task<List<SelectListItem>> GetRolesAsync(bool includeBlank, string id = null)
+        {
+            var result = new List<SelectListItem>();
+            if (includeBlank)
+            {
+                result.Add(new SelectListItem { Value = "0", Text = "Choose Roles..." });
+            }
+
+            var Roles = await _repo.GetRolesAsync();
+            if (Roles != null)
+            {
+                foreach (var role in Roles)
+                {
+                    var item = new SelectListItem
+                    {
+                        Value = role.Id.ToString(),
+                        Text = role.Name
+                    };
+
+                    if (role.Id == id)
+                    {
+                        item.Selected = true;
+                    }
+
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
+        #endregion
     }
 }

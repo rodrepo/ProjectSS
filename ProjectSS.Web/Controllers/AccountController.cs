@@ -18,10 +18,9 @@ namespace ProjectSS.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private UserManager _userManager;
-        protected TelemetryClient _telemetryClient;
 
         public AccountController(IMapper mapper, IDataRepo repo, TelemetryClient telemetryClient)
-            : base(repo, mapper)
+            : base(repo, mapper, telemetryClient)
         {
             _mapper = mapper;
             _repo = repo;

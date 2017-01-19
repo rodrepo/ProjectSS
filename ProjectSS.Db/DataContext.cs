@@ -73,7 +73,8 @@ namespace ProjectSS.Db
         }
         #endregion
 
-        #region DBSets / Tables       
+        #region DBSets / Tables      
+        public DbSet<IdentityUserRole> UserRoles { get; set; }
         #endregion
 
     }

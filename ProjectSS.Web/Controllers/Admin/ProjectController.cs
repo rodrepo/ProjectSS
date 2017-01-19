@@ -14,7 +14,7 @@ namespace ProjectSS.Web.Controllers.Admin
     {
 
         public ProjectController(IMapper mapper, IDataRepo repo, TelemetryClient telemetryClient)
-            : base(repo, mapper)
+            : base(repo, mapper, telemetryClient)
         {
             _mapper = mapper;
             _repo = repo;
