@@ -75,6 +75,8 @@ namespace ProjectSS.Db
 
         #region DBSets / Tables      
         public DbSet<IdentityUserRole> UserRoles { get; set; }
+        public DbSet<CRM> CRMs { get; set; }
+
         #endregion
 
     }
