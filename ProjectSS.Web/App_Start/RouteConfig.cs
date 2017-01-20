@@ -17,11 +17,17 @@ namespace ProjectSS.Web
             );
             #endregion
 
-            #region Home
+            #region Public
             routes.MapRoute(
                name: "Home",
                url: "Home",
                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+               name: "CRM",
+               url: "CRM",
+            defaults: new { controller = "CRM", action = "Index", id = UrlParameter.Optional }
             );
             #endregion
 

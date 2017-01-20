@@ -28,5 +28,10 @@ namespace ProjectSS.Db.Contracts
         Task<List<IdentityRole>> GetRolesByUserId(string userId);
 
         #endregion
+
+        #region CRM
+        Task<List<CRM>> GetCRM();
+        Task<List<CRM>> GetCRMByRegion(string region);
+        #endregion
     }
 }

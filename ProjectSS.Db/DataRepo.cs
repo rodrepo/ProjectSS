@@ -132,5 +132,19 @@ namespace ProjectSS.Db
                           ).ToListAsync();
         }
         #endregion
+
+        #region CRM
+
+        public async Task<List<CRM>> GetCRM()
+        {
+            var crm = await _db.CRMs.Where(m => !m.IsDeleted).ToListAsync();
+            return crm;
+        }
+        public async Task<List<CRM>> GetCRMByRegion(string region)
+        {
+            var crm = await _db.CRMs.Where(m => !m.IsDeleted && m.Region == region).ToListAsync();
+            return crm;
+        }
+        #endregion
     }
 }
