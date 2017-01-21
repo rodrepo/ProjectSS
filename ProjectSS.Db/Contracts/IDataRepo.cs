@@ -35,6 +35,7 @@ namespace ProjectSS.Db.Contracts
         CRM AddCRM(CRM crm, string userId);
         void UpdateCRM(CRM crm, string userId);
         void DeleteCRM(CRM crm, string userId);
+        Task<CRM> GetCRMById(int id);
         #endregion
     }
 }

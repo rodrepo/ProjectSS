@@ -146,6 +146,12 @@ namespace ProjectSS.Db
             return crm;
         }
 
+        public async Task<CRM> GetCRMById(int id)
+        {
+            var crm = await _db.CRMs.Where(m => !m.IsDeleted && m.Id == id).FirstOrDefaultAsync();
+            return crm;
+        }
+
         public void UpdateCRM(CRM crm, string userId)
         {
             _db.UserId = userId;
@@ -177,7 +183,6 @@ namespace ProjectSS.Db
             }
             return reference;
         }
-
 
         public void DeleteCRM(CRM crm, string userId)
         {

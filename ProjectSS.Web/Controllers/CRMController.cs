@@ -61,5 +61,12 @@ namespace ProjectSS.Web.Controllers
                 return ServerError();
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult> Manage(int id)
+        {
+            var model = _mapper.Map<CRMViewModel>(await _repo.GetCRMById(id));
+            return View(model);
+        }
     }
 }
