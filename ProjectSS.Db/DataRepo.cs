@@ -155,9 +155,29 @@ namespace ProjectSS.Db
         public CRM AddCRM(CRM crm, string userId)
         {
             _db.UserId = userId;
+            var reference = GenerateCRMReference();
+            crm.Reference = reference;
             _db.CRMs.Add(crm);
             return crm;
         }
+
+        public string GenerateCRMReference()
+        {
+            string reference = "";
+            var latestReference = _db.CRMs.Where(m => !m.IsDeleted).OrderByDescending(d => d.CreatedDate).FirstOrDefault();
+            if (latestReference != null && latestReference.Id > 0)
+            {
+                int multi = 1;
+                multi += latestReference.Id;
+                reference = "SCII-" + multi.ToString();
+            }
+            else
+            {
+                reference = "SCII-1";
+            }
+            return reference;
+        }
+
 
         public void DeleteCRM(CRM crm, string userId)
         {
