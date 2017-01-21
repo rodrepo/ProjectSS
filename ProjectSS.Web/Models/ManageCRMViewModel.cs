@@ -9,13 +9,13 @@ namespace ProjectSS.Web.Models
     {
         public ManageCRMViewModel()
         {
-            CMR = new CRMViewModel();
+            CRM = new CRMViewModel();
             CallHistorys = new List<CRMCallHistoryModel>();
             EmailHistorys = new List<CRMEmailHistoryModel>();
             RevisionHistorys = new List<CRMRevisionHistoryModel>();
         }
 
-        public CRMViewModel CMR { get; set; }
+        public CRMViewModel CRM { get; set; }
         public List<CRMCallHistoryModel> CallHistorys { get; set; }
         public List<CRMEmailHistoryModel> EmailHistorys { get; set; }
         public List<CRMRevisionHistoryModel> RevisionHistorys{ get; set; }

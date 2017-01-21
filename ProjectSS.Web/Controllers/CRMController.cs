@@ -65,7 +65,9 @@ namespace ProjectSS.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Manage(int id)
         {
-            var model = _mapper.Map<CRMViewModel>(await _repo.GetCRMById(id));
+            var model = new ManageCRMViewModel();
+            var crm = _mapper.Map<CRMViewModel>(await _repo.GetCRMById(id));
+            model.CRM = crm;
             return View(model);
         }
 

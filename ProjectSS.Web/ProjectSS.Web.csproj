@@ -621,6 +621,7 @@
     <Content Include="Views\CRM\Index.cshtml" />
     <Content Include="Views\CRM\Create.cshtml" />
     <Content Include="Views\CRM\Manage.cshtml" />
+    <Content Include="Views\CRM\_CRM.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
