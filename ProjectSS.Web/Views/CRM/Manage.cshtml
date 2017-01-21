@@ -3,7 +3,9 @@
 @{
     ViewBag.Title = "Manage";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var canAccessAdmin = User.IsInRole(RoleType.Om.ToString());
+    var canAccessOM = User.IsInRole(RoleType.OM.ToString());
+    var canAccessTH = User.IsInRole(RoleType.TH.ToString());
+    var canAccessAH = User.IsInRole(RoleType.AH.ToString());
 }
 
 @using (Html.BeginForm("Manage", "CRM", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -23,7 +25,7 @@
                         <div class="col-sm-6">
                             <div class="pull-right" style="padding-top:10px">
                                 <button type="submit" class="btn btn-success btn-xs">Update</button>&nbsp;
-                                @if (canAccessAdmin)
+                                @if (canAccessOM == true || canAccessTH == true || canAccessAH == true)
                                 {
                                     <button type="button" data-toggle="modal" data-target="#deletemodal" class="btn btn-danger btn-xs">Delete</button>
                                 }

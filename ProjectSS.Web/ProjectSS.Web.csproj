@@ -219,6 +219,7 @@
     <Compile Include="Controllers\CRMController.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Models\CRMViewModel.cs" />
+    <Compile Include="Models\ManageCRMViewModel.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />

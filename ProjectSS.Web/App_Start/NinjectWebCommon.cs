@@ -78,6 +78,10 @@ namespace ProjectSS.Web.App_Start
                 c.CreateMap<IdentityUserRole, RoleViewModel>().ReverseMap();
                 c.CreateMap<IdentityUserRole, UserRoleModel>().ReverseMap();
                 c.CreateMap<CRM, CRMViewModel>().ReverseMap();
+                c.CreateMap<CRMCallHistory, CRMCallHistoryModel>().ReverseMap();
+                c.CreateMap<CRMEmailHistory, CRMEmailHistoryModel>().ReverseMap();
+                c.CreateMap<CRMRevisionHistory, CRMRevisionHistoryModel>().ReverseMap();
+
             });
             kernel.Bind<IMapper>().ToMethod(c => config.CreateMapper()).InRequestScope();
         }
