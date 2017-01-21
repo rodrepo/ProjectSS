@@ -31,6 +31,7 @@
                             <th>Company</th>
                             <th>Contact</th>
                             <th>Email</th>
+                            <th>Region</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -53,6 +54,7 @@
                                         }
                                     </td>
                                     <td>@u.Email</td>
+                                    <td>@u.Region</td>
                                     <td>
                                         <a data-toggle="tooltip" data-placement="top" title="Edit" href="@Url.Action("Edit", "CRM", new { id = u.Id })" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                                     </td>
@@ -65,6 +67,29 @@
         </div>
     </div>
 </div>
-
+@section Styles {
+    @Styles.Render("~/bundles/datatablesCss")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+    @Scripts.Render("~/bundles/demoDatatable")
+    @Scripts.Render("~/bundles/notify")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ('@TempData["Error"]' != "") {
+                $.notify('@TempData["Error"]', "danger");
+            }
+            if ('@TempData["Success"]' != "") {
+                $.notify('@TempData["Success"]', "success");
+            }
+            if ('@TempData["Info"]' != "") {
+                $.notify('@TempData["Info"]', "info");
+            }
+            if ('@TempData["Warning"]' != "") {
+                $.notify('@TempData["Warning"]', "warning");
+            }
+        });
+    </script>
+}
 
 

@@ -49,7 +49,6 @@ namespace ProjectSS.Db
 
         #endregion
 
-
         #region Users
 
 
@@ -140,10 +139,30 @@ namespace ProjectSS.Db
             var crm = await _db.CRMs.Where(m => !m.IsDeleted).ToListAsync();
             return crm;
         }
+
         public async Task<List<CRM>> GetCRMByRegion(string region)
         {
             var crm = await _db.CRMs.Where(m => !m.IsDeleted && m.Region == region).ToListAsync();
             return crm;
+        }
+
+        public void UpdateCRM(CRM crm, string userId)
+        {
+            _db.UserId = userId;
+            _db.Entry(crm).State = EntityState.Modified;
+        }
+
+        public CRM AddCRM(CRM crm, string userId)
+        {
+            _db.UserId = userId;
+            _db.CRMs.Add(crm);
+            return crm;
+        }
+
+        public void DeleteCRM(CRM crm, string userId)
+        {
+            crm.IsDeleted = true;
+            UpdateCRM(crm, userId);
         }
         #endregion
     }

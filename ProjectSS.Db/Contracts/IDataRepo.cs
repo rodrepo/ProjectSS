@@ -32,6 +32,9 @@ namespace ProjectSS.Db.Contracts
         #region CRM
         Task<List<CRM>> GetCRM();
         Task<List<CRM>> GetCRMByRegion(string region);
+        CRM AddCRM(CRM crm, string userId);
+        void UpdateCRM(CRM crm, string userId);
+        void DeleteCRM(CRM crm, string userId);
         #endregion
     }
 }

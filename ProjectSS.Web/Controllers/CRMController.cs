@@ -23,14 +23,9 @@ namespace ProjectSS.Web.Controllers
         }
 
        
-        public async Task<ActionResult> Index(string region)
+        public async Task<ActionResult> Index()
         {
-            var model = new List<CRMViewModel>();
-            if (region != null && !region.IsEmpty())
-            {
-                var result = _mapper.Map<List<CRMViewModel>>(await _repo.GetCRMByRegion(region));
-                model = result;
-            }
+            var model = _mapper.Map<List<CRMViewModel>>(await _repo.GetCRM());
             return View(model);
         }
     }
