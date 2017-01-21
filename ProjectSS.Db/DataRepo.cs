@@ -215,6 +215,17 @@ namespace ProjectSS.Db
             _db.CRMRevisionHistorys.Add(cRMRevisionHistory);
         }
 
+        public async Task<List<CRMCallHistory>> GetCRMCallHistoryByCRMId(int CRMId)
+        {
+            var calls = await _db.CRMCallHistorys.Where(m => !m.IsDeleted && m.CRMId == CRMId).ToListAsync();
+            return calls;
+        }
+        public async Task<List<CRMRevisionHistory>> GetCRMRevisionHistoryByCRMId(int CRMId)
+        {
+            var revision = await _db.CRMRevisionHistorys.Where(m => !m.IsDeleted && m.CRMId == CRMId).ToListAsync();
+            return revision;
+        }
+
         #endregion
     }
 }

@@ -624,6 +624,12 @@
     <Content Include="Views\CRM\_CRM.cshtml" />
     <Content Include="Views\CRM\_Email.cshtml" />
     <Content Include="Views\CRM\_EmailEntry.cshtml" />
+    <Content Include="Views\CRM\_Call.cshtml" />
+    <Content Include="Views\CRM\_Revision.cshtml" />
+    <Content Include="Views\CRM\ManageWithCall.cshtml" />
+    <Content Include="Views\CRM\ManageWithRevision.cshtml" />
+    <Content Include="Views\CRM\ManageWithEmail.cshtml" />
+    <Content Include="Views\CRM\_CallEntry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

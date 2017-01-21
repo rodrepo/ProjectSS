@@ -40,6 +40,9 @@ namespace ProjectSS.Db.Contracts
         Task<List<CRMEmailHistory>> GetCRMEmailHistoryByCRMId(int CRMid);
         void AddCRMCallHistory(CRMCallHistory cRMCallHistory, string userId);
         void AddCRMRevisionHistory(CRMRevisionHistory cRMRevisionHistory, string userId);
+        Task<List<CRMCallHistory>> GetCRMCallHistoryByCRMId(int id);
+        Task<List<CRMRevisionHistory>> GetCRMRevisionHistoryByCRMId(int id);
+
 
         #endregion
     }
