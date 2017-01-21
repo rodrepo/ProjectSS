@@ -68,5 +68,56 @@ namespace ProjectSS.Web.Controllers
             var model = _mapper.Map<CRMViewModel>(await _repo.GetCRMById(id));
             return View(model);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Manage(CRMViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _repo.UpdateCRM(_mapper.Map<CRM>(model), CurrentUser.Id);
+                }
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = string.Format("CRM has been successfully Updated");
+                    return RedirectToAction("Index");
+                }
+                TempData["Error"] = "Unable to updated CRM due to some internal issues.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(CRMViewModel umodel)
+        {
+            try
+            {
+                var model = await _repo.GetCRMById(umodel.Id);
+                _repo.DeleteCRM(model, GetUserId());
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = $"Successfully deleted CRM";
+                }
+                else
+                {
+                    TempData["Error"] = "Unable to delete CRM due to some internal issues.";
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
     }
 }

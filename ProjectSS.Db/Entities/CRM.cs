@@ -22,6 +22,16 @@ namespace ProjectSS.Db.Entities
         public string OfficeNo { get; set; }
         public string FaxNo { get; set; }
         public string MobileNo { get; set; }
+        public virtual ICollection<CRMEmailHistory> CRMEmailHistorys { get; set; }
+        public virtual ICollection<CRMCallHistory> CRMCallHistorys { get; set; }
+        public virtual ICollection<CRMRevisionHistory> CRMRevisionHistorys { get; set; }
+
+        public CRM()
+        {
+            CRMEmailHistorys = new HashSet<CRMEmailHistory>();
+            CRMCallHistorys = new HashSet<CRMCallHistory>();
+            CRMRevisionHistorys = new HashSet<CRMRevisionHistory>();
+        }
 
     }
 }

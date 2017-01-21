@@ -58,11 +58,11 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     var user = MapUserViewModelToEntity(model);
                     var role = _repo.GetRoleById(model.RoleId);
-                    string defaultPassword = "P@ssw0rd";
+                    string defaultPassword = "12345";
                     var result = await UserManager.CreateAsync(user, defaultPassword);
                     if (result.Succeeded)
                     {
-                        TempData["Success"] = string.Format("Success create a User");
+                        TempData["Success"] = string.Format("Success create a User default password is 12345");
                         return RedirectToAction("Index");
                     }
                 }

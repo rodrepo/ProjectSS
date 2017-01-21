@@ -1,10 +1,14 @@
-﻿@model ProjectSS.Web.Models.CRMViewModel
+﻿@using ProjectSS.Common
+@model ProjectSS.Web.Models.CRMViewModel
 @{
     ViewBag.Title = "Manage";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var canAccessAdmin = User.IsInRole(RoleType.Om.ToString());
 }
-@using (Html.BeginForm("Create", "CRM", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+@using (Html.BeginForm("Manage", "CRM", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    @Html.HiddenFor(m => m.Reference)
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     <div class="row">
@@ -17,9 +21,13 @@
                             <h4>@Model.Reference</h4>
                         </div>
                         <div class="col-sm-6">
-                            <div class="pull-right"style="padding-top:10px">
-                                <button type="submit" class="btn btn-primary btn-xs">Update</button>&nbsp;
-                                <a type="button" class="btn btn-default btn-xs" href="@Url.Action("Index", "CRM")">Back</a>
+                            <div class="pull-right" style="padding-top:10px">
+                                <button type="submit" class="btn btn-success btn-xs">Update</button>&nbsp;
+                                @if (canAccessAdmin)
+                                {
+                                    <button type="button" data-toggle="modal" data-target="#deletemodal" class="btn btn-danger btn-xs">Delete</button>
+                                }
+                                &nbsp;<a type="button" class="btn btn-default btn-xs" href="@Url.Action("Index", "CRM")">Back</a>
                             </div>
                         </div>
                     </div>
@@ -135,6 +143,31 @@
         </div>
     </div>
 }
+
+@section BodyArea {
+    <div id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            @using (Html.BeginForm("Delete", "CRM", new { @id = Model.Id }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 id="myModalLabelSmall" class="modal-title">Delete</h4>
+                    </div>
+                    <div class="modal-body"><span>Are you sure you want to delete this SMR?</span></div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Yes</button>
+                        <a href="" type="button" class="btn btn-default" data-dismiss="modal">No</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
 
 @section Styles {
     @Styles.Render("~/bundles/datetimePickerCss")
