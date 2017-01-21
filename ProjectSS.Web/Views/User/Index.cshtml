@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var canAccessAdmin = User.IsInRole(RoleType.Om.ToString());
+    var canAccessAdmin = User.IsInRole(RoleType.OM.ToString());
 }
 @if (canAccessAdmin)
 {

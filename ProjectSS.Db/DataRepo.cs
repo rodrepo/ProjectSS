@@ -189,6 +189,32 @@ namespace ProjectSS.Db
             crm.IsDeleted = true;
             UpdateCRM(crm, userId);
         }
+
+
+        public void AddCRMEmailHistory(CRMEmailHistory cRMEmailHistory, string userId)
+        {
+            _db.UserId = userId;
+            _db.CRMEmailHistorys.Add(cRMEmailHistory);
+        }
+
+        public async Task<List<CRMEmailHistory>> GetCRMEmailHistoryByCRMId(int CRMId)
+        {
+            var emails = await _db.CRMEmailHistorys.Where(m => !m.IsDeleted && m.CRMId == CRMId).ToListAsync();
+            return emails;
+        }
+
+        public void AddCRMCallHistory(CRMCallHistory cRMCallHistory, string userId)
+        {
+            _db.UserId = userId;
+            _db.CRMCallHistorys.Add(cRMCallHistory);
+        }
+
+        public void AddCRMRevisionHistory(CRMRevisionHistory cRMRevisionHistory, string userId)
+        {
+            _db.UserId = userId;
+            _db.CRMRevisionHistorys.Add(cRMRevisionHistory);
+        }
+
         #endregion
     }
 }

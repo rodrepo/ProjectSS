@@ -36,6 +36,11 @@ namespace ProjectSS.Db.Contracts
         void UpdateCRM(CRM crm, string userId);
         void DeleteCRM(CRM crm, string userId);
         Task<CRM> GetCRMById(int id);
+        void AddCRMEmailHistory(CRMEmailHistory cRMEmailHistory, string userId);
+        Task<List<CRMEmailHistory>> GetCRMEmailHistoryByCRMId(int CRMid);
+        void AddCRMCallHistory(CRMCallHistory cRMCallHistory, string userId);
+        void AddCRMRevisionHistory(CRMRevisionHistory cRMRevisionHistory, string userId);
+
         #endregion
     }
 }

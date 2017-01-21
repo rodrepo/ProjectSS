@@ -23,32 +23,60 @@ namespace ProjectSS.Web.Models
 
     public class CRMCallHistoryModel
     {
-        public DateTime? DateTime { get; set; }
+        public DateTime? CreatedDate { get; set; }
         public string Remarks { get; set; }
         public string Caller { get; set; }
 
         public int Id { get; set; }
         public int CRMId { get; set; }
+
+        public string Date
+        {
+            get { return CreatedDate.Value.ToShortDateString(); }
+        }
+        public string Time
+        {
+            get { return CreatedDate.Value.ToShortTimeString(); }
+        }
     }
 
     public class CRMRevisionHistoryModel
     {
-        public DateTime? DateTime { get; set; }
+        public DateTime? CreatedDate { get; set; }
+
         public string Remarks { get; set; }
         public string UserName { get; set; }
 
         public int Id { get; set; }
         public int CRMId { get; set; }
+
+        public string Date
+        {
+            get { return CreatedDate.Value.ToShortDateString(); }
+        }
+        public string Time
+        {
+            get { return CreatedDate.Value.ToShortTimeString(); }
+        }
     }
 
     public class CRMEmailHistoryModel
     {
-        public DateTime? DateTime { get; set; }
+        public DateTime? CreatedDate { get; set; }
         public string Remarks { get; set; }
         public string Sender { get; set; }
 
         public int Id { get; set; }
         public int CRMId { get; set; }
+
+        public string Date
+        {
+            get { return CreatedDate.Value.ToShortDateString(); }
+        }
+        public string Time
+        {
+            get { return CreatedDate.Value.ToShortTimeString(); }
+        }
     }
 
 }

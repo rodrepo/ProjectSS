@@ -48,10 +48,10 @@ namespace ProjectSS.Db
                 {
                     if (entry.State == EntityState.Added)
                     {
-                        entry.Entity.CreatedDate = DateTime.UtcNow;
+                        entry.Entity.CreatedDate = DateTime.Now;
                         entry.Entity.CreatedBy = UserId;
                     }
-                    entry.Entity.ModifiedDate = DateTime.UtcNow;
+                    entry.Entity.ModifiedDate = DateTime.Now;
                     entry.Entity.ModifiedBy = UserId;
                 }
             }

@@ -58,7 +58,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     var user = MapUserViewModelToEntity(model);
                     var role = _repo.GetRoleById(model.RoleId);
-                    string defaultPassword = "12345";
+                    string defaultPassword = "P@ssw0rd";
                     var result = await UserManager.CreateAsync(user, defaultPassword);
                     if (result.Succeeded)
                     {
@@ -66,7 +66,13 @@ namespace ProjectSS.Web.Controllers.Admin
                         return RedirectToAction("Index");
                     }
                 }
-                TempData["Error"] = "Unable to create user due to some internal issues.";
+                foreach(var v in ModelState.Values)
+                {
+                    foreach(var e in v.Errors)
+                    {
+                        TempData["Error"] = e.ErrorMessage;
+                    }
+                }
                 return RedirectToAction("Index");
             }
             catch (Exception e)

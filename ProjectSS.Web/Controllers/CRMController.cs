@@ -67,7 +67,10 @@ namespace ProjectSS.Web.Controllers
         {
             var model = new ManageCRMViewModel();
             var crm = _mapper.Map<CRMViewModel>(await _repo.GetCRMById(id));
+            var getEmail = await _repo.GetCRMEmailHistoryByCRMId(crm.Id);
+            var emails = _mapper.Map<List<CRMEmailHistoryModel>>(getEmail);
             model.CRM = crm;
+            model.EmailHistorys = emails;
             return View(model);
         }
 
@@ -113,6 +116,58 @@ namespace ProjectSS.Web.Controllers
                     TempData["Error"] = "Unable to delete CRM due to some internal issues.";
                 }
                 return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Email(CRMEmailHistoryModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    model.Sender = CurrentUser.FirstName + " " + CurrentUser.MiddleName + " " + CurrentUser.LastName;
+                    _repo.AddCRMEmailHistory(_mapper.Map<CRMEmailHistory>(model), CurrentUser.Id);
+                }
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = string.Format("History has been successfully Created");
+                    return RedirectToAction("Manage", new { id = model.CRMId });
+                }
+                TempData["Error"] = "Unable to updated history due to some internal issues.";
+                return RedirectToAction("Manage", new { id = model.CRMId });
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Call(CRMCallHistoryModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    model.Caller = CurrentUser.FirstName + " " + CurrentUser.MiddleName + " " + CurrentUser.LastName;
+                    _repo.AddCRMCallHistory(_mapper.Map<CRMCallHistory>(model), CurrentUser.Id);
+                }
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = string.Format("History has been successfully Created");
+                    return RedirectToAction("Manage", new { id = model.CRMId });
+                }
+                TempData["Error"] = "Unable to updated history due to some internal issues.";
+                return RedirectToAction("Manage", new { id = model.CRMId });
             }
             catch (Exception e)
             {
