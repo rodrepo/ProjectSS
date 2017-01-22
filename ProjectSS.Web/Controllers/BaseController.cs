@@ -86,13 +86,9 @@ namespace ProjectSS.Web.Controllers
         }
 
         #region SetListItems
-        protected async Task<List<SelectListItem>> GetRolesAsync(bool includeBlank, string id = null)
+        protected async Task<List<SelectListItem>> GetRolesAsync(string id = null)
         {
             var result = new List<SelectListItem>();
-            if (includeBlank)
-            {
-                result.Add(new SelectListItem { Value = "0", Text = "Choose Roles..." });
-            }
 
             var Roles = await _repo.GetRolesAsync();
             if (Roles != null)

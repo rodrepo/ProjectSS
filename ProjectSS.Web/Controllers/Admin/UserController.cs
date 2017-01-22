@@ -60,12 +60,20 @@ namespace ProjectSS.Web.Controllers.Admin
         {
             try
             {
+                var vuser = _mapper.Map<List<UserViewModel>>(await _repo.GetUsersAsync());
+                if (vuser.Any(u => u.Email == model.Email))
+                {
+                    TempData["Error"] = "Error email address is already taken";
+                    await SetListItemsAsync(model);
+                    return View(model);
+                }
                 if (ModelState.IsValid)
                 {
                     var user = MapUserViewModelToEntity(model);
                     var role = _repo.GetRoleById(model.RoleId);
                     string defaultPassword = "P@ssw0rd";
                     var result = await UserManager.CreateAsync(user, defaultPassword);
+                    await UserManager.AddToRoleAsync(user.Id, role.Name);
                     if (result.Succeeded)
                     {
                         TempData["Success"] = string.Format("Success create a User default password is P@ssw0rd");
@@ -141,7 +149,6 @@ namespace ProjectSS.Web.Controllers.Admin
                             await UserManager.RemoveFromRolesAsync(model.Id, ro.Name);
                         }
                     }
-
                     var role = _repo.GetRoleById(model.RoleId);
                     var user = await _repo.UpdateUserAsync(_mapper.Map<User>(model), UserManager, role.Name.ToString(), GetUserId());
                     await _repo.SaveAllAsync();
@@ -231,7 +238,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 LastName = model.LastName,
                 Gender = model.Gender,
                 Birthday = model.Birthday,
-                Mobile = model.Mobile
+                Mobile = model.Mobile,
             };
             return (user);
         }
@@ -241,7 +248,7 @@ namespace ProjectSS.Web.Controllers.Admin
         #region SetListItems
         private async Task SetListItemsAsync(UserViewModel model)
         {
-            ViewBag.Roles = ViewBag.Roles ?? await GetRolesAsync(true, model.RoleId);
+            ViewBag.Roles = ViewBag.Roles ?? await GetRolesAsync(model.RoleId);
         }
         #endregion
     }

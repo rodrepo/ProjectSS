@@ -161,29 +161,49 @@ namespace ProjectSS.Db
         public CRM AddCRM(CRM crm, string userId)
         {
             _db.UserId = userId;
-            var reference = GenerateCRMReference();
-            crm.Reference = reference;
+            var result = GenerateCRMReference();
+            crm.Reference = result.Reference;
+            crm.Number = result.Number;
             _db.CRMs.Add(crm);
             return crm;
         }
 
-        public string GenerateCRMReference()
+        private CRMReferenceModel GenerateCRMReference()
         {
-            string reference = "";
+            var cRMReference = new CRMReferenceModel();
+
             var latestReference = _db.CRMs.Where(m => !m.IsDeleted).OrderByDescending(d => d.CreatedDate).FirstOrDefault();
-            if (latestReference != null && latestReference.Id > 0)
+            if (latestReference != null && latestReference.Number != null)
             {
                 int multi = 1;
-                multi += latestReference.Id;
-                reference = "SCII-" + multi.ToString();
+                multi += int.Parse(latestReference.Number);
+                cRMReference.Reference = "SCII-" + multi.ToString();
+                cRMReference.Number = multi.ToString();
             }
             else
             {
-                reference = "SCII-1";
+                cRMReference.Reference = "SCII-1";
+                cRMReference.Number = "1";
+
             }
-            return reference;
+            return cRMReference;
         }
 
+        //Used to follow SCII number
+        private string GenerateCRMNumbering()
+        {
+            string number = "";
+            var latestReference = _db.CRMs.Where(m => !m.IsDeleted).OrderByDescending(d => d.CreatedDate).FirstOrDefault();
+            if (latestReference != null && latestReference.Id > 0 && latestReference != null)
+            {
+                number = latestReference.Id.ToString();
+            }
+            else
+            {
+                number = "1";
+            }
+            return number;
+        }
         public void DeleteCRM(CRM crm, string userId)
         {
             crm.IsDeleted = true;
@@ -226,6 +246,14 @@ namespace ProjectSS.Db
             return revision;
         }
 
+        #endregion
+
+        #region Private Class
+        private class CRMReferenceModel
+        {
+            public string Reference { get; set; }
+            public string Number { get; set; }
+        }
         #endregion
     }
 }
