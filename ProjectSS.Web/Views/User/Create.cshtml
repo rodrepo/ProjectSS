@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <label>Birthday</label>
                             <div class="input-group date">
-                                @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control datepicker", @required = "required", })
+                                @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control datepicker", @type = "datetime", @required = "required", })
                                 @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
                                 <span class="input-group-addon">
                                     <span class="fa fa-calendar"></span>
@@ -92,6 +92,7 @@
     @Scripts.Render("~/bundles/demoForms")
     @Scripts.Render("~/bundles/parsley")
     @Scripts.Render("~/bundles/notify")
+    <script src="~/Vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             if ('@TempData["Error"]' != "") {
@@ -106,6 +107,18 @@
             if ('@TempData["Warning"]' != "") {
                 $.notify('@TempData["Warning"]', "warning");
             }
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('.datepicker').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+            $('.timepicker').datetimepicker({
+                format: 'HH:mm'
+            });
+
+
         });
     </script>
 }

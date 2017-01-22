@@ -28,5 +28,22 @@ namespace ProjectSS.Db.Contracts
         Task<List<IdentityRole>> GetRolesByUserId(string userId);
 
         #endregion
+
+        #region CRM
+        Task<List<CRM>> GetCRM();
+        Task<List<CRM>> GetCRMByRegion(string region);
+        CRM AddCRM(CRM crm, string userId);
+        void UpdateCRM(CRM crm, string userId);
+        void DeleteCRM(CRM crm, string userId);
+        Task<CRM> GetCRMById(int id);
+        void AddCRMEmailHistory(CRMEmailHistory cRMEmailHistory, string userId);
+        Task<List<CRMEmailHistory>> GetCRMEmailHistoryByCRMId(int CRMid);
+        void AddCRMCallHistory(CRMCallHistory cRMCallHistory, string userId);
+        void AddCRMRevisionHistory(CRMRevisionHistory cRMRevisionHistory, string userId);
+        Task<List<CRMCallHistory>> GetCRMCallHistoryByCRMId(int id);
+        Task<List<CRMRevisionHistory>> GetCRMRevisionHistoryByCRMId(int id);
+
+
+        #endregion
     }
 }

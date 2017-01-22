@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ProjectSS.Db.Contracts;
+using ProjectSS.Db.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -30,6 +31,14 @@ namespace ProjectSS.Web.Controllers
             GetUserId = () => User.Identity.GetUserId();
         }
 
+        public User CurrentUser
+        {
+            get
+            {
+                ViewBag.CurrentUser = ViewBag.CurrentUser ?? _repo.GetUser(GetUserId());
+                return ViewBag.CurrentUser;
+            }
+        }
 
         public UserManager UserManager
         {

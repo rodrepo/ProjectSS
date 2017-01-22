@@ -2,7 +2,7 @@
 @using ProjectSS.Common
 @using Microsoft.AspNet.Identity
 @{
-    var canAccessAdmin = User.IsInRole(RoleType.Om.ToString());
+    var canAccessAdmin = User.IsInRole(RoleType.OM.ToString());
     var currentUserName = User.Identity.Name;
 }
 <!-- START Sidebar (left)-->
@@ -39,7 +39,12 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-
+            <li class="@Html.isActive(controller: "CRM")">
+                <a href="/CRM">
+                    <em class="icon-book-open"></em>
+                    <span>CRM</span>
+                </a>
+            </li>
             @if (canAccessAdmin)
             {
                 <li class="@Html.isActive(controller: "Project")">
@@ -56,6 +61,7 @@
                 </li>
             
             }
+         
         </ul>
         <!-- END sidebar nav-->
     </nav>

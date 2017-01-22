@@ -1,0 +1,97 @@
+﻿@using System.Web.WebPages;
+@model List<ProjectSS.Web.Models.CRMViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4>List of CRM</h4>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="pull-right" style="padding-top:10px">
+                            <a class="btn btn-labeled btn-success btn-xs"  href="@Url.Action("Create", "CRM")">
+                                <span class="btn-label"><i class="fa fa-plus"></i></span>
+                                New Contact
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table id="datatable1" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Name</th>
+                            <th>Company</th>
+                            <th>Contact</th>
+                            <th>Email</th>
+                            <th>Region</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var u in Model)
+                            {
+                                <tr>
+                                    <td>@u.Reference</td>
+                                    <td>@u.Name</td>
+                                    <td>@u.CompanyName</td>
+                                    <td>
+                                        @if(u.MobileNo != null && !u.MobileNo.IsEmpty())
+                                        {
+                                            @u.MobileNo
+                                        }
+                                        else if (u.OfficeNo != null && !u.OfficeNo.IsEmpty())
+                                        {
+                                            @u.OfficeNo
+                                        }
+                                    </td>
+                                    <td>@u.Email</td>
+                                    <td>@u.Region</td>
+                                    <td>
+                                        <a data-toggle="tooltip" data-placement="top" title="Manage" href="@Url.Action("Manage", "CRM", new { id = u.Id })" class="btn btn-primary btn-xs"><i class="icon-menu"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/bundles/datatablesCss")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+    @Scripts.Render("~/bundles/demoDatatable")
+    @Scripts.Render("~/bundles/notify")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ('@TempData["Error"]' != "") {
+                $.notify('@TempData["Error"]', "danger");
+            }
+            if ('@TempData["Success"]' != "") {
+                $.notify('@TempData["Success"]', "success");
+            }
+            if ('@TempData["Info"]' != "") {
+                $.notify('@TempData["Info"]', "info");
+            }
+            if ('@TempData["Warning"]' != "") {
+                $.notify('@TempData["Warning"]', "warning");
+            }
+        });
+    </script>
+}
+
+

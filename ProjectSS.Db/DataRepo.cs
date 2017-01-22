@@ -49,7 +49,6 @@ namespace ProjectSS.Db
 
         #endregion
 
-
         #region Users
 
 
@@ -131,6 +130,102 @@ namespace ProjectSS.Db
                           select r
                           ).ToListAsync();
         }
+        #endregion
+
+        #region CRM
+
+        public async Task<List<CRM>> GetCRM()
+        {
+            var crm = await _db.CRMs.Where(m => !m.IsDeleted).ToListAsync();
+            return crm;
+        }
+
+        public async Task<List<CRM>> GetCRMByRegion(string region)
+        {
+            var crm = await _db.CRMs.Where(m => !m.IsDeleted && m.Region == region).ToListAsync();
+            return crm;
+        }
+
+        public async Task<CRM> GetCRMById(int id)
+        {
+            var crm = await _db.CRMs.Where(m => !m.IsDeleted && m.Id == id).FirstOrDefaultAsync();
+            return crm;
+        }
+
+        public void UpdateCRM(CRM crm, string userId)
+        {
+            _db.UserId = userId;
+            _db.Entry(crm).State = EntityState.Modified;
+        }
+
+        public CRM AddCRM(CRM crm, string userId)
+        {
+            _db.UserId = userId;
+            var reference = GenerateCRMReference();
+            crm.Reference = reference;
+            _db.CRMs.Add(crm);
+            return crm;
+        }
+
+        public string GenerateCRMReference()
+        {
+            string reference = "";
+            var latestReference = _db.CRMs.Where(m => !m.IsDeleted).OrderByDescending(d => d.CreatedDate).FirstOrDefault();
+            if (latestReference != null && latestReference.Id > 0)
+            {
+                int multi = 1;
+                multi += latestReference.Id;
+                reference = "SCII-" + multi.ToString();
+            }
+            else
+            {
+                reference = "SCII-1";
+            }
+            return reference;
+        }
+
+        public void DeleteCRM(CRM crm, string userId)
+        {
+            crm.IsDeleted = true;
+            UpdateCRM(crm, userId);
+        }
+
+
+        public void AddCRMEmailHistory(CRMEmailHistory cRMEmailHistory, string userId)
+        {
+            _db.UserId = userId;
+            _db.CRMEmailHistorys.Add(cRMEmailHistory);
+        }
+
+        public async Task<List<CRMEmailHistory>> GetCRMEmailHistoryByCRMId(int CRMId)
+        {
+            var emails = await _db.CRMEmailHistorys.Where(m => !m.IsDeleted && m.CRMId == CRMId).ToListAsync();
+            return emails;
+        }
+
+        public void AddCRMCallHistory(CRMCallHistory cRMCallHistory, string userId)
+        {
+            _db.UserId = userId;
+            _db.CRMCallHistorys.Add(cRMCallHistory);
+        }
+
+        public void AddCRMRevisionHistory(CRMRevisionHistory cRMRevisionHistory, string userId)
+        {
+            _db.UserId = userId;
+            _db.CRMRevisionHistorys.Add(cRMRevisionHistory);
+        }
+
+        public async Task<List<CRMCallHistory>> GetCRMCallHistoryByCRMId(int CRMId)
+        {
+            var calls = await _db.CRMCallHistorys.Where(m => !m.IsDeleted && m.CRMId == CRMId).ToListAsync();
+            return calls;
+        }
+        public async Task<List<CRMRevisionHistory>> GetCRMRevisionHistoryByCRMId(int CRMId)
+        {
+            var revision = await _db.CRMRevisionHistorys.Where(m => !m.IsDeleted && m.CRMId == CRMId).ToListAsync();
+            return revision;
+        }
+
         #endregion
     }
 }

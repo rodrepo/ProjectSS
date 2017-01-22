@@ -67,10 +67,22 @@
     <Compile Include="Contracts\IAuditable.cs" />
     <Compile Include="Contracts\IDataRepo.cs" />
     <Compile Include="Entities\Base.cs" />
+    <Compile Include="Entities\CRM.cs" />
+    <Compile Include="Entities\CRMCallHistory.cs" />
+    <Compile Include="Entities\CRMEmailHistory.cs" />
+    <Compile Include="Entities\CRMRevisionHistory.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Migrations\201701171120473_AddsUserTable.cs" />
     <Compile Include="Migrations\201701171120473_AddsUserTable.Designer.cs">
       <DependentUpon>201701171120473_AddsUserTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701201620218_AddsCRMTable.cs" />
+    <Compile Include="Migrations\201701201620218_AddsCRMTable.Designer.cs">
+      <DependentUpon>201701201620218_AddsCRMTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701210527295_AddsNeededTableForCRM.cs" />
+    <Compile Include="Migrations\201701210527295_AddsNeededTableForCRM.Designer.cs">
+      <DependentUpon>201701210527295_AddsNeededTableForCRM.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +100,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701171120473_AddsUserTable.resx">
       <DependentUpon>201701171120473_AddsUserTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701201620218_AddsCRMTable.resx">
+      <DependentUpon>201701201620218_AddsCRMTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701210527295_AddsNeededTableForCRM.resx">
+      <DependentUpon>201701210527295_AddsNeededTableForCRM.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
