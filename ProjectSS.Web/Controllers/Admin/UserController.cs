@@ -62,7 +62,7 @@ namespace ProjectSS.Web.Controllers.Admin
                     var result = await UserManager.CreateAsync(user, defaultPassword);
                     if (result.Succeeded)
                     {
-                        TempData["Success"] = string.Format("Success create a User default password is 12345");
+                        TempData["Success"] = string.Format("Success create a User default password is P@ssw0rd");
                         return RedirectToAction("Index");
                     }
                 }

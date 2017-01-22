@@ -132,6 +132,11 @@
                 @Html.TextBoxFor(model => model.MobileNo, new { @class = "form-control", @type = "text", @placeholder = "Enter Mobile Number" })
                 @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
             </div>
+            <div class="form-group col-sm-4">
+                <a href="@Url.Action("ManageWithEmail", "CRM", new { id = Model.Id })" class="btn btn-success btn-xs">Email History</a>
+                <a href="@Url.Action("ManageWithCall", "CRM", new { id = Model.Id })" class="btn btn-success btn-xs">Call History</a>
+                <a href="@Url.Action("ManageWithRevision", "CRM", new { id = Model.Id })" class="btn btn-success btn-xs">Revision History</a>
+            </div>
         </form>
     </div>
 </div>
