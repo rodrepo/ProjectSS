@@ -102,7 +102,7 @@ namespace ProjectSS.Web.Controllers
                     var item = new SelectListItem
                     {
                         Value = role.Id.ToString(),
-                        Text = role.Name
+                        Text = GetProperRoleName(role.Name)
                     };
 
                     if (role.Id == id)
@@ -115,6 +115,33 @@ namespace ProjectSS.Web.Controllers
             }
             return result;
         }
+
         #endregion
+
+        public string GetProperRoleName(string roleName)
+        {
+            string name = "";
+            if(roleName == "OM")
+            {
+                name = "Operations Manager";
+            }
+            else if(roleName == "TH")
+            {
+                name = "Technicial Head";
+            }
+            else if(roleName == "BD")
+            {
+                name = "Business Development";
+            }
+            else if(roleName == "AH")
+            {
+                name = "Admin Head";
+            }
+            else if(roleName == "TS")
+            {
+                name = "Technical Sepecialist";
+            }
+            return name;
+        }
     }
 }

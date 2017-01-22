@@ -35,7 +35,13 @@ namespace ProjectSS.Web.Controllers.Admin
                     {
                         user.Roles = roles;
                     }
+
+                    foreach (var role in user.Roles )
+                    {
+                        role.Name = GetProperRoleName(role.Name);
+                    }
                 }
+
             }
             return View(model);
         }
