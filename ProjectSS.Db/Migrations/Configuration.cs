@@ -16,13 +16,19 @@
         protected override void Seed(ProjectSS.Db.DataContext context)
         {
             #region Seed Roles
-            var om = new IdentityRole { Name = RoleType.Om.ToString() };
-            var staff = new IdentityRole { Name = RoleType.Staff.ToString() };
+            var om = new IdentityRole { Name = RoleType.OM.ToString() };
+            var th = new IdentityRole { Name = RoleType.TH.ToString() };
+            var bd = new IdentityRole { Name = RoleType.BD.ToString() };
+            var ah = new IdentityRole { Name = RoleType.AH.ToString() };
+            var ts = new IdentityRole { Name = RoleType.TS.ToString() };
 
             context.Roles.AddOrUpdate(
                 r => r.Name,
                 om,
-                staff
+                th,
+                bd,
+                ah,
+                ts
                 );
             context.SaveChanges();
             #endregion
@@ -48,7 +54,7 @@
                 var result = userManager.Create(admin, password);
                 if (result.Succeeded)
                 {
-                    userManager.AddToRole(admin.Id, RoleType.Om.ToString());
+                    userManager.AddToRole(admin.Id, RoleType.OM.ToString());
                 }
             }
             #endregion

@@ -14,8 +14,11 @@ namespace ProjectSS.Common
 
     public enum RoleType
     {
-        Om = 1,
-        Staff = 2
+        OM = 1,
+        TH = 2,
+        BD = 3,
+        AH = 4,
+        TS = 5
     }
 
     public enum UserAccountType

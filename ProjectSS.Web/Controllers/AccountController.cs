@@ -47,7 +47,23 @@ namespace ProjectSS.Web.Controllers
             var user = await UserManager.FindByNameAsync(model.Email);
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-   
+            if (user != null)
+            {
+                if (user.IsDeleted == true)
+                {
+                    Session.Abandon();
+                    AuthenticationManager.SignOut();
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View(model);
+                }
+                if (user.IsActive == false)
+                {
+                    Session.Abandon();
+                    AuthenticationManager.SignOut();
+                    ModelState.AddModelError("", "Account is not yet activated.");
+                    return View(model);
+                }
+            }
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -62,7 +78,7 @@ namespace ProjectSS.Web.Controllers
                 default:
                     if (user != null)
                     {
-                        if (user.EmailConfirmed == false)
+                        if (user.IsActive == false)
                         {
                             Session.Abandon();
                             AuthenticationManager.SignOut();

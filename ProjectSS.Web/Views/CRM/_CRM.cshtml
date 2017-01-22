@@ -1,0 +1,143 @@
+﻿@model ProjectSS.Web.Models.CRMViewModel
+@using ProjectSS.Common
+@{
+    var canAccessOM = User.IsInRole(RoleType.OM.ToString());
+    var canAccessTH = User.IsInRole(RoleType.TH.ToString());
+    var canAccessAH = User.IsInRole(RoleType.AH.ToString());
+}
+
+@Html.HiddenFor(m => m.Reference)
+@Html.HiddenFor(m => m.Number)
+@Html.HiddenFor(m => m.Id)
+@Html.AntiForgeryToken()
+@Html.ValidationSummary(true)
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="col-sm-12">
+            <div class="col-sm-6">
+                <h4>@Model.Reference</h4>
+            </div>
+            <div class="col-sm-6">
+                <div class="pull-right" style="padding-top:10px">
+                    <button type="submit" class="btn btn-success btn-xs">Update</button>&nbsp;
+                    @if (canAccessOM == true || canAccessTH == true || canAccessAH == true)
+                    {
+                        <button type="button" data-toggle="modal" data-target="#deletemodal" class="btn btn-danger btn-xs">Delete</button>
+                    }
+                    &nbsp;<a type="button" class="btn btn-default btn-xs" href="@Url.Action("Index", "CRM")">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form role="form">
+            <div class="form-group col-sm-4">
+                <label>Full Name</label>
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @type = "text", @required = "required", @placeholder = "Enter Full Name" })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-4">
+                <label>Position</label>
+                @Html.TextBoxFor(model => model.Position, new { @class = "form-control", @type = "text", @required = "required", @placeholder = "Enter Position" })
+                @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-4">
+                <label>Email Address</label>
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @type = "email", @required = "required", @placeholder = "Enter Firstname" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-6">
+                <label>Company Name</label>
+                @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", @type = "text", @required = "required" })
+                @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-6">
+                <label>Industry</label>
+                <select class="form-control" id="Industry" name="Industry" required="required">
+                    <option value="">Select Industry</option>
+                    <option @(Model.Industry == "Transport" ? "selected" : " ") value="Transport">Transport</option>
+                    <option @(Model.Industry == "Power Generation" ? "selected" : " ") value="Power Generation">Power Generation</option>
+                    <option @(Model.Industry == "Power Distribution" ? "selected" : " ") value="Power Distribution">Power Distribution</option>
+                    <option @(Model.Industry == "Electrical & Electronics" ? "selected" : " ") value="Electrical & Electronics">Electrical & Electronics</option>
+                    <option @(Model.Industry == "Metal" ? "selected" : " ") value="Metal">Metal</option>
+                    <option @(Model.Industry == "Construction & Infrastructure" ? "selected" : " ") value="Construction & Infrastructure">Construction & Infrastructure</option>
+                    <option @(Model.Industry == "Food & Beverage" ? "selected" : " ") value="Food & Beverage">Food & Beverage</option>
+                    <option @(Model.Industry == "Sugar & Distillery" ? "selected" : " ") value="Sugar & Distillery">Sugar & Distillery</option>
+                    <option @(Model.Industry == "Veg. / Oil / Detergent / Wax" ? "selected" : " ") value="Veg. / Oil / Detergent / Wax">Veg. / Oil / Detergent / Wax</option>
+                    <option @(Model.Industry == "Mining" ? "selected" : " ") value="Mining">Mining</option>
+                    <option @(Model.Industry == "Cement" ? "selected" : " ") value="Cement">Cement</option>
+                    <option @(Model.Industry == "Ceramics / Tiles / Glass" ? "selected" : " ") value="Ceramics / Tiles / Glass">Ceramics / Tiles / Glass</option>
+                    <option @(Model.Industry == "Paper & Textile" ? "selected" : " ") value="Paper & Textile">Paper & Textile</option>
+                    <option @(Model.Industry == "Rubber & Plastic" ? "selected" : " ") value="Rubber & Plastic">Rubber & Plastic</option>
+                    <option @(Model.Industry == "Agriculture" ? "selected" : " ") value="Agriculture">Agriculture</option>
+                    <option @(Model.Industry == "Forest Products & Wood" ? "selected" : " ") value="Forest Products & Wood">Forest Products & Wood</option>
+                    <option @(Model.Industry == "Livestock & Poultry" ? "selected" : " ") value="Livestock & Poultry">Livestock & Poultry</option>
+                    <option @(Model.Industry == "Commercial & Recreational" ? "selected" : " ") value="Commercial & Recreational">Commercial & Recreational</option>
+                    <option @(Model.Industry == "Medical Facilities" ? "selected" : " ") value="Medical Facilities">Medical Facilities</option>
+                    <option @(Model.Industry == "Industrial & Residential Estates" ? "selected" : " ") value="Industrial & Residential Estates">Industrial & Residential Estates</option>
+                    <option @(Model.Industry == "Chemical & Pharmaceutical" ? "selected" : " ") value="Chemical & Pharmaceutical">Chemical & Pharmaceutical</option>
+                    <option @(Model.Industry == "Consultancy & Services" ? "selected" : " ") value="Consultancy & Services">Consultancy & Services</option>
+                    <option @(Model.Industry == "Laboratories" ? "selected" : " ") value="Laboratories">Laboratories</option>
+                    <option @(Model.Industry == "Communication & Printing" ? "selected" : " ") value="Communication & Printing">Communication & Printing</option>
+                    <option @(Model.Industry == "Education" ? "selected" : " ") value="Education">Education</option>
+                    <option @(Model.Industry == "Government" ? "selected" : " ") value="Government">Government</option>
+                    <option @(Model.Industry == "Others" ? "selected" : " ") value="Others">Others</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label>Address</label>
+                @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @type = "text", placeholder = "Enter Full Address", @required = "required", })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-4">
+                <label>Municipality</label>
+                @Html.TextBoxFor(model => model.Municipality, new { @class = "form-control", @type = "text", @required = "required", placeholder = "Enter Municipality" })
+                @Html.ValidationMessageFor(model => model.Municipality, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-4">
+                <label>Region</label>
+                <select class="form-control" id="Region" name="Region" required="required">
+                    <option value="">Select Region</option>
+                    <option @(Model.Region == "National Capital Region" ? "selected" : " ") value="National Capital Region">National Capital Region</option>
+                    <option @(Model.Region == "Region 1 - Ilocos" ? "selected" : " ") value="Region 1 - Ilocos">Region 1 - Ilocos</option>
+                    <option @(Model.Region == "Region 2 - Cagayan Valley" ? "selected" : " ") value="Region 2 - Cagayan Valley">Region 2 - Cagayan Valley</option>
+                    <option @(Model.Region == "Region 3 - Central Luzon" ? "selected" : " ") value="Region 3 - Central Luzon">Region 3 - Central Luzon</option>
+                    <option @(Model.Region == "Region 4A - Calabarzon" ? "selected" : " ") value="Region 4A - Calabarzon">Region 4A - Calabarzon</option>
+                    <option @(Model.Region == "Region 4B - Mimaropa" ? "selected" : " ") value="Region 4B - Mimaropa">Region 4B - Mimaropa</option>
+                    <option @(Model.Region == "Region 5 - Bicol" ? "selected" : " ") value="Region 5 - Bicol">Region 5 - Bicol</option>
+                    <option @(Model.Region == "Region 6 - Western Visayas" ? "selected" : " ") value="Region 6 - Western Visayas">Region 6 - Western Visayas</option>
+                    <option @(Model.Region == "Region 7 - Central Visayas" ? "selected" : " ") value="Region 7 - Central Visayas">Region 7 - Central Visayas</option>
+                    <option @(Model.Region == "Region 8 - Negros Island" ? "selected" : " ") value="Region 8 - Negros Island">Region 8 - Negros Island</option>
+                    <option @(Model.Region == "Region 9 - Zamboanga Peninsula" ? "selected" : " ") value="Region 9 - Zamboanga Peninsula">Region 9 - Zamboanga Peninsula</option>
+                    <option @(Model.Region == "Region 10 - Northern Mindanao" ? "selected" : " ") value="Region 10 - Northern Mindanao">Region 10 - Northern Mindanao</option>
+                    <option @(Model.Region == "Region 11 - Davao" ? "selected" : " ") value="Region 11 - Davao">Region 11 - Davao</option>
+                    <option @(Model.Region == "Region 12 - Soccsksargen" ? "selected" : " ") value="Region 12 - Soccsksargen">Region 12 - Soccsksargen</option>
+                    <option @(Model.Region == "Region 13 - Caraga" ? "selected" : " ") value="Region 13 - Caraga">Region 13 - Caraga</option>
+                    <option @(Model.Region == "Cordillera Autonomous Region" ? "selected" : " ") value="Cordillera Autonomous Region">Cordillera Autonomous Region</option>
+                    <option @(Model.Region == "Autonomous Region of Mus. Min." ? "selected" : " ") value="Autonomous Region of Mus. Min.">Autonomous Region of Mus. Min.</option>
+                </select>
+            </div>
+
+            <div class="form-group col-sm-4">
+                <label>Office Number</label>
+                @Html.TextBoxFor(model => model.OfficeNo, new { @class = "form-control", @type = "text", placeholder = "Enter Office Number" })
+                @Html.ValidationMessageFor(model => model.OfficeNo, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-4">
+                <label>Fax Number</label>
+                @Html.TextBoxFor(model => model.FaxNo, new { @class = "form-control", @type = "text", placeholder = "Enter Fax Number" })
+                @Html.ValidationMessageFor(model => model.FaxNo, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-4">
+                <label>Mobile Number</label>
+                @Html.TextBoxFor(model => model.MobileNo, new { @class = "form-control", @type = "text", @placeholder = "Enter Mobile Number" })
+                @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-4">
+                <a href="@Url.Action("ManageWithEmail", "CRM", new { id = Model.Id })" class="btn btn-success btn-xs">Email History</a>
+                <a href="@Url.Action("ManageWithCall", "CRM", new { id = Model.Id })" class="btn btn-success btn-xs">Call History</a>
+                <a href="@Url.Action("ManageWithRevision", "CRM", new { id = Model.Id })" class="btn btn-success btn-xs">Revision History</a>
+            </div>
+        </form>
+    </div>
+</div>

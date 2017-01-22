@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var canAccessAdmin = User.IsInRole(RoleType.Om.ToString());
+    var canAccessAdmin = User.IsInRole(RoleType.OM.ToString());
 }
 @if (canAccessAdmin)
 {
@@ -17,7 +17,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="pull-right">
-                                <a class="btn btn-labeled btn-success" href="@Url.Action("Create", "User")">
+                                <a class="btn btn-labeled btn-success btn-xs" href="@Url.Action("Create", "User")">
                                     <span class="btn-label"><i class="fa fa-plus"></i></span>
                                     Add User
                                 </a>
@@ -77,7 +77,7 @@
                                                 }
                                             </td>
                                             <td>
-                                                <a data-toggle="tooltip" data-placement="top" title="Edit" href="@Url.Action("Edit", "User", new { id = u.Id })" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                                                <a data-toggle="tooltip" data-placement="top" title="Edit" href="@Url.Action("Edit", "User", new { id = u.Id })" class="btn btn-primary btn-xs"><i class="icon-menu"></i></a>
                                             </td>
                                         </tr>
                                     }

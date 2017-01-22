@@ -48,10 +48,10 @@ namespace ProjectSS.Db
                 {
                     if (entry.State == EntityState.Added)
                     {
-                        entry.Entity.CreatedDate = DateTime.UtcNow;
+                        entry.Entity.CreatedDate = DateTime.Now;
                         entry.Entity.CreatedBy = UserId;
                     }
-                    entry.Entity.ModifiedDate = DateTime.UtcNow;
+                    entry.Entity.ModifiedDate = DateTime.Now;
                     entry.Entity.ModifiedBy = UserId;
                 }
             }
@@ -75,6 +75,11 @@ namespace ProjectSS.Db
 
         #region DBSets / Tables      
         public DbSet<IdentityUserRole> UserRoles { get; set; }
+        public DbSet<CRM> CRMs { get; set; }
+        public DbSet<CRMEmailHistory> CRMEmailHistorys { get; set; }
+        public DbSet<CRMCallHistory> CRMCallHistorys { get; set; }
+        public DbSet<CRMRevisionHistory> CRMRevisionHistorys { get; set; }
+
         #endregion
 
     }

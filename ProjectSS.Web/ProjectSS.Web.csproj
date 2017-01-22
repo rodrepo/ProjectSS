@@ -216,7 +216,10 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Controllers\Admin\ProjectController.cs" />
     <Compile Include="Controllers\Admin\UserController.cs" />
+    <Compile Include="Controllers\CRMController.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
+    <Compile Include="Models\CRMViewModel.cs" />
+    <Compile Include="Models\ManageCRMViewModel.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -615,6 +618,18 @@
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\CRM\Index.cshtml" />
+    <Content Include="Views\CRM\Create.cshtml" />
+    <Content Include="Views\CRM\Manage.cshtml" />
+    <Content Include="Views\CRM\_CRM.cshtml" />
+    <Content Include="Views\CRM\_Email.cshtml" />
+    <Content Include="Views\CRM\_EmailEntry.cshtml" />
+    <Content Include="Views\CRM\_Call.cshtml" />
+    <Content Include="Views\CRM\_Revision.cshtml" />
+    <Content Include="Views\CRM\ManageWithCall.cshtml" />
+    <Content Include="Views\CRM\ManageWithRevision.cshtml" />
+    <Content Include="Views\CRM\ManageWithEmail.cshtml" />
+    <Content Include="Views\CRM\_CallEntry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

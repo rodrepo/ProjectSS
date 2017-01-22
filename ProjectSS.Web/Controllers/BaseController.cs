@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ProjectSS.Db.Contracts;
+using ProjectSS.Db.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -30,6 +31,14 @@ namespace ProjectSS.Web.Controllers
             GetUserId = () => User.Identity.GetUserId();
         }
 
+        public User CurrentUser
+        {
+            get
+            {
+                ViewBag.CurrentUser = ViewBag.CurrentUser ?? _repo.GetUser(GetUserId());
+                return ViewBag.CurrentUser;
+            }
+        }
 
         public UserManager UserManager
         {
@@ -77,13 +86,9 @@ namespace ProjectSS.Web.Controllers
         }
 
         #region SetListItems
-        protected async Task<List<SelectListItem>> GetRolesAsync(bool includeBlank, string id = null)
+        protected async Task<List<SelectListItem>> GetRolesAsync(string id = null)
         {
             var result = new List<SelectListItem>();
-            if (includeBlank)
-            {
-                result.Add(new SelectListItem { Value = "0", Text = "Choose Roles..." });
-            }
 
             var Roles = await _repo.GetRolesAsync();
             if (Roles != null)
@@ -93,7 +98,7 @@ namespace ProjectSS.Web.Controllers
                     var item = new SelectListItem
                     {
                         Value = role.Id.ToString(),
-                        Text = role.Name
+                        Text = GetProperRoleName(role.Name)
                     };
 
                     if (role.Id == id)
@@ -106,6 +111,33 @@ namespace ProjectSS.Web.Controllers
             }
             return result;
         }
+
         #endregion
+
+        public string GetProperRoleName(string roleName)
+        {
+            string name = "";
+            if(roleName == "OM")
+            {
+                name = "Operations Manager";
+            }
+            else if(roleName == "TH")
+            {
+                name = "Technicial Head";
+            }
+            else if(roleName == "BD")
+            {
+                name = "Business Development";
+            }
+            else if(roleName == "AH")
+            {
+                name = "Admin Head";
+            }
+            else if(roleName == "TS")
+            {
+                name = "Technical Sepecialist";
+            }
+            return name;
+        }
     }
 }
