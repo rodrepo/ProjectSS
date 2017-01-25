@@ -28,6 +28,8 @@ namespace ProjectSS.Web.Models.admin
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
         public string CreatedBy { get; set; }
+        [Required]
+        public decimal Rate { get; set; }
         public string ModifiedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }

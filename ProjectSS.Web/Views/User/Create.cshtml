@@ -16,60 +16,71 @@
                 <div class="panel-heading"><h4>Create New User</h4></div>
                 <div class="panel-body">
                     <form role="form">
-                        <div class="form-group">
-                            <label>Email address</label>
-                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @type = "email", @placeholder = "Enter email", @required = "required", })
-                        </div>
-                        <div class="form-group">
-                            <label>First Name</label>
-                            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @type = "text", @placeholder = "Enter Firstname", @required = "required", })
-                        </div>
-                        <div class="form-group">
-                            <label>Middle Name</label>
-                            @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control", @type = "text", @placeholder = "Enter Middlename", @required = "required", })
-                        </div>
-                        <div class="form-group">
-                            <label>Last Name</label>
-                            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @type = "text", @placeholder = "Enter Lastname", @required = "required", })
-                        </div>
-                        <div class="form-group">
-                            <label>Mobile Number</label>
-                            @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", @type = "number", @placeholder = "Enter Mobile" })
-                        </div>
-                        <div class="form-group">
-                            <label>Gender</label>
-                            @Html.EnumDropDownListFor(model => model.Gender, new { @class = "form-control", @type = "text", @id = "gender", @required = "required"})
-                        </div>
-                        <div class="form-group">
-                            <label>Birthday</label>
-                            <div class="input-group date">
-                                @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control datepicker", @required = "required" })
-                                <span class="input-group-addon">
-                                    <span class="fa fa-calendar"></span>
-                                </span>
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label>First Name</label>
+                                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @type = "text", @placeholder = "Enter First Name", @required = "required"})
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Middle Name</label>
+                                @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control", @type = "text", @placeholder = "Enter Middle Name", @required = "required"})
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Last Name</label>
+                                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @type = "text", @placeholder = "Enter Last Name", @required = "required"})
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Role Type</label>
-                            @Html.DropDownListFor(model => model.RoleId, (List<SelectListItem>)ViewBag.Roles, "", new { @class = "form-control", @required = "required", })
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label>Rate</label>
+                                @Html.TextBoxFor(model => model.Rate,"0.00", new { @class = "form-control", @type = "text", @required = "required"})
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Mobile Number</label>
+                                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", @type = "number", @placeholder = "Enter Mobile" })
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Gender</label>
+                                @Html.EnumDropDownListFor(model => model.Gender, "Select Gender", new { @class = "form-control", @type = "text", @required = "required" })
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Status</label>
-                            <select class="form-control" id="IsActive" name="IsActive">
-                                <option value=""></option>
-                                <option @(Model.IsActive == true ? "selected" : " ") value="true">Activate</option>
-                                <option @(Model.IsActive == false ? "selected" : " ") value="false">Deactivate</option>
-                            </select>
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label>Birthday</label>
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control datepicker", @required = "required", @placeholder = "Enter Birthday  " })
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Role Type</label>
+                                @Html.DropDownListFor(model => model.RoleId, (List<SelectListItem>)ViewBag.Roles, "Select Role", new { @class = "form-control", @required = "required", })
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Status</label>
+                                <select class="form-control" id="IsActive" name="IsActive">
+                                    <option value=""></option>
+                                    <option @(Model.IsActive == true ? "selected" : " ") value="true">Activate</option>
+                                    <option @(Model.IsActive == false ? "selected" : " ") value="false">Deactivate</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="pull-right">
-                            <div class="right">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" data-toggle="modal" data-target="#deletemodal" class="btn btn-danger">Delete</button>
-                                <a type="button" class="btn btn-default" href="@Url.Action("Index", "User")">Cancel</a>
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label>Email address</label>
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @type = "email", @placeholder = "Enter email", @required = "required", })
+                            </div>
+                            <div class="form-group col-sm-8">
+                                <div class="pull-right" style="padding-top:38px">
+                                    <button type="submit" class="btn btn-primary btn-xs">Save</button>
+                                    <button type="button" data-toggle="modal" data-target="#deletemodal" class="btn btn-danger btn-xs">Delete</button>
+                                    <a type="button" class="btn btn-default btn-xs" href="@Url.Action("Index", "User")">Cancel</a>
+                                </div>
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
             <!-- END panel-->
