@@ -84,6 +84,10 @@
     <Compile Include="Migrations\201701210527295_AddsNeededTableForCRM.Designer.cs">
       <DependentUpon>201701210527295_AddsNeededTableForCRM.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701250939430_AddRateFieldToUser.cs" />
+    <Compile Include="Migrations\201701250939430_AddRateFieldToUser.Designer.cs">
+      <DependentUpon>201701250939430_AddRateFieldToUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -106,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701210527295_AddsNeededTableForCRM.resx">
       <DependentUpon>201701210527295_AddsNeededTableForCRM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701250939430_AddRateFieldToUser.resx">
+      <DependentUpon>201701250939430_AddRateFieldToUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

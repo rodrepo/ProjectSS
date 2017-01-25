@@ -21,6 +21,7 @@ namespace ProjectSS.Db.Entities
         public string Mobile { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
+        public decimal Rate { get; set; }
 
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
