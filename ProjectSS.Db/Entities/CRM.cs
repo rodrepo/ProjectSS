@@ -25,12 +25,14 @@ namespace ProjectSS.Db.Entities
         public virtual ICollection<CRMEmailHistory> CRMEmailHistorys { get; set; }
         public virtual ICollection<CRMCallHistory> CRMCallHistorys { get; set; }
         public virtual ICollection<CRMRevisionHistory> CRMRevisionHistorys { get; set; }
+        public virtual ICollection<Proposal> Proposals { get; set; }
 
         public CRM()
         {
             CRMEmailHistorys = new HashSet<CRMEmailHistory>();
             CRMCallHistorys = new HashSet<CRMCallHistory>();
             CRMRevisionHistorys = new HashSet<CRMRevisionHistory>();
+            Proposals = new HashSet<Proposal>();
         }
 
     }

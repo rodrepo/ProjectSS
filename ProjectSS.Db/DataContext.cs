@@ -79,6 +79,10 @@ namespace ProjectSS.Db
         public DbSet<CRMEmailHistory> CRMEmailHistorys { get; set; }
         public DbSet<CRMCallHistory> CRMCallHistorys { get; set; }
         public DbSet<CRMRevisionHistory> CRMRevisionHistorys { get; set; }
+        public DbSet<Proposal> Proposals { get; set; }
+        public DbSet<ProposalStaff> ProposalStaffs { get; set; }
+        public DbSet<ProposalContractor> ProposalContractors { get; set; }
+        public DbSet<ProposalExpense> ProposalExpensess { get; set; }
 
         #endregion
 
