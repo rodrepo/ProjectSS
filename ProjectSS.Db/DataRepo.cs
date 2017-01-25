@@ -74,6 +74,7 @@ namespace ProjectSS.Db
                 usr.Birthday = user.Birthday;
                 usr.Mobile = user.Mobile;
                 usr.IsActive = user.IsActive;
+                usr.Rate = user.Rate;
                 var result = await userManager.UpdateAsync(usr);
                 if (result.Succeeded)
                 {

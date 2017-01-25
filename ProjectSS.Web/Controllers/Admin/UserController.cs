@@ -87,7 +87,8 @@ namespace ProjectSS.Web.Controllers.Admin
                         TempData["Error"] = e.ErrorMessage;
                     }
                 }
-                return RedirectToAction("Index");
+                await SetListItemsAsync(model);
+                return View(model);
             }
             catch (Exception e)
             {
@@ -162,7 +163,14 @@ namespace ProjectSS.Web.Controllers.Admin
                         return RedirectToAction("Index");
                     }
                 }
-                TempData["Error"] = "Unable to update user due to some internal issues.";
+                foreach(var value in  ModelState.Values)
+                {
+                    foreach(var error in value.Errors)
+                    {
+                        TempData["Error"] = error.ErrorMessage;
+
+                    }
+                }
                 await SetListItemsAsync(model);
                 return View(model);
             }
@@ -239,6 +247,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 Gender = model.Gender,
                 Birthday = model.Birthday,
                 Mobile = model.Mobile,
+                Rate = model.Rate
             };
             return (user);
         }
