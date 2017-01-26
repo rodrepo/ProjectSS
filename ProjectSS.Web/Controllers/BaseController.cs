@@ -3,6 +3,7 @@ using Microsoft.ApplicationInsights;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using ProjectSS.Common;
 using ProjectSS.Db.Contracts;
 using ProjectSS.Db.Entities;
 using System;
@@ -112,28 +113,154 @@ namespace ProjectSS.Web.Controllers
             return result;
         }
 
+        protected async Task<List<SelectListItem>> GetCRMsAsync(int id = 0)
+        {
+            var result = new List<SelectListItem>();
+            var crms = await _repo.GetCRM();
+            if (crms != null)
+            {
+                foreach (var crm in crms)
+                {
+                    var item = new SelectListItem
+                    {
+                        Value = crm.Id.ToString(),
+                        Text = crm.Reference + " " + crm.CompanyName
+                    };
+
+                    if (crm.Id == id)
+                    {
+                        item.Selected = true;
+                    }
+
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
+
+        protected async Task<List<SelectListItem>> GetBDUsersAsync(string id = null)
+        {
+            var result = new List<SelectListItem>();
+            var users = await _repo.GetUsersAsync();
+            if (users != null)
+            {
+                foreach (var user in users)
+                {
+                    if (user.Roles.Count > 0)
+                    {
+                        foreach (var role in user.Roles)
+                        {
+                            var userRole = _repo.GetRoleById(role.RoleId);
+                            if (userRole.Name == RoleType.BD.ToString())
+                            {
+                                var item = new SelectListItem
+                                {
+                                    Value = user.Id.ToString(),
+                                    Text = user.FirstName + " " + user.MiddleName + " " + user.LastName
+                                };
+
+                                if (user.Id == id)
+                                {
+                                    item.Selected = true;
+                                }
+                                result.Add(item);
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        protected async Task<List<SelectListItem>> GetTSUsersAsync(string id = null)
+        {
+            var result = new List<SelectListItem>();
+            var users = await _repo.GetUsersAsync();
+            if (users != null)
+            {
+                foreach (var user in users)
+                {
+                    if (user.Roles.Count > 0)
+                    {
+                        foreach (var role in user.Roles)
+                        {
+                            var userRole = _repo.GetRoleById(role.RoleId);
+                            if (userRole.Name == RoleType.TS.ToString())
+                            {
+                                var item = new SelectListItem
+                                {
+                                    Value = user.Id.ToString(),
+                                    Text = user.FirstName + " " + user.MiddleName + " " + user.LastName
+                                };
+
+                                if (user.Id == id)
+                                {
+                                    item.Selected = true;
+                                }
+                                result.Add(item);
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        protected async Task<List<SelectListItem>> GetTHUsersAsync(string id = null)
+        {
+            var result = new List<SelectListItem>();
+            var users = await _repo.GetUsersAsync();
+            if (users != null)
+            {
+                foreach (var user in users)
+                {
+                    if (user.Roles.Count > 0)
+                    {
+                        foreach (var role in user.Roles)
+                        {
+                            var userRole = _repo.GetRoleById(role.RoleId);
+                            if (userRole.Name == RoleType.TH.ToString())
+                            {
+                                var item = new SelectListItem
+                                {
+                                    Value = user.Id.ToString(),
+                                    Text = user.FirstName + " " + user.MiddleName + " " + user.LastName
+                                };
+
+                                if (user.Id == id)
+                                {
+                                    item.Selected = true;
+                                }
+                                result.Add(item);
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
         #endregion
 
         public string GetProperRoleName(string roleName)
         {
             string name = "";
-            if(roleName == "OM")
+            if (roleName == "OM")
             {
                 name = "Operations Manager";
             }
-            else if(roleName == "TH")
+            else if (roleName == "TH")
             {
                 name = "Technicial Head";
             }
-            else if(roleName == "BD")
+            else if (roleName == "BD")
             {
                 name = "Business Development";
             }
-            else if(roleName == "AH")
+            else if (roleName == "AH")
             {
                 name = "Admin Head";
             }
-            else if(roleName == "TS")
+            else if (roleName == "TS")
             {
                 name = "Technical Sepecialist";
             }

@@ -249,6 +249,32 @@ namespace ProjectSS.Db
 
         #endregion
 
+        #region Proposal
+        public async Task<List<Proposal>> GetProposalAsync()
+        {
+            return await _db.Proposals.Where(p => !p.IsDeleted).ToListAsync();
+        }
+
+        public async Task<Proposal> AddPorposalAsync(Proposal proposal, string userId)
+        {
+            var crm = await GetCRMById(proposal.CRMId);
+            proposal.CompanyName = crm.CompanyName;
+            proposal.ContactPerson = crm.Name;
+            proposal.ContactPersonPosition = crm.Position;
+            proposal.Industry = crm.Industry;
+            proposal.Location = crm.Region;
+
+            _db.UserId = userId;
+            var result = _db.Proposals.Add(proposal);
+            return result;
+        }
+
+        public async Task<Proposal> GetProposalByIdAsync(int id)
+        {
+            return await _db.Proposals.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
+        }
+        #endregion
+
         #region Private Class
         private class CRMReferenceModel
         {
