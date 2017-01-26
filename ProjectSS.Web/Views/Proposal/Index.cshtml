@@ -63,7 +63,7 @@
 @section BodyArea {
     <div id="create" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
         <div class="modal-dialog modal-sm">
-            @using (Html.BeginForm("Create", "CRM", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("Create", "Proposal", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.Partial("_Create", new ProposalViewModel())

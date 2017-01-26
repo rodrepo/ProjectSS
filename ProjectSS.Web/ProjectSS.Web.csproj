@@ -634,6 +634,7 @@
     <Content Include="Views\CRM\_CallEntry.cshtml" />
     <Content Include="Views\Proposal\Index.cshtml" />
     <Content Include="Views\Proposal\_Create.cshtml" />
+    <Content Include="Views\Proposal\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

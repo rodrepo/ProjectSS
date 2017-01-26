@@ -8,7 +8,7 @@
         <button type="button" data-dismiss="modal" aria-label="Close" class="close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <h4 id="myModalLabelSmall" class="modal-title">Create</h4>
+        <h4 id="myModalLabelSmall" class="modal-title">Select CRM</h4>
     </div>
     <div class="modal-body">
         @Html.DropDownListFor(model => model.CRMId, (List<SelectListItem>)ViewBag.CRMs, "Select CRM", new { @class = "form-control", @required = "required", })
