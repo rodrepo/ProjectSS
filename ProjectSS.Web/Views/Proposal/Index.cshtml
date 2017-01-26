@@ -1,8 +1,11 @@
-﻿@using ProjectSS.Web.Models
+﻿@using ProjectSS.Common
+@using ProjectSS.Web.Models
 @model List<ProposalViewModel>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var canAccessOM = User.IsInRole(RoleType.OM.ToString());
+    var canAccessBD = User.IsInRole(RoleType.BD.ToString());
 }
 
 <div class="row">
@@ -13,14 +16,17 @@
                     <div class="col-sm-6">
                         <h4>List of Proposal</h4>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="pull-right" style="padding-top:10px">
-                            <a class="btn btn-labeled btn-success btn-xs" data-toggle="modal" data-target="#create">
-                                <span class="btn-label"><i class="fa fa-plus"></i></span>
-                                New Proposal
-                            </a>
+                    @if (canAccessOM == true || canAccessBD == true)
+                    {
+                        <div class="col-sm-6">
+                            <div class="pull-right" style="padding-top:10px">
+                                <a class="btn btn-labeled btn-success btn-xs" data-toggle="modal" data-target="#create">
+                                    <span class="btn-label"><i class="fa fa-plus"></i></span>
+                                    New Proposal
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div class="panel-body">
@@ -49,7 +55,7 @@
                                     <td>@u.Location</td>
                                     <td>@u.Status</td>
                                     <td>
-                                        <a data-toggle="tooltip" data-placement="top" title="Manage" href="@Url.Action("Manage", "CRM", new { id = u.Id })" class="btn btn-primary btn-xs"><i class="icon-menu"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Manage" href="@Url.Action("Manage", "Proposal", new { id = u.Id })" class="btn btn-primary btn-xs"><i class="icon-menu"></i></a>
                                     </td>
                                 </tr>
                             }
