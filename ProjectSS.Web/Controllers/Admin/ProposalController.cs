@@ -52,6 +52,7 @@ namespace ProjectSS.Web.Controllers.Admin
         public async Task<ActionResult> Manage(int id)
         {
             var proposal = _mapper.Map<ProposalViewModel>(await _repo.GetProposalByIdAsync(id));
+            await SetListItemsAsync(proposal);
             return View(proposal);
         }
 
