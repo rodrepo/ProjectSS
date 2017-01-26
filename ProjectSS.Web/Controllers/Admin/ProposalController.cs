@@ -60,6 +60,9 @@ namespace ProjectSS.Web.Controllers.Admin
         private async Task SetListItemsAsync(ProposalViewModel model)
         {
             ViewBag.CRMs = ViewBag.CRMs ?? await GetCRMsAsync(model.CRMId);
+            ViewBag.BDs = ViewBag.BDs ?? await GetBDUsersAsync(model.BDId);
+            ViewBag.TSs = ViewBag.TSs ?? await GetTSUsersAsync(model.TSId);
+            ViewBag.THs = ViewBag.THs ?? await GetTHUsersAsync(model.THId);
         }
         #endregion
 
