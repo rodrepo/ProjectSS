@@ -632,6 +632,8 @@
     <Content Include="Views\CRM\ManageWithRevision.cshtml" />
     <Content Include="Views\CRM\ManageWithEmail.cshtml" />
     <Content Include="Views\CRM\_CallEntry.cshtml" />
+    <Content Include="Views\Proposal\Index.cshtml" />
+    <Content Include="Views\Proposal\_Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

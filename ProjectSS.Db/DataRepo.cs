@@ -249,6 +249,13 @@ namespace ProjectSS.Db
 
         #endregion
 
+        #region Proposal
+        public async Task<List<Proposal>> GetProposalAsync()
+        {
+            return await _db.Proposals.Where(p => !p.IsDeleted).ToListAsync();
+        }
+        #endregion
+
         #region Private Class
         private class CRMReferenceModel
         {

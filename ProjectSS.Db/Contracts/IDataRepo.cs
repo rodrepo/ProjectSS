@@ -45,5 +45,10 @@ namespace ProjectSS.Db.Contracts
 
 
         #endregion
+
+        #region Proposal
+        Task<List<Proposal>> GetProposalAsync();
+
+        #endregion
     }
 }

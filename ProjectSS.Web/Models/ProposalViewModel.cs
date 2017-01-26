@@ -25,6 +25,7 @@ namespace ProjectSS.Web.Models
         public string BDId { get; set; }
         public string TSId { get; set; }
         public string THId { get; set; }
+        public string Status { get; set; }
 
         public int PJNumber { get; set; }
         public int PPNumber { get; set; }

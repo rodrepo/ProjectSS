@@ -112,6 +112,31 @@ namespace ProjectSS.Web.Controllers
             return result;
         }
 
+        protected async Task<List<SelectListItem>> GetCRMsAsync(int id = 0)
+        {
+            var result = new List<SelectListItem>();
+            var crms = await _repo.GetCRM();
+            if (crms != null)
+            {
+                foreach (var crm in crms)
+                {
+                    var item = new SelectListItem
+                    {
+                        Value = crm.Id.ToString(),
+                        Text = crm.Reference +" "+ crm.CompanyName
+                    };
+
+                    if (crm.Id == id)
+                    {
+                        item.Selected = true;
+                    }
+
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
+
         #endregion
 
         public string GetProperRoleName(string roleName)
