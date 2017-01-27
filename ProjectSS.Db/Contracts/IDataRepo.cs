@@ -20,6 +20,7 @@ namespace ProjectSS.Db.Contracts
         Task<User> GetUserByIdAsync(string id);
         Task<User> UpdateUserAsync(User user, UserManager<User> userManager, string role, string userId);
         void DeleteUser(User user, string userId);
+        Task<string> GetUserNameByIdAsync(string id);
         #endregion
 
         #region Roles
@@ -50,6 +51,21 @@ namespace ProjectSS.Db.Contracts
         Task<List<Proposal>> GetProposalAsync();
         Task<Proposal> AddPorposalAsync(Proposal proposal, string UserId);
         Task<Proposal> GetProposalByIdAsync(int id);
+        #endregion
+
+        #region Proposal Staff
+        Task<List<ProposalStaff>> GetProposalStaffsByProposalIdAsync(int proposalId);
+        void AddProposalStaff(ProposalStaff proposalStaff, string userId);
+        #endregion
+
+        #region Proposal Operationg Expenses
+        Task<List<ProposalExpense>> GetProposalExpensesByProposalIdAsync(int proposalId);
+        void AddProposalExpenses(ProposalExpense proposalExpense, string userId);
+        #endregion
+
+        #region Proposal Contractors/OutSource
+        Task<List<ProposalContractor>> GetProposalContractorsByProposalIdAsync(int proposalId);
+        void AddProposalContractor(ProposalContractor proposalContractor, string userId);
         #endregion
     }
 }

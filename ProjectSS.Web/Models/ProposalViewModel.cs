@@ -34,6 +34,8 @@ namespace ProjectSS.Web.Models
         public string ProjectNumber { get; set; }
         public string ProposalNumber { get; set; }
         public string RevisionNumber { get; set; }
+        public decimal TotalStaffBilledToClient { get; set; }
+        public decimal TotalStaffDirectCost { get; set; }
 
         public int CRMId { get; set; }
         public int Id { get; set; }
@@ -41,7 +43,6 @@ namespace ProjectSS.Web.Models
         public List<ProposalContractorViewModel> ProposalContractors { get; set; }
         public List<ProposalExpenseViewModel> ProposalExpenses { get; set; }
         public List<ProposalStaffViewModel> ProposalStaffs { get; set; }
-
     }
 
 
@@ -70,10 +71,14 @@ namespace ProjectSS.Web.Models
 
     public class ProposalStaffViewModel
     {
+        public string Name { get; set; }
         public int ManHours { get; set; }
         public int ManMonths { get; set; }
         public decimal Factor { get; set; }
-
+        public int TotalManHours { get; set; }
+        public decimal BillingRate { get; set; }
+        public decimal DirectCost { get; set; }
+        public decimal BilledToClient { get; set; }
         public string UserId { get; set; }
         public int ProposalId { get; set; }
         public int Id { get; set; }

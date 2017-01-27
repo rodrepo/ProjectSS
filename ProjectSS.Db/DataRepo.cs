@@ -16,6 +16,7 @@ namespace ProjectSS.Db
     {
         #region Default
         private DataContext _db;
+        private ProposalStaff proposalStaff;
 
         public DataRepo(DataContext db)
         {
@@ -59,6 +60,11 @@ namespace ProjectSS.Db
         public async Task<User> GetUserByIdAsync(string id)
         {
             return await _db.Users.Where(u => u.Id == id && !u.IsDeleted).FirstOrDefaultAsync();
+        }
+
+        public async Task<string> GetUserNameByIdAsync(string id)
+        {
+            return await _db.Users.Where(u => u.Id == id && !u.IsDeleted).Select(u => u.FirstName + " " + u.MiddleName + " " + u.LastName).FirstOrDefaultAsync();
         }
 
         public async Task<User> UpdateUserAsync(User user, UserManager<User> userManager, string role, string userId)
@@ -273,6 +279,48 @@ namespace ProjectSS.Db
         {
             return await _db.Proposals.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
         }
+        #endregion
+
+        #region Proposal Staff
+        public async Task<List<ProposalStaff>> GetProposalStaffsByProposalIdAsync(int proposalId)
+        {
+            return await _db.ProposalStaffs.Where(p => !p.IsDeleted && p.ProposalId == proposalId).ToListAsync();
+        }
+
+        public void AddProposalStaff(ProposalStaff proposalStaff, string userId)
+        {
+            _db.UserId = userId;
+            _db.ProposalStaffs.Add(proposalStaff);
+        }
+
+        #endregion
+
+        #region Proposal Operationg Expenses
+        public async Task<List<ProposalExpense>> GetProposalExpensesByProposalIdAsync(int proposalId)
+        {
+            return await _db.ProposalExpensess.Where(p => !p.IsDeleted && p.ProposalId == proposalId).ToListAsync();
+        }
+
+        public void AddProposalExpenses(ProposalExpense proposalExpense, string userId)
+        {
+            _db.UserId = userId;
+            _db.ProposalExpensess.Add(proposalExpense);
+        }
+
+        #endregion
+
+        #region Proposal Contractors/OutSource
+        public async Task<List<ProposalContractor>> GetProposalContractorsByProposalIdAsync(int proposalId)
+        {
+            return await _db.ProposalContractors.Where(p => !p.IsDeleted && p.ProposalId == proposalId).ToListAsync();
+        }
+
+        public void AddProposalContractor(ProposalContractor proposalContractor, string userId)
+        {
+            _db.UserId = userId;
+            _db.ProposalContractors.Add(proposalContractor);
+        }
+
         #endregion
 
         #region Private Class

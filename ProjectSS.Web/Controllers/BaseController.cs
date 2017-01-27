@@ -239,6 +239,25 @@ namespace ProjectSS.Web.Controllers
             }
             return result;
         }
+
+        protected async Task<List<SelectListItem>> GetUsersAsync()
+        {
+            var result = new List<SelectListItem>();
+            var users = await _repo.GetUsersAsync();
+            if (users != null)
+            {
+                foreach (var user in users)
+                {
+                    var item = new SelectListItem
+                    {
+                        Value = user.Id.ToString(),
+                        Text = user.FirstName + " " + user.MiddleName + " " + user.LastName
+                    };
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
         #endregion
 
         public string GetProperRoleName(string roleName)

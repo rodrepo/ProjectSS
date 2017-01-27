@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace ProjectSS.Web.Controllers.Admin
 {
@@ -51,11 +52,74 @@ namespace ProjectSS.Web.Controllers.Admin
         [HttpGet]
         public async Task<ActionResult> Manage(int id)
         {
-            var proposal = _mapper.Map<ProposalViewModel>(await _repo.GetProposalByIdAsync(id));
-            await SetListItemsAsync(proposal);
-            return View(proposal);
+            var mergeValues = await MergeToProposal(_mapper.Map<ProposalViewModel>(await _repo.GetProposalByIdAsync(id)));
+            await DropdownListForUsers();
+            await SetListItemsAsync(mergeValues);
+            return View(mergeValues);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> CreateStaff(ProposalStaffViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _repo.AddProposalStaff(_mapper.Map<ProposalStaff>(model), CurrentUser.Id);
+                if (await _repo.SaveAllAsync())
+                {
+
+                    TempData["Success"] = string.Format("Staff has been successfully Created");
+                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                }
+                TempData["Error"] = "Unable to create Staff due to some internal issues.";
+            }
+            foreach(var value in ModelState.Values)
+            {
+                foreach(var error in value.Errors)
+                {
+                    TempData["Error"] = error.ErrorMessage;
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        #region Private Helpers
+        private async Task<ProposalViewModel> MergeToProposal(ProposalViewModel model)
+        {
+            if (model != null)
+            {
+                //Staff
+                var staff = await MapNeedFieldForProposalStaff(_mapper.Map<List<ProposalStaffViewModel>>(await _repo.GetProposalStaffsByProposalIdAsync(model.Id)));
+                if (staff?.Any() ?? false)
+                {
+                    model.ProposalStaffs = staff;
+                    model.TotalStaffBilledToClient = staff.Select(m => m.BilledToClient).Sum();
+                    model.TotalStaffDirectCost = staff.Select(m => m.DirectCost).Sum();
+                }
+            }
+            return model;
+        }
+
+        private async Task<List<ProposalStaffViewModel>> MapNeedFieldForProposalStaff(List<ProposalStaffViewModel> staffs)
+        {
+            if (staffs?.Any() ?? false)
+            {
+                foreach (var staff in staffs)
+                {
+                    if (staff != null && !staff.UserId.IsEmpty())
+                    {
+                        var user = await _repo.GetUserByIdAsync(staff.UserId);
+                        staff.Name = user.FirstName + " " + user.MiddleName + " " + user.LastName;
+                        staff.BillingRate = user.Rate;
+                        staff.TotalManHours = staff.ManHours * staff.ManMonths;
+                        staff.DirectCost = user.Rate * staff.TotalManHours;
+                        staff.BilledToClient =  staff.DirectCost * staff.Factor;
+                    }
+                }
+            }
+            return staffs;
+        }
+
+        #endregion
 
         #region SetListItems
         private async Task SetListItemsAsync(ProposalViewModel model)
@@ -64,6 +128,11 @@ namespace ProjectSS.Web.Controllers.Admin
             ViewBag.BDs = ViewBag.BDs ?? await GetBDUsersAsync(model.BDId);
             ViewBag.TSs = ViewBag.TSs ?? await GetTSUsersAsync(model.TSId);
             ViewBag.THs = ViewBag.THs ?? await GetTHUsersAsync(model.THId);
+        }
+
+        private async Task DropdownListForUsers()
+        {
+            ViewBag.Users = ViewBag.Users ?? await GetUsersAsync();
         }
         #endregion
 
