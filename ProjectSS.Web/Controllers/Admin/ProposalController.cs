@@ -49,15 +49,6 @@ namespace ProjectSS.Web.Controllers.Admin
 
         }
 
-        [HttpGet]
-        public async Task<ActionResult> Manage(int id)
-        {
-            var mergeValues = await MergeToProposal(_mapper.Map<ProposalViewModel>(await _repo.GetProposalByIdAsync(id)));
-            await DropdownListForUsers();
-            await SetListItemsAsync(mergeValues);
-            return View(mergeValues);
-        }
-
         [HttpPost]
         public async Task<ActionResult> CreateStaff(ProposalStaffViewModel model)
         {
@@ -82,18 +73,61 @@ namespace ProjectSS.Web.Controllers.Admin
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteStaff(int id)
+        {
+            try
+            {
+                await _repo.DeleteProposalStaff(id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = $"Successfully deleted staff";
+                }
+                else
+                {
+                    TempData["Error"] = "Unable to delete staff due to some internal issues.";
+                }
+                return RedirectToAction("Manage", new { @id = id });
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Manage(int id)
+        {
+            var proposal = _mapper.Map<ProposalViewModel>(await _repo.GetProposalByIdAsync(id));
+            if (proposal != null)
+            {
+                var mergeValues = await MergeToProposal(proposal);
+                await DropdownListForUsers();
+                await SetListItemsAsync(mergeValues);
+                return View(mergeValues);
+            }
+            return View(proposal);
+        }
+
         #region Private Helpers
         private async Task<ProposalViewModel> MergeToProposal(ProposalViewModel model)
         {
             if (model != null)
             {
                 //Staff
-                var staff = await MapNeedFieldForProposalStaff(_mapper.Map<List<ProposalStaffViewModel>>(await _repo.GetProposalStaffsByProposalIdAsync(model.Id)));
-                if (staff?.Any() ?? false)
+                var result = _mapper.Map<List<ProposalStaffViewModel>>(await _repo.GetProposalStaffsByProposalIdAsync(model.Id));
+                if (result?.Any() ?? false)
                 {
-                    model.ProposalStaffs = staff;
-                    model.TotalStaffBilledToClient = staff.Select(m => m.BilledToClient).Sum();
-                    model.TotalStaffDirectCost = staff.Select(m => m.DirectCost).Sum();
+                    var staff = await MapNeedFieldForProposalStaff(result);
+                    if (staff?.Any() ?? false)
+                    {
+                        model.ProposalModelStaffs = staff;
+                        model.TotalStaffBilledToClient = staff.Select(m => m.BilledToClient).Sum();
+                        model.TotalStaffDirectCost = staff.Select(m => m.DirectCost).Sum();
+                    }
                 }
             }
             return model;
@@ -105,14 +139,26 @@ namespace ProjectSS.Web.Controllers.Admin
             {
                 foreach (var staff in staffs)
                 {
-                    if (staff != null && !staff.UserId.IsEmpty())
+                    var user = await _repo.GetUserByIdAsync(staff.UserId);
+                    if (user != null)
                     {
-                        var user = await _repo.GetUserByIdAsync(staff.UserId);
-                        staff.Name = user.FirstName + " " + user.MiddleName + " " + user.LastName;
-                        staff.BillingRate = user.Rate;
-                        staff.TotalManHours = staff.ManHours * staff.ManMonths;
-                        staff.DirectCost = user.Rate * staff.TotalManHours;
-                        staff.BilledToClient =  staff.DirectCost * staff.Factor;
+                        if (staff != null && !staff.UserId.IsEmpty())
+                        {
+
+                            staff.Name = user.FirstName + " " + user.MiddleName + " " + user.LastName;
+                            staff.BillingRate = user.Rate;
+                            staff.TotalManHours = staff.ManHours * staff.ManMonths;
+                            staff.DirectCost = user.Rate * staff.TotalManHours;
+                            staff.BilledToClient = staff.DirectCost * staff.Factor;
+                        }
+                    }
+                    else
+                    {
+                        if(staff.Id > 0)
+                        {
+                            await _repo.DeleteProposalStaff(staff.Id);
+                            await _repo.SaveAllAsync();
+                        }
                     }
                 }
             }

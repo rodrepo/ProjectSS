@@ -56,6 +56,7 @@ namespace ProjectSS.Db.Contracts
         #region Proposal Staff
         Task<List<ProposalStaff>> GetProposalStaffsByProposalIdAsync(int proposalId);
         void AddProposalStaff(ProposalStaff proposalStaff, string userId);
+        Task DeleteProposalStaff(int id);
         #endregion
 
         #region Proposal Operationg Expenses

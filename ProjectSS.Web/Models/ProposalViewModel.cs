@@ -9,9 +9,9 @@ namespace ProjectSS.Web.Models
     {
         public ProposalViewModel()
         {
-            ProposalContractors = new List<ProposalContractorViewModel>();
-            ProposalExpenses = new List<ProposalExpenseViewModel>();
-            ProposalStaffs = new List<ProposalStaffViewModel>();
+            ProposalModelContractors = new List<ProposalContractorViewModel>();
+            ProposalModelExpenses = new List<ProposalExpenseViewModel>();
+            ProposalModelStaffs = new List<ProposalStaffViewModel>();
         }
         public string ContactPerson { get; set; }
         public string CompanyName { get; set; }
@@ -40,9 +40,9 @@ namespace ProjectSS.Web.Models
         public int CRMId { get; set; }
         public int Id { get; set; }
 
-        public List<ProposalContractorViewModel> ProposalContractors { get; set; }
-        public List<ProposalExpenseViewModel> ProposalExpenses { get; set; }
-        public List<ProposalStaffViewModel> ProposalStaffs { get; set; }
+        public List<ProposalContractorViewModel> ProposalModelContractors { get; set; }
+        public List<ProposalExpenseViewModel> ProposalModelExpenses { get; set; }
+        public List<ProposalStaffViewModel> ProposalModelStaffs { get; set; }
     }
 
 
@@ -82,5 +82,6 @@ namespace ProjectSS.Web.Models
         public string UserId { get; set; }
         public int ProposalId { get; set; }
         public int Id { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

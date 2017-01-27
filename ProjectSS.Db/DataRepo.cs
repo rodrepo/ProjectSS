@@ -287,10 +287,23 @@ namespace ProjectSS.Db
             return await _db.ProposalStaffs.Where(p => !p.IsDeleted && p.ProposalId == proposalId).ToListAsync();
         }
 
+        public async Task<ProposalStaff> GetProposalStaffByIdAsync(int id)
+        {
+            return await _db.ProposalStaffs.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
+        }
+
+
         public void AddProposalStaff(ProposalStaff proposalStaff, string userId)
         {
             _db.UserId = userId;
             _db.ProposalStaffs.Add(proposalStaff);
+        }
+
+        public async Task DeleteProposalStaff(int id)
+        {
+            var staff = await GetProposalStaffByIdAsync(id);
+            staff.IsDeleted = true;
+            _db.Entry(staff).State = EntityState.Modified;
         }
 
         #endregion
