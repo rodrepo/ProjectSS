@@ -121,7 +121,7 @@
             <tbody>
                 @if (Model != null)
                 {
-                    foreach (var u in Model.ProposalModelStaffs)
+                    foreach (var u in Model.ProposalStaffs)
                     {
                         <tr>
                             <td>@u.Name</td>
@@ -198,7 +198,7 @@
                 </div>
                 <div class="modal-body">
                     @Html.AntiForgeryToken()
-                    @Html.Partial("_Staff", new ProposalStaffViewModel { ProposalId = Model.Id })
+                    @Html.Partial("_Staff", new ProposalStaffModel { ProposalId = Model.Id })
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success btn-xs">Save</button>
@@ -208,7 +208,7 @@
         }
     </div>
 </div>
- @foreach (var staff in Model.ProposalModelStaffs)
+ @foreach (var staff in Model.ProposalStaffs)
  {
 <div id="deleteStaff-@staff.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
     <div class="modal-dialog modal-sm">

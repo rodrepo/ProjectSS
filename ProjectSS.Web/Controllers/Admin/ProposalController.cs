@@ -50,7 +50,7 @@ namespace ProjectSS.Web.Controllers.Admin
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateStaff(ProposalStaffViewModel model)
+        public async Task<ActionResult> CreateStaff(ProposalStaffModel model)
         {
             if (ModelState.IsValid)
             {
@@ -117,23 +117,24 @@ namespace ProjectSS.Web.Controllers.Admin
         {
             if (model != null)
             {
-                //Staff
-                var result = _mapper.Map<List<ProposalStaffViewModel>>(await _repo.GetProposalStaffsByProposalIdAsync(model.Id));
+                #region Staff
+                var result = model.ProposalStaffs.Where(s => !s.IsDeleted).ToList();
                 if (result?.Any() ?? false)
                 {
                     var staff = await MapNeedFieldForProposalStaff(result);
                     if (staff?.Any() ?? false)
                     {
-                        model.ProposalModelStaffs = staff;
                         model.TotalStaffBilledToClient = staff.Select(m => m.BilledToClient).Sum();
                         model.TotalStaffDirectCost = staff.Select(m => m.DirectCost).Sum();
                     }
                 }
+                model.ProposalStaffs = result;
+                #endregion
             }
             return model;
         }
 
-        private async Task<List<ProposalStaffViewModel>> MapNeedFieldForProposalStaff(List<ProposalStaffViewModel> staffs)
+        private async Task<List<ProposalStaffModel>> MapNeedFieldForProposalStaff(List<ProposalStaffModel> staffs)
         {
             if (staffs?.Any() ?? false)
             {
