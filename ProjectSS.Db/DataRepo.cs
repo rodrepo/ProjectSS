@@ -16,7 +16,6 @@ namespace ProjectSS.Db
     {
         #region Default
         private DataContext _db;
-        private ProposalStaff proposalStaff;
 
         public DataRepo(DataContext db)
         {
@@ -315,6 +314,13 @@ namespace ProjectSS.Db
                 keys.Number = 1;
             }
             return keys;
+        }
+
+        public async Task DeleteProposal(int id)
+        {
+            var staff = await GetProposalByIdAsync(id);
+            staff.IsDeleted = true;
+            _db.Entry(staff).State = EntityState.Modified;
         }
 
         #endregion

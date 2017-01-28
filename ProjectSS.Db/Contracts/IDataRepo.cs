@@ -54,6 +54,7 @@ namespace ProjectSS.Db.Contracts
         Task<Proposal> AddPorposalAsync(Proposal proposal, string UserId);
         Task<Proposal> GetProposalByIdAsync(int id);
         Task UpdateProposal(Proposal proposal, string userId);
+        Task DeleteProposal(int id);
         #endregion
 
         #region Proposal Staff
@@ -70,6 +71,7 @@ namespace ProjectSS.Db.Contracts
         #region Proposal Contractors/OutSource
         Task<List<ProposalContractor>> GetProposalContractorsByProposalIdAsync(int proposalId);
         void AddProposalContractor(ProposalContractor proposalContractor, string userId);
+    
         #endregion
     }
 }
