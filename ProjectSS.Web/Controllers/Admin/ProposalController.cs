@@ -39,7 +39,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 var proposal = await _repo.AddPorposalAsync(_mapper.Map<Proposal>(model), CurrentUser.Id);
                 if (await _repo.SaveAllAsync())
                 {
-                    
+
                     TempData["Success"] = string.Format("Proposal has been successfully Created");
                     return RedirectToAction("Manage", new { @id = proposal.Id });
                 }
@@ -63,9 +63,9 @@ namespace ProjectSS.Web.Controllers.Admin
                 }
                 TempData["Error"] = "Unable to create Staff due to some internal issues.";
             }
-            foreach(var value in ModelState.Values)
+            foreach (var value in ModelState.Values)
             {
-                foreach(var error in value.Errors)
+                foreach (var error in value.Errors)
                 {
                     TempData["Error"] = error.ErrorMessage;
                 }
@@ -101,9 +101,11 @@ namespace ProjectSS.Web.Controllers.Admin
         [HttpGet]
         public async Task<ActionResult> Manage(int id)
         {
-            var proposal = _mapper.Map<ProposalViewModel>(await _repo.GetProposalByIdAsync(id));
+            var getValues = await _repo.GetProposalByIdAsync(id);
+            var proposal = _mapper.Map<ProposalViewModel>(getValues);
             if (proposal != null)
             {
+                proposal.Staffs = _mapper.Map<List<ProposalStaffModel>>(getValues.ProposalStaffs);
                 var mergeValues = await MergeToProposal(proposal);
                 await DropdownListForUsers();
                 await SetListItemsAsync(mergeValues);
@@ -112,13 +114,50 @@ namespace ProjectSS.Web.Controllers.Admin
             return View(proposal);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Manage(ProposalViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await _repo.UpdateProposal(_mapper.Map<Proposal>(model), CurrentUser.Id);
+                    if (await _repo.SaveAllAsync())
+                    {
+                        TempData["Success"] = string.Format("CRM has been successfully Updated");
+                        return RedirectToAction("Manage", new { id = model.Id });
+                    }
+                }
+                foreach(var value in ModelState.Values)
+                {
+                    foreach(var error in value.Errors)
+                    {
+                        TempData["Error"] = error.ErrorMessage;
+                        return RedirectToAction("Manage", new { id = model.Id });
+                    }
+                }
+                return RedirectToAction("Manage", new { id = model.Id });
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
+
         #region Private Helpers
         private async Task<ProposalViewModel> MergeToProposal(ProposalViewModel model)
         {
             if (model != null)
             {
+                if(model.Cost > 0)
+                {
+                    model.MangementFeeBilledToClient = decimal.Parse("0.4") * model.Cost;
+                }
+
                 #region Staff
-                var result = model.ProposalStaffs.Where(s => !s.IsDeleted).ToList();
+                var result = model.Staffs.Where(s => !s.IsDeleted).ToList();
                 if (result?.Any() ?? false)
                 {
                     var staff = await MapNeedFieldForProposalStaff(result);
@@ -128,7 +167,7 @@ namespace ProjectSS.Web.Controllers.Admin
                         model.TotalStaffDirectCost = staff.Select(m => m.DirectCost).Sum();
                     }
                 }
-                model.ProposalStaffs = result;
+                model.Staffs = result;
                 #endregion
             }
             return model;
@@ -155,7 +194,7 @@ namespace ProjectSS.Web.Controllers.Admin
                     }
                     else
                     {
-                        if(staff.Id > 0)
+                        if (staff.Id > 0)
                         {
                             await _repo.DeleteProposalStaff(staff.Id);
                             await _repo.SaveAllAsync();

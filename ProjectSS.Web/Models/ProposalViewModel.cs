@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,9 +10,9 @@ namespace ProjectSS.Web.Models
     {
         public ProposalViewModel()
         {
-            ProposalContractors = new List<ProposalContractorModel>();
-            ProposalExpenses = new List<ProposalExpenseModel>();
-            ProposalStaffs = new List<ProposalStaffModel>();
+           Contractors = new List<ProposalContractorModel>();
+           Expenses = new List<ProposalExpenseModel>();
+           Staffs = new List<ProposalStaffModel>();
         }
         public string ContactPerson { get; set; }
         public string CompanyName { get; set; }
@@ -22,6 +23,8 @@ namespace ProjectSS.Web.Models
         public string Location { get; set; }
         public decimal Amount { get; set; }
         public decimal Cost { get; set; }
+
+        public decimal MangementFeeBilledToClient { get; set; }
         public string BDId { get; set; }
         public string TSId { get; set; }
         public string THId { get; set; }
@@ -40,9 +43,9 @@ namespace ProjectSS.Web.Models
         public int CRMId { get; set; }
         public int Id { get; set; }
 
-        public List<ProposalContractorModel> ProposalContractors { get; set; }
-        public List<ProposalExpenseModel> ProposalExpenses { get; set; }
-        public List<ProposalStaffModel> ProposalStaffs { get; set; }
+        public List<ProposalContractorModel> Contractors { get; set; }
+        public List<ProposalExpenseModel> Expenses { get; set; }
+        public List<ProposalStaffModel> Staffs { get; set; }
     }
 
 

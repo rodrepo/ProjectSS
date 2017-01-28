@@ -272,30 +272,29 @@ namespace ProjectSS.Db
         public async Task UpdateProposal(Proposal proposal, string userId)
         {
             _db.UserId = userId;
-            var result = await GenerateProposalRevisionNumber(proposal.Id);
-            proposal.RevisionNumber = result.Reference;
-            proposal.RVNumber = result.Number;
-            _db.Entry(proposal).State = EntityState.Modified;
+            var result = await MappPropsal(proposal);
+            _db.Entry(result).State = EntityState.Modified;
         }
 
-        private async Task<ReferenceModel> GenerateProposalRevisionNumber(int id)
+        private async Task<Proposal> MappPropsal(Proposal proposal)
         {
-            var keys = new ReferenceModel();
-
-            var latestProposal = await GetProposalByIdAsync(id);
+            var latestProposal = await GetProposalByIdAsync(proposal.Id);
             if (latestProposal != null && latestProposal.RVNumber > 0)
             {
                 int multi = 1;
                 multi += latestProposal.RVNumber;
-                keys.Reference = "REV-" + multi.ToString();
-                keys.Number = multi;
+                latestProposal.RevisionNumber = "REV-" + multi.ToString();
+                latestProposal.RVNumber = multi;
             }
             else
             {
-                keys.Reference = "REV-1";
-                keys.Number = 1;
+                latestProposal.RevisionNumber = "REV-1";
+                latestProposal.RVNumber = 1;
             }
-            return keys;
+            latestProposal.Title = proposal.Title;
+            latestProposal.Cost = proposal.Cost;
+            latestProposal.Description = proposal.Description;
+            return latestProposal;
         }
 
         private async Task<ReferenceModel> GenerateProposalNumber()
