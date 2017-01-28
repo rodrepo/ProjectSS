@@ -11,9 +11,11 @@ namespace ProjectSS.Db.Contracts
 {
     public interface IDataRepo : IDisposable
     {
+        #region Default
         bool SaveAll();
         Task<bool> SaveAllAsync();
         User GetUser(string userId);
+        #endregion
 
         #region Users
         Task<List<User>> GetUsersAsync();
@@ -51,6 +53,7 @@ namespace ProjectSS.Db.Contracts
         Task<List<Proposal>> GetProposalAsync();
         Task<Proposal> AddPorposalAsync(Proposal proposal, string UserId);
         Task<Proposal> GetProposalByIdAsync(int id);
+        Task UpdateProposal(Proposal proposal, string userId);
         #endregion
 
         #region Proposal Staff

@@ -170,14 +170,14 @@ namespace ProjectSS.Db
             _db.UserId = userId;
             var result = GenerateCRMReference();
             crm.Reference = result.Reference;
-            crm.Number = result.Number;
+            crm.Number = result.Number.ToString();
             _db.CRMs.Add(crm);
             return crm;
         }
 
-        private CRMReferenceModel GenerateCRMReference()
+        private ReferenceModel GenerateCRMReference()
         {
-            var cRMReference = new CRMReferenceModel();
+            var cRMReference = new ReferenceModel();
 
             var latestReference = _db.CRMs.Where(m => !m.IsDeleted).OrderByDescending(d => d.CreatedDate).FirstOrDefault();
             if (latestReference != null && latestReference.Number != null)
@@ -185,32 +185,17 @@ namespace ProjectSS.Db
                 int multi = 1;
                 multi += int.Parse(latestReference.Number);
                 cRMReference.Reference = "SCII-" + multi.ToString();
-                cRMReference.Number = multi.ToString();
+                cRMReference.Number = multi;
             }
             else
             {
                 cRMReference.Reference = "SCII-1";
-                cRMReference.Number = "1";
+                cRMReference.Number = 1;
 
             }
             return cRMReference;
         }
 
-        //Used to follow SCII number
-        private string GenerateCRMNumbering()
-        {
-            string number = "";
-            var latestReference = _db.CRMs.Where(m => !m.IsDeleted).OrderByDescending(d => d.CreatedDate).FirstOrDefault();
-            if (latestReference != null && latestReference.Id > 0 && latestReference != null)
-            {
-                number = latestReference.Id.ToString();
-            }
-            else
-            {
-                number = "1";
-            }
-            return number;
-        }
         public void DeleteCRM(CRM crm, string userId)
         {
             crm.IsDeleted = true;
@@ -270,6 +255,10 @@ namespace ProjectSS.Db
             proposal.Industry = crm.Industry;
             proposal.Location = crm.Region;
 
+            var key = await GenerateProposalNumber();
+            proposal.ProposalNumber = key.Reference;
+            proposal.PPNumber = key.Number;
+
             _db.UserId = userId;
             var result = _db.Proposals.Add(proposal);
             return result;
@@ -279,6 +268,56 @@ namespace ProjectSS.Db
         {
             return await _db.Proposals.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
         }
+
+        public async Task UpdateProposal(Proposal proposal, string userId)
+        {
+            _db.UserId = userId;
+            var result = await GenerateProposalRevisionNumber(proposal.Id);
+            proposal.RevisionNumber = result.Reference;
+            proposal.RVNumber = result.Number;
+            _db.Entry(proposal).State = EntityState.Modified;
+        }
+
+        private async Task<ReferenceModel> GenerateProposalRevisionNumber(int id)
+        {
+            var keys = new ReferenceModel();
+
+            var latestProposal = await GetProposalByIdAsync(id);
+            if (latestProposal != null && latestProposal.RVNumber > 0)
+            {
+                int multi = 1;
+                multi += latestProposal.RVNumber;
+                keys.Reference = "REV-" + multi.ToString();
+                keys.Number = multi;
+            }
+            else
+            {
+                keys.Reference = "REV-1";
+                keys.Number = 1;
+            }
+            return keys;
+        }
+
+        private async Task<ReferenceModel> GenerateProposalNumber()
+        {
+            var keys = new ReferenceModel();
+
+            var latestProposal = await _db.Proposals.Where(m => !m.IsDeleted).OrderByDescending(d => d.CreatedDate).FirstOrDefaultAsync();
+            if (latestProposal != null && latestProposal.PPNumber > 0)
+            {
+                int multi = 1;
+                multi += latestProposal.PPNumber;
+                keys.Reference = "PRP-" + multi.ToString();
+                keys.Number = multi;
+            }
+            else
+            {
+                keys.Reference = "PRP-1";
+                keys.Number = 1;
+            }
+            return keys;
+        }
+
         #endregion
 
         #region Proposal Staff
@@ -337,10 +376,10 @@ namespace ProjectSS.Db
         #endregion
 
         #region Private Class
-        private class CRMReferenceModel
+        private class ReferenceModel
         {
             public string Reference { get; set; }
-            public string Number { get; set; }
+            public int Number { get; set; }
         }
         #endregion
     }
