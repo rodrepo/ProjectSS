@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,9 +10,9 @@ namespace ProjectSS.Web.Models
     {
         public ProposalViewModel()
         {
-            ProposalContractors = new List<ProposalContractorViewModel>();
-            ProposalExpenses = new List<ProposalExpenseViewModel>();
-            ProposalStaffs = new List<ProposalStaffViewModel>();
+           Contractors = new List<ProposalContractorModel>();
+           Expenses = new List<ProposalExpenseModel>();
+           Staffs = new List<ProposalStaffModel>();
         }
         public string ContactPerson { get; set; }
         public string CompanyName { get; set; }
@@ -22,6 +23,8 @@ namespace ProjectSS.Web.Models
         public string Location { get; set; }
         public decimal Amount { get; set; }
         public decimal Cost { get; set; }
+
+        public decimal MangementFeeBilledToClient { get; set; }
         public string BDId { get; set; }
         public string TSId { get; set; }
         public string THId { get; set; }
@@ -34,18 +37,19 @@ namespace ProjectSS.Web.Models
         public string ProjectNumber { get; set; }
         public string ProposalNumber { get; set; }
         public string RevisionNumber { get; set; }
+        public decimal TotalStaffBilledToClient { get; set; }
+        public decimal TotalStaffDirectCost { get; set; }
 
         public int CRMId { get; set; }
         public int Id { get; set; }
 
-        public List<ProposalContractorViewModel> ProposalContractors { get; set; }
-        public List<ProposalExpenseViewModel> ProposalExpenses { get; set; }
-        public List<ProposalStaffViewModel> ProposalStaffs { get; set; }
-
+        public List<ProposalContractorModel> Contractors { get; set; }
+        public List<ProposalExpenseModel> Expenses { get; set; }
+        public List<ProposalStaffModel> Staffs { get; set; }
     }
 
 
-    public class ProposalContractorViewModel
+    public class ProposalContractorModel
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -57,7 +61,7 @@ namespace ProjectSS.Web.Models
         public int Id { get; set; }
     }
 
-    public class ProposalExpenseViewModel
+    public class ProposalExpenseModel
     {
         public string Item { get; set; }
         public string Description { get; set; }
@@ -68,14 +72,19 @@ namespace ProjectSS.Web.Models
         public int Id { get; set; }
     }
 
-    public class ProposalStaffViewModel
+    public class ProposalStaffModel
     {
+        public string Name { get; set; }
         public int ManHours { get; set; }
         public int ManMonths { get; set; }
         public decimal Factor { get; set; }
-
+        public int TotalManHours { get; set; }
+        public decimal BillingRate { get; set; }
+        public decimal DirectCost { get; set; }
+        public decimal BilledToClient { get; set; }
         public string UserId { get; set; }
         public int ProposalId { get; set; }
         public int Id { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

@@ -11,15 +11,18 @@ namespace ProjectSS.Db.Contracts
 {
     public interface IDataRepo : IDisposable
     {
+        #region Default
         bool SaveAll();
         Task<bool> SaveAllAsync();
         User GetUser(string userId);
+        #endregion
 
         #region Users
         Task<List<User>> GetUsersAsync();
         Task<User> GetUserByIdAsync(string id);
         Task<User> UpdateUserAsync(User user, UserManager<User> userManager, string role, string userId);
         void DeleteUser(User user, string userId);
+        Task<string> GetUserNameByIdAsync(string id);
         #endregion
 
         #region Roles
@@ -50,6 +53,25 @@ namespace ProjectSS.Db.Contracts
         Task<List<Proposal>> GetProposalAsync();
         Task<Proposal> AddPorposalAsync(Proposal proposal, string UserId);
         Task<Proposal> GetProposalByIdAsync(int id);
+        Task UpdateProposal(Proposal proposal, string userId);
+        Task DeleteProposal(int id);
+        #endregion
+
+        #region Proposal Staff
+        Task<List<ProposalStaff>> GetProposalStaffsByProposalIdAsync(int proposalId);
+        void AddProposalStaff(ProposalStaff proposalStaff, string userId);
+        Task DeleteProposalStaff(int id);
+        #endregion
+
+        #region Proposal Operationg Expenses
+        Task<List<ProposalExpense>> GetProposalExpensesByProposalIdAsync(int proposalId);
+        void AddProposalExpenses(ProposalExpense proposalExpense, string userId);
+        #endregion
+
+        #region Proposal Contractors/OutSource
+        Task<List<ProposalContractor>> GetProposalContractorsByProposalIdAsync(int proposalId);
+        void AddProposalContractor(ProposalContractor proposalContractor, string userId);
+    
         #endregion
     }
 }
