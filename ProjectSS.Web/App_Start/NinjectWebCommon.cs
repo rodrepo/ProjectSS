@@ -81,7 +81,11 @@ namespace ProjectSS.Web.App_Start
                 c.CreateMap<CRMCallHistory, CRMCallHistoryModel>().ReverseMap();
                 c.CreateMap<CRMEmailHistory, CRMEmailHistoryModel>().ReverseMap();
                 c.CreateMap<CRMRevisionHistory, CRMRevisionHistoryModel>().ReverseMap();
-
+                c.CreateMap<Proposal, ProposalViewModel>().ReverseMap();
+                c.CreateMap<ProposalContractor, ProposalContractorModel>().ReverseMap();
+                c.CreateMap<ProposalExpense, ProposalExpenseModel>().ReverseMap();
+                c.CreateMap<ProposalStaff, ProposalStaffModel>().ReverseMap();
+                c.CreateMap<ProposalContractor, ProposalContractorModel>().ReverseMap();
             });
             kernel.Bind<IMapper>().ToMethod(c => config.CreateMapper()).InRequestScope();
         }

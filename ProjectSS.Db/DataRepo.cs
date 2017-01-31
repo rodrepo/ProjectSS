@@ -61,6 +61,11 @@ namespace ProjectSS.Db
             return await _db.Users.Where(u => u.Id == id && !u.IsDeleted).FirstOrDefaultAsync();
         }
 
+        public async Task<string> GetUserNameByIdAsync(string id)
+        {
+            return await _db.Users.Where(u => u.Id == id && !u.IsDeleted).Select(u => u.FirstName + " " + u.MiddleName + " " + u.LastName).FirstOrDefaultAsync();
+        }
+
         public async Task<User> UpdateUserAsync(User user, UserManager<User> userManager, string role, string userId)
         {
             var usr = await userManager.FindByIdAsync(user.Id);
@@ -164,14 +169,14 @@ namespace ProjectSS.Db
             _db.UserId = userId;
             var result = GenerateCRMReference();
             crm.Reference = result.Reference;
-            crm.Number = result.Number;
+            crm.Number = result.Number.ToString();
             _db.CRMs.Add(crm);
             return crm;
         }
 
-        private CRMReferenceModel GenerateCRMReference()
+        private ReferenceModel GenerateCRMReference()
         {
-            var cRMReference = new CRMReferenceModel();
+            var cRMReference = new ReferenceModel();
 
             var latestReference = _db.CRMs.Where(m => !m.IsDeleted).OrderByDescending(d => d.CreatedDate).FirstOrDefault();
             if (latestReference != null && latestReference.Number != null)
@@ -179,32 +184,17 @@ namespace ProjectSS.Db
                 int multi = 1;
                 multi += int.Parse(latestReference.Number);
                 cRMReference.Reference = "SCII-" + multi.ToString();
-                cRMReference.Number = multi.ToString();
+                cRMReference.Number = multi;
             }
             else
             {
                 cRMReference.Reference = "SCII-1";
-                cRMReference.Number = "1";
+                cRMReference.Number = 1;
 
             }
             return cRMReference;
         }
 
-        //Used to follow SCII number
-        private string GenerateCRMNumbering()
-        {
-            string number = "";
-            var latestReference = _db.CRMs.Where(m => !m.IsDeleted).OrderByDescending(d => d.CreatedDate).FirstOrDefault();
-            if (latestReference != null && latestReference.Id > 0 && latestReference != null)
-            {
-                number = latestReference.Id.ToString();
-            }
-            else
-            {
-                number = "1";
-            }
-            return number;
-        }
         public void DeleteCRM(CRM crm, string userId)
         {
             crm.IsDeleted = true;
@@ -249,11 +239,164 @@ namespace ProjectSS.Db
 
         #endregion
 
+        #region Proposal
+        public async Task<List<Proposal>> GetProposalAsync()
+        {
+            return await _db.Proposals.Where(p => !p.IsDeleted).ToListAsync();
+        }
+
+        public async Task<Proposal> AddPorposalAsync(Proposal proposal, string userId)
+        {
+            var crm = await GetCRMById(proposal.CRMId);
+            proposal.CompanyName = crm.CompanyName;
+            proposal.ContactPerson = crm.Name;
+            proposal.ContactPersonPosition = crm.Position;
+            proposal.Industry = crm.Industry;
+            proposal.Location = crm.Region;
+
+            var key = await GenerateProposalNumber();
+            proposal.ProposalNumber = key.Reference;
+            proposal.PPNumber = key.Number;
+
+            _db.UserId = userId;
+            var result = _db.Proposals.Add(proposal);
+            return result;
+        }
+
+        public async Task<Proposal> GetProposalByIdAsync(int id)
+        {
+            return await _db.Proposals.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task UpdateProposal(Proposal proposal, string userId)
+        {
+            _db.UserId = userId;
+            var result = await MappPropsal(proposal);
+            _db.Entry(result).State = EntityState.Modified;
+        }
+
+        private async Task<Proposal> MappPropsal(Proposal proposal)
+        {
+            var latestProposal = await GetProposalByIdAsync(proposal.Id);
+            if (latestProposal != null && latestProposal.RVNumber > 0)
+            {
+                int multi = 1;
+                multi += latestProposal.RVNumber;
+                latestProposal.RevisionNumber = "REV-" + multi.ToString();
+                latestProposal.RVNumber = multi;
+            }
+            else
+            {
+                latestProposal.RevisionNumber = "REV-1";
+                latestProposal.RVNumber = 1;
+            }
+            latestProposal.Title = proposal.Title;
+            latestProposal.Cost = proposal.Cost;
+            latestProposal.Description = proposal.Description;
+            return latestProposal;
+        }
+
+        private async Task<ReferenceModel> GenerateProposalNumber()
+        {
+            var keys = new ReferenceModel();
+
+            var latestProposal = await _db.Proposals.Where(m => !m.IsDeleted).OrderByDescending(d => d.CreatedDate).FirstOrDefaultAsync();
+            if (latestProposal != null && latestProposal.PPNumber > 0)
+            {
+                int multi = 1;
+                multi += latestProposal.PPNumber;
+                keys.Reference = "PRP-" + multi.ToString();
+                keys.Number = multi;
+            }
+            else
+            {
+                keys.Reference = "PRP-1";
+                keys.Number = 1;
+            }
+            return keys;
+        }
+
+        public async Task DeleteProposal(int id)
+        {
+            var staff = await GetProposalByIdAsync(id);
+            staff.IsDeleted = true;
+            _db.Entry(staff).State = EntityState.Modified;
+        }
+
+        #endregion
+
+        #region Proposal Staff
+        public async Task<List<ProposalStaff>> GetProposalStaffsByProposalIdAsync(int proposalId)
+        {
+            return await _db.ProposalStaffs.Where(p => !p.IsDeleted && p.ProposalId == proposalId).ToListAsync();
+        }
+
+        public async Task<ProposalStaff> GetProposalStaffByIdAsync(int id)
+        {
+            return await _db.ProposalStaffs.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
+        }
+
+
+        public void AddProposalStaff(ProposalStaff proposalStaff, string userId)
+        {
+            _db.UserId = userId;
+            _db.ProposalStaffs.Add(proposalStaff);
+        }
+
+        public async Task DeleteProposalStaff(int id)
+        {
+            var staff = await GetProposalStaffByIdAsync(id);
+            staff.IsDeleted = true;
+            _db.Entry(staff).State = EntityState.Modified;
+        }
+
+        #endregion
+
+        #region Proposal Operationg Expenses
+        public async Task<List<ProposalExpense>> GetProposalExpensesByProposalIdAsync(int proposalId)
+        {
+            return await _db.ProposalExpensess.Where(p => !p.IsDeleted && p.ProposalId == proposalId).ToListAsync();
+        }
+
+        public void AddProposalExpenses(ProposalExpense proposalExpense, string userId)
+        {
+            _db.UserId = userId;
+            _db.ProposalExpensess.Add(proposalExpense);
+        }
+
+        #endregion
+
+        #region Proposal Contractors/OutSource
+        public async Task<List<ProposalContractor>> GetProposalContractorsByProposalIdAsync(int proposalId)
+        {
+            return await _db.ProposalContractors.Where(p => !p.IsDeleted && p.ProposalId == proposalId).ToListAsync();
+        }
+
+        public void AddProposalContractor(ProposalContractor proposalContractor, string userId)
+        {
+            _db.UserId = userId;
+            _db.ProposalContractors.Add(proposalContractor);
+        }
+
+        public async Task<ProposalContractor> GetProposalContractorByIdAsync(int id)
+        {
+            return await _db.ProposalContractors.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task DeleteProposalContractor(int id)
+        {
+            var contractor = await GetProposalContractorByIdAsync(id);
+            contractor.IsDeleted = true;
+            _db.Entry(contractor).State = EntityState.Modified;
+        }
+
+        #endregion
+
         #region Private Class
-        private class CRMReferenceModel
+        private class ReferenceModel
         {
             public string Reference { get; set; }
-            public string Number { get; set; }
+            public int Number { get; set; }
         }
         #endregion
     }
