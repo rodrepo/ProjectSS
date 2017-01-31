@@ -23,6 +23,7 @@ namespace ProjectSS.Web.Controllers.Admin
             _repo = repo;
         }
 
+        #region Get
         [HttpGet]
         public async Task<ActionResult> Index()
         {
@@ -31,47 +32,26 @@ namespace ProjectSS.Web.Controllers.Admin
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Create(ProposalViewModel model)
+        [HttpGet]
+        public async Task<ActionResult> Manage(int id)
         {
-            if (model.CRMId != 0)
+            var getValues = await _repo.GetProposalByIdAsync(id);
+            var proposal = _mapper.Map<ProposalViewModel>(getValues);
+            if (proposal != null)
             {
-                var proposal = await _repo.AddPorposalAsync(_mapper.Map<Proposal>(model), CurrentUser.Id);
-                if (await _repo.SaveAllAsync())
-                {
-
-                    TempData["Success"] = string.Format("Proposal has been successfully Created");
-                    return RedirectToAction("Manage", new { @id = proposal.Id });
-                }
-                TempData["Error"] = "Unable to create Proposal due to some internal issues.";
+                proposal.Staffs = _mapper.Map<List<ProposalStaffModel>>(getValues.ProposalStaffs);
+                proposal.Contractors = _mapper.Map<List<ProposalContractorModel>>(getValues.ProposalContractors);
+                var mergeValues = await MergeToProposal(proposal);
+                await DropdownListForUsers();
+                await SetListItemsAsync(mergeValues);
+                return View(mergeValues);
             }
-            return RedirectToAction("Index");
-
+            return View(proposal);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> CreateStaff(ProposalStaffModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                _repo.AddProposalStaff(_mapper.Map<ProposalStaff>(model), CurrentUser.Id);
-                if (await _repo.SaveAllAsync())
-                {
+        #endregion
 
-                    TempData["Success"] = string.Format("Staff has been successfully Created");
-                    return RedirectToAction("Manage", new { @id = model.ProposalId });
-                }
-                TempData["Error"] = "Unable to create Staff due to some internal issues.";
-            }
-            foreach (var value in ModelState.Values)
-            {
-                foreach (var error in value.Errors)
-                {
-                    TempData["Error"] = error.ErrorMessage;
-                }
-            }
-            return RedirectToAction("Index");
-        }
+        #region Delete
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -97,7 +77,6 @@ namespace ProjectSS.Web.Controllers.Admin
                 return ServerError();
             }
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -125,21 +104,34 @@ namespace ProjectSS.Web.Controllers.Admin
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult> Manage(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteContractor(int id , int proposalId)
         {
-            var getValues = await _repo.GetProposalByIdAsync(id);
-            var proposal = _mapper.Map<ProposalViewModel>(getValues);
-            if (proposal != null)
+            try
             {
-                proposal.Staffs = _mapper.Map<List<ProposalStaffModel>>(getValues.ProposalStaffs);
-                var mergeValues = await MergeToProposal(proposal);
-                await DropdownListForUsers();
-                await SetListItemsAsync(mergeValues);
-                return View(mergeValues);
+                await _repo.DeleteProposalContractor(id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = $"Successfully deleted contactor/outsource";
+                }
+                else
+                {
+                    TempData["Error"] = "Unable to delete contactor/outsource due to some internal issues.";
+                }
+                return RedirectToAction("Manage", new { @id = proposalId });
             }
-            return View(proposal);
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
         }
+
+        #endregion
+
+        #region Create
 
         [HttpPost]
         public async Task<ActionResult> Manage(ProposalViewModel model)
@@ -155,9 +147,9 @@ namespace ProjectSS.Web.Controllers.Admin
                         return RedirectToAction("Manage", new { id = model.Id });
                     }
                 }
-                foreach(var value in ModelState.Values)
+                foreach (var value in ModelState.Values)
                 {
-                    foreach(var error in value.Errors)
+                    foreach (var error in value.Errors)
                     {
                         TempData["Error"] = error.ErrorMessage;
                         return RedirectToAction("Manage", new { id = model.Id });
@@ -173,12 +165,78 @@ namespace ProjectSS.Web.Controllers.Admin
             }
         }
 
+        [HttpPost]
+        public async Task<ActionResult> CreateStaff(ProposalStaffModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _repo.AddProposalStaff(_mapper.Map<ProposalStaff>(model), CurrentUser.Id);
+                if (await _repo.SaveAllAsync())
+                {
+
+                    TempData["Success"] = string.Format("Staff has been successfully Created");
+                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                }
+                TempData["Error"] = "Unable to create Staff due to some internal issues.";
+            }
+            foreach (var value in ModelState.Values)
+            {
+                foreach (var error in value.Errors)
+                {
+                    TempData["Error"] = error.ErrorMessage;
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateContractor(ProposalContractorModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _repo.AddProposalContractor(_mapper.Map<ProposalContractor>(model), CurrentUser.Id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = string.Format("Contractor/Outsource has been successfully Created");
+                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                }
+                TempData["Error"] = "Unable to create Contractor/Outsource due to some internal issues.";
+            }
+            foreach (var value in ModelState.Values)
+            {
+                foreach (var error in value.Errors)
+                {
+                    TempData["Error"] = error.ErrorMessage;
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Create(ProposalViewModel model)
+        {
+            if (model.CRMId != 0)
+            {
+                var proposal = await _repo.AddPorposalAsync(_mapper.Map<Proposal>(model), CurrentUser.Id);
+                if (await _repo.SaveAllAsync())
+                {
+
+                    TempData["Success"] = string.Format("Proposal has been successfully Created");
+                    return RedirectToAction("Manage", new { @id = proposal.Id });
+                }
+                TempData["Error"] = "Unable to create Proposal due to some internal issues.";
+            }
+            return RedirectToAction("Index");
+
+        }
+        #endregion
+
         #region Private Helpers
         private async Task<ProposalViewModel> MergeToProposal(ProposalViewModel model)
         {
             if (model != null)
             {
-                if(model.Cost > 0)
+                if (model.Cost > 0)
                 {
                     model.MangementFeeBilledToClient = decimal.Parse("0.4") * model.Cost;
                 }
@@ -196,8 +254,35 @@ namespace ProjectSS.Web.Controllers.Admin
                 }
                 model.Staffs = result;
                 #endregion
+
+                #region Contractor
+                var contractorResult = model.Contractors.Where(c => !c.IsDeleted).ToList();
+                if (contractorResult?.Any() ?? false)
+                {
+                    var contractor = MapNeedFieldForProposalContractor(contractorResult);
+                    model.TotalContractorBilledToClient = contractor.Select(m => m.BilledToClient).Sum();
+                    model.TotalContractorDirectCost = contractor.Select(m => m.DirectCost).Sum();
+                }
+                model.Contractors = contractorResult;
+                #endregion
             }
             return model;
+        }
+
+        private List<ProposalContractorModel> MapNeedFieldForProposalContractor(List<ProposalContractorModel> contractors)
+        {
+            if (contractors?.Any() ?? false)
+            {
+                foreach (var contractor in contractors)
+                {
+                    if (contractor != null)
+                    {
+                        contractor.DirectCost = contractor.NoOfDay * contractor.Rate;
+                        contractor.BilledToClient = contractor.DirectCost * contractor.Factor;
+                    }
+                }
+            }
+            return contractors;
         }
 
         private async Task<List<ProposalStaffModel>> MapNeedFieldForProposalStaff(List<ProposalStaffModel> staffs)

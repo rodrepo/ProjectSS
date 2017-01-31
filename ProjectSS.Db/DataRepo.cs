@@ -378,6 +378,18 @@ namespace ProjectSS.Db
             _db.ProposalContractors.Add(proposalContractor);
         }
 
+        public async Task<ProposalContractor> GetProposalContractorByIdAsync(int id)
+        {
+            return await _db.ProposalContractors.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task DeleteProposalContractor(int id)
+        {
+            var contractor = await GetProposalContractorByIdAsync(id);
+            contractor.IsDeleted = true;
+            _db.Entry(contractor).State = EntityState.Modified;
+        }
+
         #endregion
 
         #region Private Class

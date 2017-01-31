@@ -17,7 +17,7 @@
         @Html.TextBoxFor(model => model.ManMonths, new { @class = "form-control", @type = "number", @required = "required" })
     </div>
     <div class="form-group col-sm-12">
-        <label>Industry</label>
+        <label>Factor</label>
         <select class="form-control" id="Factor" name="Factor" required="required">
             <option value="">Select Factor</option>
             <option @(Model.Factor == decimal.Parse("2.0") ? "selected" : " ") value="2.0">2.0</option>
@@ -30,7 +30,7 @@
         </select>
     </div>
     <div class="form-group col-sm-offset-2 col-sm-8" >
-        <h5 style="color:red" align="center">Warning : Please double check values before pressing <i><b>Save</b></i> entered values will not be <b>edited</b> or <b>deleted</b> </h5>
+        <h5 style="color:red" align="center">Warning : Please double check values before pressing <i><b>Save</b></i> entered values will not be <b>edited</b></h5>
     </div>
 </div>
 

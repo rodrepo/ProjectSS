@@ -37,8 +37,12 @@ namespace ProjectSS.Web.Models
         public string ProjectNumber { get; set; }
         public string ProposalNumber { get; set; }
         public string RevisionNumber { get; set; }
+
         public decimal TotalStaffBilledToClient { get; set; }
         public decimal TotalStaffDirectCost { get; set; }
+
+        public decimal TotalContractorBilledToClient { get; set; }
+        public decimal TotalContractorDirectCost { get; set; }
 
         public int CRMId { get; set; }
         public int Id { get; set; }
@@ -56,9 +60,12 @@ namespace ProjectSS.Web.Models
         public int NoOfDay { get; set; }
         public decimal Rate { get; set; }
         public decimal Factor { get; set; }
-
+        public decimal DirectCost { get; set; }
+        public decimal BilledToClient { get; set; }
         public int ProposalId { get; set; }
         public int Id { get; set; }
+        public bool IsDeleted { get; set; }
+
     }
 
     public class ProposalExpenseModel
