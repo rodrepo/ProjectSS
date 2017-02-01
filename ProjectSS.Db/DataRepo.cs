@@ -364,6 +364,18 @@ namespace ProjectSS.Db
             _db.ProposalExpensess.Add(proposalExpense);
         }
 
+        public async Task<ProposalExpense> GetProposalExpenseByIdAsync(int id)
+        {
+            return await _db.ProposalExpensess.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task DeleteProposalExpense(int id)
+        {
+            var expense = await GetProposalExpenseByIdAsync(id);
+            expense.IsDeleted = true;
+            _db.Entry(expense).State = EntityState.Modified;
+        }
+
         #endregion
 
         #region Proposal Contractors/OutSource
