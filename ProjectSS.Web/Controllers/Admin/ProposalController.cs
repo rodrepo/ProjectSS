@@ -39,8 +39,18 @@ namespace ProjectSS.Web.Controllers.Admin
             var proposal = _mapper.Map<ProposalViewModel>(getValues);
             if (proposal != null)
             {
-                proposal.Staffs = _mapper.Map<List<ProposalStaffModel>>(getValues.ProposalStaffs);
-                proposal.Contractors = _mapper.Map<List<ProposalContractorModel>>(getValues.ProposalContractors);
+                if (getValues.ProposalStaffs?.Any() ?? false)
+                {
+                    proposal.Staffs = _mapper.Map<List<ProposalStaffModel>>(getValues.ProposalStaffs);
+                }
+                if (getValues.ProposalContractors?.Any() ?? false)
+                {
+                    proposal.Contractors = _mapper.Map<List<ProposalContractorModel>>(getValues.ProposalContractors);
+                }
+                if (getValues.ProposalExpenses?.Any() ?? false)
+                {
+                    proposal.Expenses = _mapper.Map<List<ProposalExpenseModel>>(getValues.ProposalExpenses);
+                }
                 var mergeValues = await MergeToProposal(proposal);
                 await DropdownListForUsers();
                 await SetListItemsAsync(mergeValues);
@@ -118,6 +128,31 @@ namespace ProjectSS.Web.Controllers.Admin
                 else
                 {
                     TempData["Error"] = "Unable to delete contactor/outsource due to some internal issues.";
+                }
+                return RedirectToAction("Manage", new { @id = proposalId });
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteExpense(int id, int proposalId)
+        {
+            try
+            {
+                await _repo.DeleteProposalExpense(id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = $"Successfully deleted operating expense";
+                }
+                else
+                {
+                    TempData["Error"] = "Unable to delete operating expense due to some internal issues.";
                 }
                 return RedirectToAction("Manage", new { @id = proposalId });
             }
@@ -213,6 +248,29 @@ namespace ProjectSS.Web.Controllers.Admin
         }
 
         [HttpPost]
+        public async Task<ActionResult> CreateExpense(ProposalExpenseModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _repo.AddProposalExpenses(_mapper.Map<ProposalExpense>(model), CurrentUser.Id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = string.Format("Operating expense has been successfully Created");
+                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                }
+                TempData["Error"] = "Unable to create operating expense due to some internal issues.";
+            }
+            foreach (var value in ModelState.Values)
+            {
+                foreach (var error in value.Errors)
+                {
+                    TempData["Error"] = error.ErrorMessage;
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public async Task<ActionResult> Create(ProposalViewModel model)
         {
             if (model.CRMId != 0)
@@ -245,11 +303,11 @@ namespace ProjectSS.Web.Controllers.Admin
                 var result = model.Staffs.Where(s => !s.IsDeleted).ToList();
                 if (result?.Any() ?? false)
                 {
-                    var staff = await MapNeedFieldForProposalStaff(result);
-                    if (staff?.Any() ?? false)
+                    result = await MapNeedFieldForProposalStaff(result);
+                    if (result?.Any() ?? false)
                     {
-                        model.TotalStaffBilledToClient = staff.Select(m => m.BilledToClient).Sum();
-                        model.TotalStaffDirectCost = staff.Select(m => m.DirectCost).Sum();
+                        model.TotalStaffBilledToClient = result.Select(m => m.BilledToClient).Sum();
+                        model.TotalStaffDirectCost = result.Select(m => m.DirectCost).Sum();
                     }
                 }
                 model.Staffs = result;
@@ -259,14 +317,40 @@ namespace ProjectSS.Web.Controllers.Admin
                 var contractorResult = model.Contractors.Where(c => !c.IsDeleted).ToList();
                 if (contractorResult?.Any() ?? false)
                 {
-                    var contractor = MapNeedFieldForProposalContractor(contractorResult);
-                    model.TotalContractorBilledToClient = contractor.Select(m => m.BilledToClient).Sum();
-                    model.TotalContractorDirectCost = contractor.Select(m => m.DirectCost).Sum();
+                    contractorResult = MapNeedFieldForProposalContractor(contractorResult);
+                    model.TotalContractorBilledToClient = contractorResult.Select(m => m.BilledToClient).Sum();
+                    model.TotalContractorDirectCost = contractorResult.Select(m => m.DirectCost).Sum();
                 }
                 model.Contractors = contractorResult;
                 #endregion
+
+                #region Expense
+                var expenseResult = model.Expenses.Where(c => !c.IsDeleted).ToList();
+                if (expenseResult?.Any() ?? false)
+                {
+                    expenseResult = MapNeedFieldForProposalExpense(expenseResult);
+                    model.TotalContractorBilledToClient = expenseResult.Select(m => m.BilledToClient).Sum();
+                    model.TotalContractorDirectCost = expenseResult.Select(m => m.DirectCost).Sum();
+                }
+                model.Expenses = expenseResult;
+                #endregion
             }
             return model;
+        }
+
+        private List<ProposalExpenseModel> MapNeedFieldForProposalExpense(List<ProposalExpenseModel> expenses)
+        {
+            if (expenses?.Any() ?? false)
+            {
+                foreach (var expense in expenses)
+                {
+                    if (expense != null)
+                    {
+                        expense.BilledToClient = expense.DirectCost * expense.Factor;
+                    }
+                }
+            }
+            return expenses;
         }
 
         private List<ProposalContractorModel> MapNeedFieldForProposalContractor(List<ProposalContractorModel> contractors)

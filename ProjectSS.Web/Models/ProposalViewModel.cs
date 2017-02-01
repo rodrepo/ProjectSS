@@ -44,6 +44,9 @@ namespace ProjectSS.Web.Models
         public decimal TotalContractorBilledToClient { get; set; }
         public decimal TotalContractorDirectCost { get; set; }
 
+        public decimal TotalExpenseBilledToClient { get; set; }
+        public decimal TotalExpenseDirectCost { get; set; }
+
         public int CRMId { get; set; }
         public int Id { get; set; }
 
@@ -74,7 +77,8 @@ namespace ProjectSS.Web.Models
         public string Description { get; set; }
         public decimal Factor { get; set; }
         public decimal DirectCost { get; set; }
-
+        public bool IsDeleted { get; set; }
+        public decimal BilledToClient { get; set; }
         public int ProposalId { get; set; }
         public int Id { get; set; }
     }

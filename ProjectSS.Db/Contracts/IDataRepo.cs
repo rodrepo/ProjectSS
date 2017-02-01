@@ -66,6 +66,7 @@ namespace ProjectSS.Db.Contracts
         #region Proposal Operationg Expenses
         Task<List<ProposalExpense>> GetProposalExpensesByProposalIdAsync(int proposalId);
         void AddProposalExpenses(ProposalExpense proposalExpense, string userId);
+        Task DeleteProposalExpense(int id);
         #endregion
 
         #region Proposal Contractors/OutSource
