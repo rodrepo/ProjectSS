@@ -51,3 +51,27 @@
     </div>
     <!-- END panel-->
 </div>
+@section Styles {
+    @Styles.Render("~/bundles/datatablesCss")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+    @Scripts.Render("~/bundles/demoDatatable")
+    @Scripts.Render("~/bundles/notify")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ('@TempData["Error"]' != "") {
+                $.notify('@TempData["Error"]', "danger");
+            }
+            if ('@TempData["Success"]' != "") {
+                $.notify('@TempData["Success"]', "success");
+            }
+            if ('@TempData["Info"]' != "") {
+                $.notify('@TempData["Info"]', "info");
+            }
+            if ('@TempData["Warning"]' != "") {
+                $.notify('@TempData["Warning"]', "warning");
+            }
+        });
+    </script>
+}
