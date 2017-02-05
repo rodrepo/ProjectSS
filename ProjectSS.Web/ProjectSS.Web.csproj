@@ -425,8 +425,6 @@
     <Content Include="Vendor\datatables\media\images\sort_desc_disabled.png" />
     <Content Include="Vendor\datatables\media\js\dataTables.bootstrap.js" />
     <Content Include="Vendor\datatables\media\js\jquery.dataTables.min.js" />
-    <Content Include="Vendor\eonasdan-bootstrap-datetimepicker\build\css\bootstrap-datetimepicker.min.css" />
-    <Content Include="Vendor\eonasdan-bootstrap-datetimepicker\build\js\bootstrap-datetimepicker.min.js" />
     <Content Include="Vendor\fastclick\lib\fastclick.js" />
     <Content Include="Vendor\flatdoc\flatdoc.js" />
     <Content Include="Vendor\flot-spline\js\jquery.flot.spline.min.js" />
@@ -644,6 +642,8 @@
     <Folder Include="Vendor\blueimp-file-upload\js\vendor\" />
     <Folder Include="Vendor\bootstrap-tour\build\css\" />
     <Folder Include="Vendor\bootstrap-tour\build\js\" />
+    <Folder Include="Vendor\eonasdan-bootstrap-datetimepicker\build\css\" />
+    <Folder Include="Vendor\eonasdan-bootstrap-datetimepicker\build\js\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
