@@ -10,6 +10,7 @@ using ProjectSS.Db.Contracts;
 using ProjectSS.Web.Models;
 using ProjectSS.Db.Entities;
 using Microsoft.ApplicationInsights;
+using ProjectSS.Web.Models.admin;
 
 namespace ProjectSS.Web.Controllers
 {
@@ -118,6 +119,43 @@ namespace ProjectSS.Web.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            var model = new ChangePasswordViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                foreach (var value in ModelState.Values)
+                {
+                    foreach (var error in value.Errors)
+                    {
+                        TempData["Error"] = error.ErrorMessage;
+                    }
+                }
+                return View(model);
+            }
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                TempData["Success"] = string.Format("Changed password successfully please log in using your new password");
+                return RedirectToAction("Login");
+            }
+            AddErrors(result);
+            return View(model);
         }
     }
 }

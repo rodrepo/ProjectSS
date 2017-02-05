@@ -60,7 +60,7 @@
          <!-- START Alert menu-->
          <li class="dropdown dropdown-list">
             <a href="#" data-toggle="dropdown">
-               <em class="icon-bell"></em>
+               <em class="icon-settings"></em>
                @*<div class="label label-danger">11</div>*@
             </a>
             <!-- START Dropdown menu-->
@@ -68,7 +68,7 @@
                <li>
                   <!-- START list group-->
                   <div class="list-group">
-                     <!-- list item-->
+                     @*<!-- list item-->
                      <a href="#" class="list-group-item">
                         <div class="media-box">
                            <div class="pull-left">
@@ -95,17 +95,16 @@
                               </p>
                            </div>
                         </div>
-                     </a>
+                     </a>*@
                      <!-- list item-->
-                     <a href="#" class="list-group-item">
+                     <a href="@Url.Action("ChangePassword", "Account")" class="list-group-item">
                         <div class="media-box">
                            <div class="pull-left">
-                              <em class="fa fa-tasks fa-2x text-success"></em>
+                              @*<em class="fa fa-tasks fa-2x text-success"></em>*@
                            </div>
                            <div class="media-box-body clearfix">
-                              <p class="m0">Pending Tasks</p>
+                              <p class="m0">Change Password</p>
                               <p class="m0 text-muted">
-                                 <small>11 pending task</small>
                               </p>
                            </div>
                         </div>
