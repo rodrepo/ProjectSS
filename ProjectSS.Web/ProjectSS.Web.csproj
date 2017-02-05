@@ -512,7 +512,6 @@
     <Content Include="Vendor\jquery.easing\js\jquery.easing.js" />
     <Content Include="Vendor\jquery.easy-pie-chart\dist\jquery.easypiechart.js" />
     <Content Include="Vendor\jquery.inputmask\dist\jquery.inputmask.bundle.js" />
-    <Content Include="Vendor\jquery.steps\build\jquery.steps.js" />
     <Content Include="Vendor\jqueryui-touch-punch\jquery.ui.touch-punch.min.js" />
     <Content Include="Vendor\jquery\dist\jquery.js" />
     <Content Include="Vendor\loaders.css\loaders.css" />
@@ -644,6 +643,7 @@
     <Folder Include="Vendor\bootstrap-tour\build\js\" />
     <Folder Include="Vendor\eonasdan-bootstrap-datetimepicker\build\css\" />
     <Folder Include="Vendor\eonasdan-bootstrap-datetimepicker\build\js\" />
+    <Folder Include="Vendor\jquery.steps\build\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
