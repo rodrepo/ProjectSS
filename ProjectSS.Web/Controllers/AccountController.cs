@@ -11,6 +11,7 @@ using ProjectSS.Web.Models;
 using ProjectSS.Db.Entities;
 using Microsoft.ApplicationInsights;
 using ProjectSS.Web.Models.admin;
+using System.Web.WebPages;
 
 namespace ProjectSS.Web.Controllers
 {
@@ -122,9 +123,14 @@ namespace ProjectSS.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult ChangePassword()
+        public ActionResult ChangePassword(string userId)
         {
             var model = new ChangePasswordViewModel();
+            if(!userId.IsEmpty())
+            {
+                model.UserId = userId;
+                model.OldPassword = "Xxxxxx0xx";
+            }
             return View(model);
         }
 
@@ -143,7 +149,23 @@ namespace ProjectSS.Web.Controllers
                 }
                 return View(model);
             }
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+
+            string userId = "";
+            var result = new IdentityResult();
+            if(!model.UserId.IsEmpty())
+            {
+                userId = model.UserId;
+                result = UserManager.RemovePassword(userId);
+                if(result.Succeeded)
+                {
+                    result = UserManager.AddPassword(userId, model.ConfirmPassword);
+                }
+            }
+            else
+            {
+                userId = User.Identity.GetUserId();
+                result = await UserManager.ChangePasswordAsync(userId, model.OldPassword, model.NewPassword);
+            }
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
