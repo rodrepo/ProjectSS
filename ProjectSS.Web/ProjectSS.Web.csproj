@@ -399,8 +399,6 @@
     <Content Include="Vendor\bootstrap-filestyle\src\bootstrap-filestyle.js" />
     <Content Include="Vendor\bootstrap-tagsinput\dist\bootstrap-tagsinput.css" />
     <Content Include="Vendor\bootstrap-tagsinput\dist\bootstrap-tagsinput.min.js" />
-    <Content Include="Vendor\bootstrap-tour\build\css\bootstrap-tour-standalone.css" />
-    <Content Include="Vendor\bootstrap-tour\build\js\bootstrap-tour-standalone.js" />
     <Content Include="Vendor\bootstrap-wysiwyg\bootstrap-wysiwyg.js" />
     <Content Include="Vendor\bootstrap-wysiwyg\external\jquery.hotkeys.js" />
     <Content Include="Vendor\bootstrap\dist\css\bootstrap.css" />
@@ -644,6 +642,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Vendor\blueimp-file-upload\js\cors\" />
     <Folder Include="Vendor\blueimp-file-upload\js\vendor\" />
+    <Folder Include="Vendor\bootstrap-tour\build\css\" />
+    <Folder Include="Vendor\bootstrap-tour\build\js\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
