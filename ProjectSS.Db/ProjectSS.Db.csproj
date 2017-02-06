@@ -97,9 +97,9 @@
     <Compile Include="Migrations\201701251157585_AddsProposalTableAndNeededTables.Designer.cs">
       <DependentUpon>201701251157585_AddsProposalTableAndNeededTables.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702061113304_AddsInventoryTable.cs" />
-    <Compile Include="Migrations\201702061113304_AddsInventoryTable.Designer.cs">
-      <DependentUpon>201702061113304_AddsInventoryTable.cs</DependentUpon>
+    <Compile Include="Migrations\201702061303573_AddInventoryTable.cs" />
+    <Compile Include="Migrations\201702061303573_AddInventoryTable.Designer.cs">
+      <DependentUpon>201702061303573_AddInventoryTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -130,8 +130,8 @@
     <EmbeddedResource Include="Migrations\201701251157585_AddsProposalTableAndNeededTables.resx">
       <DependentUpon>201701251157585_AddsProposalTableAndNeededTables.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702061113304_AddsInventoryTable.resx">
-      <DependentUpon>201702061113304_AddsInventoryTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702061303573_AddInventoryTable.resx">
+      <DependentUpon>201702061303573_AddInventoryTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

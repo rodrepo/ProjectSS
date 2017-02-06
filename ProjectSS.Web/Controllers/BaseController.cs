@@ -240,7 +240,7 @@ namespace ProjectSS.Web.Controllers
             return result;
         }
 
-        protected async Task<List<SelectListItem>> GetUsersAsync()
+        protected async Task<List<SelectListItem>> GetUsersAsync(string id = null)
         {
             var result = new List<SelectListItem>();
             var users = await _repo.GetUsersAsync();
@@ -253,6 +253,11 @@ namespace ProjectSS.Web.Controllers
                         Value = user.Id.ToString(),
                         Text = user.FirstName + " " + user.MiddleName + " " + user.LastName
                     };
+
+                    if (user.Id == id)
+                    {
+                        item.Selected = true;
+                    }
                     result.Add(item);
                 }
             }

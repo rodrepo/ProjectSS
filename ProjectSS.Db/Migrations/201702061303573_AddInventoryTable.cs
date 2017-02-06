@@ -3,7 +3,7 @@ namespace ProjectSS.Db.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddsInventoryTable : DbMigration
+    public partial class AddInventoryTable : DbMigration
     {
         public override void Up()
         {
@@ -14,7 +14,7 @@ namespace ProjectSS.Db.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(),
                         Brand = c.String(),
-                        Model = c.String(),
+                        ItemModel = c.String(),
                         SerialNo = c.String(),
                         Location = c.String(),
                         UserId = c.String(maxLength: 128),

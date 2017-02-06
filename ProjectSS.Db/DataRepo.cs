@@ -441,7 +441,7 @@ namespace ProjectSS.Db
             var storedInventory = await GetInventoryByIdAsync(inventory.Id);
             storedInventory.Name = inventory.Name;
             storedInventory.Brand = inventory.Brand;
-            storedInventory.Model = inventory.Model;
+            storedInventory.ItemModel = inventory.ItemModel;
             storedInventory.SerialNo = inventory.SerialNo;
             storedInventory.Location = inventory.Location;
             storedInventory.UserId = inventory.UserId;

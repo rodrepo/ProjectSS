@@ -10,7 +10,7 @@ namespace ProjectSS.Db.Entities
     {
         public string Name { get; set; }
         public string Brand { get; set; }
-        public string Model { get; set; }
+        public string ItemModel { get; set; }
         public string SerialNo { get; set; }
         public string Location { get; set; }
         public string UserId { get; set; }

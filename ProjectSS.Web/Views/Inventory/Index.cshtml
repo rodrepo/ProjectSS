@@ -27,13 +27,14 @@
                         <tr>
                             <th>Name</th>
                             <th>Brand</th>
-                            <th>Mobile</th>
+                            <th>Model</th>
                             <th>Serial Number</th>
                             <th>Location</th>
                             <th>costodian</th>
                             <th>Quantity</th>
-                            <th>Location</th>
+                            <th>Modified Date</th>
                             <th>ModifiedBy</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,10 +47,19 @@
                                     <tr>
                                         <td>@item.Name</td>
                                         <td>@item.Brand</td>
+                                        <td>@item.ItemModel</td>
                                         <td>@item.SerialNo</td>
                                         <td>@item.Location</td>
-                                        <td>@item.costodian</td>
+                                        <td>@item.Costodian</td>
                                         <td>@item.Quantity</td>
+                                        @if (item.ModifiedBy != null)
+                                        {
+                                            <td>@item.ModifiedDate</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.CreatedDate</td>
+                                        }
                                         @if (!item.ModifiedBy.IsEmpty())
                                         {
                                           <td>@item.ModifiedBy</td>

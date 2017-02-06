@@ -7,13 +7,13 @@ namespace ProjectSS.Db.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddsInventoryTable : IMigrationMetadata
+    public sealed partial class AddInventoryTable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddsInventoryTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddInventoryTable));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702061113304_AddsInventoryTable"; }
+            get { return "201702061303573_AddInventoryTable"; }
         }
         
         string IMigrationMetadata.Source
