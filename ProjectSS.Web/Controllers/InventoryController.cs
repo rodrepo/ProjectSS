@@ -67,6 +67,70 @@ namespace ProjectSS.Web.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<ActionResult> Edit(int id)
+        {
+            var model = _mapper.Map<InventoryViewModel>(await _repo.GetInventoryByIdAsync(id));
+            await SetListItemsAsync(model);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(InventoryViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await _repo.UpdateInventory(_mapper.Map<Inventory>(model), CurrentUser.Id);
+                    if (await _repo.SaveAllAsync())
+                    {
+                        TempData["Success"] = string.Format("Item has been successfully updated");
+                        return RedirectToAction("Index");
+                    }
+                }
+                foreach (var value in ModelState.Values)
+                {
+                    foreach (var error in value.Errors)
+                    {
+                        TempData["Error"] = error.ErrorMessage;
+                    }
+                }
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(InventoryViewModel model)
+        {
+            try
+            {
+                await _repo.DeleteInventory(model.Id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = $"Successfully deleted item";
+                }
+                else
+                {
+                    TempData["Error"] = "Unable to delete item due to some internal issues.";
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
+
         #region Helper
         public List<InventoryViewModel> MapNeededValue(List<Inventory> inventory)
         {
