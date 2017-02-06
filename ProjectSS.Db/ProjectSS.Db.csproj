@@ -71,6 +71,7 @@
     <Compile Include="Entities\CRMCallHistory.cs" />
     <Compile Include="Entities\CRMEmailHistory.cs" />
     <Compile Include="Entities\CRMRevisionHistory.cs" />
+    <Compile Include="Entities\Inventory.cs" />
     <Compile Include="Entities\Proposal.cs" />
     <Compile Include="Entities\ProposalContractor.cs" />
     <Compile Include="Entities\ProposalExpense.cs" />
@@ -95,6 +96,10 @@
     <Compile Include="Migrations\201701251157585_AddsProposalTableAndNeededTables.cs" />
     <Compile Include="Migrations\201701251157585_AddsProposalTableAndNeededTables.Designer.cs">
       <DependentUpon>201701251157585_AddsProposalTableAndNeededTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702061113304_AddsInventoryTable.cs" />
+    <Compile Include="Migrations\201702061113304_AddsInventoryTable.Designer.cs">
+      <DependentUpon>201702061113304_AddsInventoryTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -124,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701251157585_AddsProposalTableAndNeededTables.resx">
       <DependentUpon>201701251157585_AddsProposalTableAndNeededTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702061113304_AddsInventoryTable.resx">
+      <DependentUpon>201702061113304_AddsInventoryTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
