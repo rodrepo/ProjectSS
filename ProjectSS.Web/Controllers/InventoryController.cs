@@ -22,9 +22,8 @@ namespace ProjectSS.Web.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var model = _mapper.Map<List<InventoryViewModel>>(await _repo.GetInvetoriesAsync());
-
-            return View();
+            var model = _mapper.Map<List<InventoryViewModel>>(await _repo.GetInventoriesAsync());
+            return View(model);
         }
 
     }

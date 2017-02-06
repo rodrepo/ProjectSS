@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectSS.Web.Models.admin;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,6 +16,17 @@ namespace ProjectSS.Web.Models
         public string Location { get; set; }
         public string UserId { get; set; }
         public int Quantity { get; set; }
+        public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
+        public bool IsDeleted { get; set; }
+        public UserViewModel User { get; set; }
+
+        public string costodian
+        {
+            get
+            {
+                return (User.FirstName + " " + User.MiddleName + " " + User.LastName);
+           }
+        }
     }
 }

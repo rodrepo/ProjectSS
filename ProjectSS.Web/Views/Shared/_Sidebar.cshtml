@@ -37,7 +37,7 @@
             </li>
             <li class="@Html.isActive(controller: "Home")">
                 <a href="/Home">
-                    <em class="icon-speedometer"></em>
+                    <em class="icon-home"></em>
                     <span>Dashboard</span>
                 </a>
             </li>
@@ -72,6 +72,12 @@
                     </a>
                 </li>
             }
+            <li class="@Html.isActive(controller: "Inventory")">
+                <a href="/Inventory">
+                    <em class="icon-social-dropbox"></em>
+                    <span>Inventory</span>
+                </a>
+            </li>
         </ul>
         <!-- END sidebar nav-->
     </nav>
