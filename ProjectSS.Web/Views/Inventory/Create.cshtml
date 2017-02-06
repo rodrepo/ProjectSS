@@ -1,0 +1,103 @@
+﻿@model ProjectSS.Web.Models.InventoryViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Create", "Inventory", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="row">
+        <div class="col-sm-6">
+            <!-- START panel-->
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Create New Item</h4></div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label>Item Name</label>
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @type = "text", @placeholder = "Enter Item Name", @required = "required" })
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Brand</label>
+                                @Html.TextBoxFor(model => model.Brand, new { @class = "form-control", @type = "text", @placeholder = "Enter Item Brand", @required = "required" })
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Model</label>
+                                @Html.TextBoxFor(model => model.ItemModel, new { @class = "form-control", @type = "text", @placeholder = "Enter Item Model", @required = "required" })
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Serial Number</label>
+                                @Html.TextBoxFor(model => model.SerialNo, new { @class = "form-control", @type = "text", @placeholder = "Enter Item Serial Number", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label>Location</label>
+                                <select class="form-control" id="Location" name="Location" required="required">
+                                    <option value="">Select Item</option>
+                                    <option @(Model.Location == "Manila" ? "selected" : " ") value="Manila">Manila</option>
+                                    <option @(Model.Location == "Davao" ? "selected" : " ") value="Davao">Davao</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Costodian</label>
+                                @Html.DropDownListFor(model => model.UserId, (List<SelectListItem>)ViewBag.Users, "Select Costodian", new { @class = "form-control", @required = "required" })
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Quantity</label>
+                                @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control", @type = "number", @placeholder = "Enter Quantity", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-success btn-xs">Save</button>
+                                <a type="button" class="btn btn-info btn-xs" href="@Url.Action("Index", "Inventory")">Back</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- END panel-->
+        </div>
+    </div>
+}
+
+@section Styles {
+    @Styles.Render("~/bundles/datetimePickerCss")
+}
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/datetimePicker")
+    @Scripts.Render("~/bundles/demoForms")
+    @Scripts.Render("~/bundles/parsley")
+    @Scripts.Render("~/bundles/notify")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ('@TempData["Error"]' != "") {
+                $.notify('@TempData["Error"]', "danger");
+            }
+            if ('@TempData["Success"]' != "") {
+                $.notify('@TempData["Success"]', "success");
+            }
+            if ('@TempData["Info"]' != "") {
+                $.notify('@TempData["Info"]', "info");
+            }
+            if ('@TempData["Warning"]' != "") {
+                $.notify('@TempData["Warning"]', "warning");
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('.datepicker').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+            $('.timepicker').datetimepicker({
+                format: 'HH:mm'
+            });
+        });
+    </script>
+}

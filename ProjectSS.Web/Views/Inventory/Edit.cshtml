@@ -1,0 +1,131 @@
+﻿@using ProjectSS.Common
+@model ProjectSS.Web.Models.InventoryViewModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var canAccessOM = User.IsInRole(RoleType.OM.ToString());
+}
+@using (Html.BeginForm("Edit", "Inventory", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="row">
+        <div class="col-sm-6">
+            <!-- START panel-->
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Edit Item</h4></div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label>Item Name</label>
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @type = "text", @placeholder = "Enter Item Name", @required = "required" })
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Brand</label>
+                                @Html.TextBoxFor(model => model.Brand, new { @class = "form-control", @type = "text", @placeholder = "Enter Item Brand", @required = "required" })
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Model</label>
+                                @Html.TextBoxFor(model => model.ItemModel, new { @class = "form-control", @type = "text", @placeholder = "Enter Item Model", @required = "required" })
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Serial Number</label>
+                                @Html.TextBoxFor(model => model.SerialNo, new { @class = "form-control", @type = "text", @placeholder = "Enter Item Serial Number", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label>Location</label>
+                                <select class="form-control" id="Location" name="Location" required="required">
+                                    <option value="">Select Item</option>
+                                    <option @(Model.Location == "Manila" ? "selected" : " ") value="Manila">Manila</option>
+                                    <option @(Model.Location == "Davao" ? "selected" : " ") value="Davao">Davao</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Costodian</label>
+                                @Html.DropDownListFor(model => model.UserId, (List<SelectListItem>)ViewBag.Users, "Select Costodian", new { @class = "form-control", @required = "required" })
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Quantity</label>
+                                @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control", @type = "number", @placeholder = "Enter Quantity", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-success btn-xs">Save</button>
+                                @if (canAccessOM == true)
+                                {
+                                    <button type="button" data-toggle="modal" data-target="#deletemodal" class="btn btn-danger btn-xs">Delete</button>
+                                }
+                                <a type="button" class="btn btn-info btn-xs" href="@Url.Action("Index", "Inventory")">Back</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- END panel-->
+        </div>
+    </div>
+}
+@section BodyArea {
+    <div id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            @using (Html.BeginForm("Delete", "Inventory", new { @id = Model.Id }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 id="myModalLabelSmall" class="modal-title">Delete</h4>
+                    </div>
+                    <div class="modal-body"><span>Are you sure you want to delete this item?</span></div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Yes</button>
+                        <a href="" type="button" class="btn btn-info" data-dismiss="modal">No</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+@section Styles {
+    @Styles.Render("~/bundles/datetimePickerCss")
+}
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/datetimePicker")
+    @Scripts.Render("~/bundles/demoForms")
+    @Scripts.Render("~/bundles/parsley")
+    @Scripts.Render("~/bundles/notify")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ('@TempData["Error"]' != "") {
+                $.notify('@TempData["Error"]', "danger");
+            }
+            if ('@TempData["Success"]' != "") {
+                $.notify('@TempData["Success"]', "success");
+            }
+            if ('@TempData["Info"]' != "") {
+                $.notify('@TempData["Info"]', "info");
+            }
+            if ('@TempData["Warning"]' != "") {
+                $.notify('@TempData["Warning"]', "warning");
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('.datepicker').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+            $('.timepicker').datetimepicker({
+                format: 'HH:mm'
+            });
+        });
+    </script>
+}
