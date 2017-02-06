@@ -404,6 +404,52 @@ namespace ProjectSS.Db
 
         #endregion
 
+        #region Inventory
+
+        public async Task<List<Inventory>> GetInventoriesAsync()
+        {
+            return await _db.Inventories.Where(p => !p.IsDeleted).ToListAsync();
+        }
+
+        public async Task<Inventory> GetInventoryByIdAsync(int id)
+        {
+            return await _db.Inventories.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
+        }
+
+        public void AddInventory(Inventory inventory, string userId)
+        {
+            _db.UserId = userId;
+            _db.Inventories.Add(inventory);
+        }
+
+        public async Task UpdateInventory(Inventory inventory, string userId)
+        {
+            _db.UserId = userId;
+            var result = await MapInventory(inventory);
+            _db.Entry(result).State = EntityState.Modified;
+        }
+
+        public async Task DeleteInventory(int id)
+        {
+            var inventory = await GetInventoryByIdAsync(id);
+            inventory.IsDeleted = true;
+            _db.Entry(inventory).State = EntityState.Modified;
+        }
+
+        private async Task<Inventory> MapInventory(Inventory inventory)
+        {
+            var storedInventory = await GetInventoryByIdAsync(inventory.Id);
+            storedInventory.Name = inventory.Name;
+            storedInventory.Brand = inventory.Brand;
+            storedInventory.ItemModel = inventory.ItemModel;
+            storedInventory.SerialNo = inventory.SerialNo;
+            storedInventory.Location = inventory.Location;
+            storedInventory.UserId = inventory.UserId;
+            storedInventory.Quantity = inventory.Quantity;
+            return storedInventory;
+        }
+        #endregion
+
         #region Private Class
         private class ReferenceModel
         {
