@@ -13,7 +13,9 @@ namespace ProjectSS.Web.Models
            Contractors = new List<ProposalContractorModel>();
            Expenses = new List<ProposalExpenseModel>();
            Staffs = new List<ProposalStaffModel>();
+           Equipments = new List<ProposalEquipment>();
         }
+
         public string ContactPerson { get; set; }
         public string CompanyName { get; set; }
         public string Industry { get; set; }
@@ -53,6 +55,7 @@ namespace ProjectSS.Web.Models
         public List<ProposalContractorModel> Contractors { get; set; }
         public List<ProposalExpenseModel> Expenses { get; set; }
         public List<ProposalStaffModel> Staffs { get; set; }
+        public List<ProposalEquipment> Equipments { get; set; }
     }
 
 
@@ -97,5 +100,19 @@ namespace ProjectSS.Web.Models
         public int ProposalId { get; set; }
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
+    }
+
+    public class ProposalEquipment
+    {
+        public int Hours { get; set; }
+        public int Months { get; set; }
+        public decimal Rate { get; set; }
+        public decimal Factor { get; set; }
+        public decimal DirectCost { get; set; }
+        public decimal BilledToClient { get; set; }
+        public int TotalHours { get; set; }
+        public int Id { get; set; }
+        public int ProposalId { get; set; }
+        public int InventoryId { get; set; }
     }
 }
