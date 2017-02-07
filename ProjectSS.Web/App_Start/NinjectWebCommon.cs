@@ -86,6 +86,7 @@ namespace ProjectSS.Web.App_Start
                 c.CreateMap<ProposalExpense, ProposalExpenseModel>().ReverseMap();
                 c.CreateMap<ProposalStaff, ProposalStaffModel>().ReverseMap();
                 c.CreateMap<ProposalContractor, ProposalContractorModel>().ReverseMap();
+                c.CreateMap<ProposalEquipment, ProposalEquipmentModel>().ReverseMap();
                 c.CreateMap<Inventory, InventoryViewModel>().ReverseMap();
             });
             kernel.Bind<IMapper>().ToMethod(c => config.CreateMapper()).InRequestScope();

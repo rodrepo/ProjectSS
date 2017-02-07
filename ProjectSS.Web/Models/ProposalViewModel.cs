@@ -102,7 +102,7 @@ namespace ProjectSS.Web.Models
         public bool IsDeleted { get; set; }
     }
 
-    public class ProposalEquipment
+    public class ProposalEquipmentModel
     {
         public int Hours { get; set; }
         public int Months { get; set; }
