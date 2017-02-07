@@ -35,12 +35,14 @@ namespace ProjectSS.Db.Entities
         public virtual ICollection<ProposalStaff> ProposalStaffs { get; set; }
         public virtual ICollection<ProposalContractor> ProposalContractors { get; set; }
         public virtual ICollection<ProposalExpense> ProposalExpenses { get; set; }
+        public virtual ICollection<ProposalEquipment> ProposalEquipments { get; set; }
 
         public Proposal()
         {
             ProposalStaffs = new HashSet<ProposalStaff>();
             ProposalContractors = new HashSet<ProposalContractor>();
             ProposalExpenses = new HashSet<ProposalExpense>();
+            ProposalEquipments = new HashSet<ProposalEquipment>();
         }
     }
 }

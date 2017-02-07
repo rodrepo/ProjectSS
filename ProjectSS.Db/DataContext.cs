@@ -83,6 +83,7 @@ namespace ProjectSS.Db
         public DbSet<ProposalStaff> ProposalStaffs { get; set; }
         public DbSet<ProposalContractor> ProposalContractors { get; set; }
         public DbSet<ProposalExpense> ProposalExpensess { get; set; }
+        public DbSet<ProposalEquipment> ProposalEquipments { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
         #endregion
 

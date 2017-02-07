@@ -74,6 +74,7 @@
     <Compile Include="Entities\Inventory.cs" />
     <Compile Include="Entities\Proposal.cs" />
     <Compile Include="Entities\ProposalContractor.cs" />
+    <Compile Include="Entities\ProposalEquipment.cs" />
     <Compile Include="Entities\ProposalExpense.cs" />
     <Compile Include="Entities\ProposalStaff.cs" />
     <Compile Include="Entities\User.cs" />
@@ -100,6 +101,10 @@
     <Compile Include="Migrations\201702061303573_AddInventoryTable.cs" />
     <Compile Include="Migrations\201702061303573_AddInventoryTable.Designer.cs">
       <DependentUpon>201702061303573_AddInventoryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702071219153_AddsProposalEquipmentTable.cs" />
+    <Compile Include="Migrations\201702071219153_AddsProposalEquipmentTable.Designer.cs">
+      <DependentUpon>201702071219153_AddsProposalEquipmentTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -132,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702061303573_AddInventoryTable.resx">
       <DependentUpon>201702061303573_AddInventoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702071219153_AddsProposalEquipmentTable.resx">
+      <DependentUpon>201702071219153_AddsProposalEquipmentTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
