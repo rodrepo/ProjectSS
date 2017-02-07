@@ -263,6 +263,25 @@ namespace ProjectSS.Web.Controllers
             }
             return result;
         }
+
+        protected async Task<List<SelectListItem>> GetInventoriesAsync()
+        {
+            var result = new List<SelectListItem>();
+            var inventories = await _repo.GetInventoriesAsync();
+            if (inventories != null)
+            {
+                foreach (var invtory in inventories)
+                {
+                    var item = new SelectListItem
+                    {
+                        Value = invtory.Id.ToString(),
+                        Text = invtory.Name
+                    };
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
         #endregion
 
         public string GetProperRoleName(string roleName)

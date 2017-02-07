@@ -49,6 +49,9 @@ namespace ProjectSS.Web.Models
         public decimal TotalExpenseBilledToClient { get; set; }
         public decimal TotalExpenseDirectCost { get; set; }
 
+        public decimal TotalEquipmentBilledToClient { get; set; }
+        public decimal TotalEquipmentDirectCost { get; set; }
+
         public int CRMId { get; set; }
         public int Id { get; set; }
 
@@ -104,6 +107,7 @@ namespace ProjectSS.Web.Models
 
     public class ProposalEquipmentModel
     {
+        public string Name { get; set; }
         public int Hours { get; set; }
         public int Months { get; set; }
         public decimal Rate { get; set; }
@@ -111,6 +115,8 @@ namespace ProjectSS.Web.Models
         public decimal DirectCost { get; set; }
         public decimal BilledToClient { get; set; }
         public int TotalHours { get; set; }
+        public bool IsDeleted { get; set; }
+
         public int Id { get; set; }
         public int ProposalId { get; set; }
         public int InventoryId { get; set; }

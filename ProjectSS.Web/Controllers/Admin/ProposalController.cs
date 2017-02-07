@@ -51,6 +51,10 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     proposal.Expenses = _mapper.Map<List<ProposalExpenseModel>>(getValues.ProposalExpenses);
                 }
+                if (getValues.ProposalEquipments?.Any() ?? false)
+                {
+                    proposal.Equipments = _mapper.Map<List<ProposalEquipmentModel>>(getValues.ProposalEquipments);
+                }
                 var mergeValues = await MergeToProposal(proposal);
                 await DropdownListForUsers();
                 await SetListItemsAsync(mergeValues);
@@ -153,6 +157,31 @@ namespace ProjectSS.Web.Controllers.Admin
                 else
                 {
                     TempData["Error"] = "Unable to delete operating expense due to some internal issues.";
+                }
+                return RedirectToAction("Manage", new { @id = proposalId });
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteEquipment(int id, int proposalId)
+        {
+            try
+            {
+                await _repo.DeleteProposalEquipment(id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = $"Successfully deleted equipment";
+                }
+                else
+                {
+                    TempData["Error"] = "Unable to delete equipment due to some internal issues.";
                 }
                 return RedirectToAction("Manage", new { @id = proposalId });
             }
@@ -271,6 +300,29 @@ namespace ProjectSS.Web.Controllers.Admin
         }
 
         [HttpPost]
+        public async Task<ActionResult> CreateEquipment(ProposalEquipmentModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _repo.AddProposalEquipment(_mapper.Map<ProposalEquipment>(model), CurrentUser.Id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = string.Format("Equipment has been successfully Created");
+                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                }
+                TempData["Error"] = "Unable to create equipment due to some internal issues.";
+            }
+            foreach (var value in ModelState.Values)
+            {
+                foreach (var error in value.Errors)
+                {
+                    TempData["Error"] = error.ErrorMessage;
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public async Task<ActionResult> Create(ProposalViewModel model)
         {
             if (model.CRMId != 0)
@@ -334,8 +386,41 @@ namespace ProjectSS.Web.Controllers.Admin
                 }
                 model.Expenses = expenseResult;
                 #endregion
+
+                #region Equipment
+                var equipmentResult = model.Equipments.Where(c => !c.IsDeleted).ToList();
+                if (equipmentResult?.Any() ?? false)
+                {
+                    equipmentResult = await MapNeedFieldForEquipmentModel(equipmentResult);
+                    model.TotalEquipmentBilledToClient = equipmentResult.Select(m => m.BilledToClient).Sum();
+                    model.TotalEquipmentDirectCost = equipmentResult.Select(m => m.DirectCost).Sum();
+                }
+                model.Expenses = expenseResult;
+                #endregion
             }
             return model;
+        }
+
+        private async Task<List<ProposalEquipmentModel>> MapNeedFieldForEquipmentModel(List<ProposalEquipmentModel> equipments)
+        {
+            if (equipments?.Any() ?? false)
+            {
+                foreach (var equipment in equipments)
+                {
+                    if (equipment != null)
+                    {
+                        if(equipment.InventoryId > 0)
+                        {
+                            var inventory = await _repo.GetInventoryByIdAsync(equipment.InventoryId);
+                            equipment.Name = inventory.Name;
+                        }
+                        equipment.TotalHours = equipment.Hours * equipment.Months;
+                        equipment.DirectCost = equipment.Rate * equipment.TotalHours;
+                        equipment.BilledToClient = equipment.DirectCost * equipment.Factor;
+                    }
+                }
+            }
+            return equipments;
         }
 
         private List<ProposalExpenseModel> MapNeedFieldForProposalExpense(List<ProposalExpenseModel> expenses)
@@ -415,6 +500,7 @@ namespace ProjectSS.Web.Controllers.Admin
         private async Task DropdownListForUsers()
         {
             ViewBag.Users = ViewBag.Users ?? await GetUsersAsync();
+            ViewBag.Inventories = ViewBag.Inventories ?? await GetInventoriesAsync();
         }
         #endregion
 
