@@ -76,6 +76,14 @@ namespace ProjectSS.Db.Contracts
 
         #endregion
 
+        #region Proposal Equipment
+
+        Task<List<ProposalEquipment>> GetProposalEquipmentsByProposalIdAsync(int proposalId);
+        void AddProposalEquipment(ProposalEquipment proposalEquipment, string userId);
+        Task DeleteProposalEquipment(int id);
+
+        #endregion
+
         #region Inventory
         Task<List<Inventory>> GetInventoriesAsync();
         Task<Inventory> GetInventoryByIdAsync(int id);

@@ -404,6 +404,34 @@ namespace ProjectSS.Db
 
         #endregion
 
+        #region Proposal Equipment
+
+        public async Task<List<ProposalEquipment>> GetProposalEquipmentsByProposalIdAsync(int proposalId)
+        {
+            return await _db.ProposalEquipments.Where(p => !p.IsDeleted && p.ProposalId == proposalId).ToListAsync();
+        }
+
+        public void AddProposalEquipment(ProposalEquipment proposalEquipment, string userId)
+        {
+            _db.UserId = userId;
+            _db.ProposalEquipments.Add(proposalEquipment);
+        }
+
+        public async Task<ProposalEquipment> GetProposalEquipmentByIdAsync(int id)
+        {
+            return await _db.ProposalEquipments.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task DeleteProposalEquipment(int id)
+        {
+            var equipment = await GetProposalEquipmentByIdAsync(id);
+            equipment.IsDeleted = true;
+            _db.Entry(equipment).State = EntityState.Modified;
+        }
+
+
+        #endregion
+
         #region Inventory
 
         public async Task<List<Inventory>> GetInventoriesAsync()

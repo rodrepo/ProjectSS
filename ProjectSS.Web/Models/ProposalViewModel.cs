@@ -13,7 +13,7 @@ namespace ProjectSS.Web.Models
            Contractors = new List<ProposalContractorModel>();
            Expenses = new List<ProposalExpenseModel>();
            Staffs = new List<ProposalStaffModel>();
-           Equipments = new List<ProposalEquipment>();
+           Equipments = new List<ProposalEquipmentModel>();
         }
 
         public string ContactPerson { get; set; }
@@ -55,7 +55,7 @@ namespace ProjectSS.Web.Models
         public List<ProposalContractorModel> Contractors { get; set; }
         public List<ProposalExpenseModel> Expenses { get; set; }
         public List<ProposalStaffModel> Staffs { get; set; }
-        public List<ProposalEquipment> Equipments { get; set; }
+        public List<ProposalEquipmentModel> Equipments { get; set; }
     }
 
 
