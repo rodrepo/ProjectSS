@@ -14,6 +14,7 @@ namespace ProjectSS.Web.Models
            Expenses = new List<ProposalExpenseModel>();
            Staffs = new List<ProposalStaffModel>();
            Equipments = new List<ProposalEquipmentModel>();
+           Laboratories = new List<ProposalLaboratoyModel>();
         }
 
         public string ContactPerson { get; set; }
@@ -52,6 +53,9 @@ namespace ProjectSS.Web.Models
         public decimal TotalEquipmentBilledToClient { get; set; }
         public decimal TotalEquipmentDirectCost { get; set; }
 
+        public decimal TotalLaboratoryBilledToClient { get; set; }
+        public decimal TotalLaboratoryDirectCost { get; set; }
+
         public int CRMId { get; set; }
         public int Id { get; set; }
 
@@ -59,6 +63,7 @@ namespace ProjectSS.Web.Models
         public List<ProposalExpenseModel> Expenses { get; set; }
         public List<ProposalStaffModel> Staffs { get; set; }
         public List<ProposalEquipmentModel> Equipments { get; set; }
+        public List<ProposalLaboratoyModel> Laboratories { get; set; }
     }
 
 
@@ -120,5 +125,21 @@ namespace ProjectSS.Web.Models
         public int Id { get; set; }
         public int ProposalId { get; set; }
         public int InventoryId { get; set; }
+    }
+
+    public class ProposalLaboratoryModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Parameters { get; set; }
+        public int NoOfStations { get; set; }
+        public string Replicate { get; set; }
+        public int Cost { get; set; }
+        public decimal Factor { get; set; }
+
+        public decimal DirectCost { get; set; }
+        public decimal BilledToClient { get; set; }
+
+        public int ProposalId { get; set; }
     }
 }
