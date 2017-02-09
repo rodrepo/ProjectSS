@@ -432,6 +432,32 @@ namespace ProjectSS.Db
 
         #endregion
 
+        #region Proposal Laboratory
+        public async Task<List<ProposalLaboratory>> GetProposalLaboratoriesByProposalAsync(int proposalId)
+        {
+            return await _db.ProposalLaboratories.Where(p => !p.IsDeleted && p.Id == proposalId).ToListAsync();
+        }
+
+        public void AddProposalLaboratory(ProposalLaboratory proposalLaboratory, string userId)
+        {
+            _db.UserId = userId;
+            _db.ProposalLaboratories.Add(proposalLaboratory);
+        }
+
+        public async Task<ProposalLaboratory> GetProposalLaboratoryByIdAync(int id)
+        {
+            return await _db.ProposalLaboratories.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
+
+        }
+
+        public async Task DeleteProposalLaboratory(int id)
+        {
+            var laboratory = await GetProposalLaboratoryByIdAync(id);
+            laboratory.IsDeleted = true;
+            _db.Entry(laboratory).State = EntityState.Modified;
+        }
+        #endregion
+
         #region Inventory
 
         public async Task<List<Inventory>> GetInventoriesAsync()

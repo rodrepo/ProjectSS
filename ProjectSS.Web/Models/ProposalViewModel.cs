@@ -14,7 +14,7 @@ namespace ProjectSS.Web.Models
            Expenses = new List<ProposalExpenseModel>();
            Staffs = new List<ProposalStaffModel>();
            Equipments = new List<ProposalEquipmentModel>();
-           Laboratories = new List<ProposalLaboratoyModel>();
+           Laboratories = new List<ProposalLaboratoryModel>();
         }
 
         public string ContactPerson { get; set; }
@@ -63,7 +63,7 @@ namespace ProjectSS.Web.Models
         public List<ProposalExpenseModel> Expenses { get; set; }
         public List<ProposalStaffModel> Staffs { get; set; }
         public List<ProposalEquipmentModel> Equipments { get; set; }
-        public List<ProposalLaboratoyModel> Laboratories { get; set; }
+        public List<ProposalLaboratoryModel> Laboratories { get; set; }
     }
 
 

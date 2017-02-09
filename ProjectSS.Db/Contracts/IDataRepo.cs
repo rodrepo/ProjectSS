@@ -84,6 +84,13 @@ namespace ProjectSS.Db.Contracts
 
         #endregion
 
+        #region Proposal Laboratory
+        Task<List<ProposalLaboratory>> GetProposalLaboratoriesByProposalAsync(int proposalId);
+        void AddProposalLaboratory(ProposalLaboratory proposalLaboratory, string userId);
+        Task DeleteProposalLaboratory(int id);
+
+        #endregion
+
         #region Inventory
         Task<List<Inventory>> GetInventoriesAsync();
         Task<Inventory> GetInventoryByIdAsync(int id);
