@@ -36,6 +36,7 @@ namespace ProjectSS.Db.Entities
         public virtual ICollection<ProposalContractor> ProposalContractors { get; set; }
         public virtual ICollection<ProposalExpense> ProposalExpenses { get; set; }
         public virtual ICollection<ProposalEquipment> ProposalEquipments { get; set; }
+        public virtual ICollection<ProposalLaboratory> ProposalLaboratories { get; set; }
 
         public Proposal()
         {
@@ -43,6 +44,7 @@ namespace ProjectSS.Db.Entities
             ProposalContractors = new HashSet<ProposalContractor>();
             ProposalExpenses = new HashSet<ProposalExpense>();
             ProposalEquipments = new HashSet<ProposalEquipment>();
+            ProposalLaboratories = new HashSet<ProposalLaboratory>();
         }
     }
 }

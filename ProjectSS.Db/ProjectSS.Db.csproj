@@ -76,6 +76,7 @@
     <Compile Include="Entities\ProposalContractor.cs" />
     <Compile Include="Entities\ProposalEquipment.cs" />
     <Compile Include="Entities\ProposalExpense.cs" />
+    <Compile Include="Entities\ProposalLaboratory.cs" />
     <Compile Include="Entities\ProposalStaff.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Migrations\201701171120473_AddsUserTable.cs" />
@@ -105,6 +106,10 @@
     <Compile Include="Migrations\201702071219153_AddsProposalEquipmentTable.cs" />
     <Compile Include="Migrations\201702071219153_AddsProposalEquipmentTable.Designer.cs">
       <DependentUpon>201702071219153_AddsProposalEquipmentTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702091201366_AddsProposalLaboratoryTable.cs" />
+    <Compile Include="Migrations\201702091201366_AddsProposalLaboratoryTable.Designer.cs">
+      <DependentUpon>201702091201366_AddsProposalLaboratoryTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -140,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702071219153_AddsProposalEquipmentTable.resx">
       <DependentUpon>201702071219153_AddsProposalEquipmentTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702091201366_AddsProposalLaboratoryTable.resx">
+      <DependentUpon>201702091201366_AddsProposalLaboratoryTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
