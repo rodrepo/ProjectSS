@@ -327,6 +327,29 @@ namespace ProjectSS.Web.Controllers.Admin
         }
 
         [HttpPost]
+        public async Task<ActionResult> CreateLaboratory(ProposalLaboratoryModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _repo.AddProposalLaboratory(_mapper.Map<ProposalLaboratory>(model), CurrentUser.Id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = string.Format("Laboratory has been successfully Created");
+                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                }
+                TempData["Error"] = "Unable to create laboratory due to some internal issues.";
+            }
+            foreach (var value in ModelState.Values)
+            {
+                foreach (var error in value.Errors)
+                {
+                    TempData["Error"] = error.ErrorMessage;
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public async Task<ActionResult> Create(ProposalViewModel model)
         {
             if (model.CRMId != 0)
