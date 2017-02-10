@@ -140,6 +140,7 @@ namespace ProjectSS.Web.Models
         public decimal DirectCost { get; set; }
         public decimal BilledToClient { get; set; }
 
+        public bool IsDeleted { get; set; }
         public int ProposalId { get; set; }
     }
 }

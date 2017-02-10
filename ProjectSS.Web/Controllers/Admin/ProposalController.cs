@@ -55,6 +55,10 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     proposal.Equipments = _mapper.Map<List<ProposalEquipmentModel>>(getValues.ProposalEquipments);
                 }
+                if(getValues.ProposalLaboratories?.Any() ?? false)
+                {
+                    proposal.Laboratories = _mapper.Map<List<ProposalLaboratoryModel>>(getValues.ProposalLaboratories);
+                }
                 var mergeValues = await MergeToProposal(proposal);
                 await DropdownListForUsers();
                 await SetListItemsAsync(mergeValues);
@@ -387,6 +391,16 @@ namespace ProjectSS.Web.Controllers.Admin
                 model.Expenses = expenseResult;
                 #endregion
 
+                #region Laboratory
+                var laboratoryResult = model.Laboratories.Where(l => !l.IsDeleted).ToList();
+                if(laboratoryResult?.Any() ?? false)
+                {
+                    laboratoryResult = MapNeedFieldForLaboratoryModel(laboratoryResult);
+                    model.TotalLaboratoryBilledToClient = laboratoryResult.Select(l => l.BilledToClient).Sum();
+                    model.TotalLaboratoryDirectCost = laboratoryResult.Select(l => l.DirectCost).Sum();
+                }
+                #endregion
+
                 #region Equipment
                 var equipmentResult = model.Equipments.Where(c => !c.IsDeleted).ToList();
                 if (equipmentResult?.Any() ?? false)
@@ -399,6 +413,22 @@ namespace ProjectSS.Web.Controllers.Admin
                 #endregion
             }
             return model;
+        }
+
+        private List<ProposalLaboratoryModel> MapNeedFieldForLaboratoryModel(List<ProposalLaboratoryModel> laboratories)
+        {
+            if (laboratories?.Any() ?? false)
+            {
+                foreach (var laboratory in laboratories)
+                {
+                    if (laboratory != null)
+                    {
+                        laboratory.DirectCost = laboratory.Cost * laboratory.NoOfStations * int.Parse(laboratory.Replicate);
+                        laboratory.BilledToClient = laboratory.DirectCost * laboratory.Factor;
+                    }
+                }
+            }
+            return laboratories;
         }
 
         private async Task<List<ProposalEquipmentModel>> MapNeedFieldForEquipmentModel(List<ProposalEquipmentModel> equipments)
