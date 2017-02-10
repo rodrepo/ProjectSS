@@ -98,6 +98,31 @@ namespace ProjectSS.Web.Controllers.Admin
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteLaboratory(int id, int proposalId)
+        {
+            try
+            {
+                await _repo.DeleteProposalLaboratory(id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = $"Successfully deleted laboratory";
+                }
+                else
+                {
+                    TempData["Error"] = "Unable to delete laboratory due to some internal issues.";
+                }
+                return RedirectToAction("Manage", new { @id = proposalId });
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int id)
         {
             try
