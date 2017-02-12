@@ -156,6 +156,7 @@ namespace ProjectSS.Web.Models
         public string Note { get; set; }
         public decimal Cost { get; set; }
         public decimal Factor { get; set; }
+        public bool IsDeleted { get; set; }
         public decimal BilledToClient { get; set; }
 
         public int Id { get; set; }

@@ -59,6 +59,10 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     proposal.Laboratories = _mapper.Map<List<ProposalLaboratoryModel>>(getValues.ProposalLaboratories);
                 }
+                if (getValues.ProposalCommissions?.Any() ?? false)
+                {
+                    proposal.Commissions = _mapper.Map<List<ProposalCommissionModel>>(getValues.ProposalCommissions);
+                }
                 var mergeValues = await MergeToProposal(proposal);
                 await DropdownListForUsers();
                 await SetListItemsAsync(mergeValues);
@@ -222,6 +226,31 @@ namespace ProjectSS.Web.Controllers.Admin
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteCommission(int id, int proposalId)
+        {
+            try
+            {
+                await _repo.DeleteProposalCommission(id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = $"Successfully deleted commission/representation";
+                }
+                else
+                {
+                    TempData["Error"] = "Unable to delete commission/representation due to some internal issues.";
+                }
+                return RedirectToAction("Manage", new { @id = proposalId });
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
+
         #endregion
 
         #region Create
@@ -352,6 +381,29 @@ namespace ProjectSS.Web.Controllers.Admin
         }
 
         [HttpPost]
+        public async Task<ActionResult> CreateCommission(ProposalCommissionModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _repo.AddProposalCommission(_mapper.Map<ProposalCommission>(model), CurrentUser.Id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = string.Format("Cmmission/Representations has been successfully Created");
+                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                }
+                TempData["Error"] = "Unable to create Cmmission/Representations due to some internal issues.";
+            }
+            foreach (var value in ModelState.Values)
+            {
+                foreach (var error in value.Errors)
+                {
+                    TempData["Error"] = error.ErrorMessage;
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public async Task<ActionResult> CreateLaboratory(ProposalLaboratoryModel model)
         {
             if (ModelState.IsValid)
@@ -449,6 +501,16 @@ namespace ProjectSS.Web.Controllers.Admin
                 }
                 #endregion
 
+                #region Commision
+                var commissionResult = model.Commissions.Where(l => !l.IsDeleted).ToList();
+                if (commissionResult?.Any() ?? false)
+                {
+                    commissionResult = MapNeedFieldForCommissionModel(commissionResult);
+                    model.TotalCommissionBilledToClient = commissionResult.Select(l => l.BilledToClient).Sum();
+                    model.TotalCommissionDirectCost = commissionResult.Select(l => l.Cost).Sum();
+                }
+                #endregion
+
                 #region Equipment
                 var equipmentResult = model.Equipments.Where(c => !c.IsDeleted).ToList();
                 if (equipmentResult?.Any() ?? false)
@@ -461,6 +523,21 @@ namespace ProjectSS.Web.Controllers.Admin
                 #endregion
             }
             return model;
+        }
+
+        private List<ProposalCommissionModel> MapNeedFieldForCommissionModel(List<ProposalCommissionModel> commissions)
+        {
+            if (commissions?.Any() ?? false)
+            {
+                foreach (var commission in commissions)
+                {
+                    if (commission != null)
+                    {
+                        commission.BilledToClient = commission.Cost * commission.Factor;
+                    }
+                }
+            }
+            return commissions;
         }
 
         private List<ProposalLaboratoryModel> MapNeedFieldForLaboratoryModel(List<ProposalLaboratoryModel> laboratories)
