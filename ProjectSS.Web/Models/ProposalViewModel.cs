@@ -14,6 +14,8 @@ namespace ProjectSS.Web.Models
            Expenses = new List<ProposalExpenseModel>();
            Staffs = new List<ProposalStaffModel>();
            Equipments = new List<ProposalEquipmentModel>();
+           Laboratories = new List<ProposalLaboratoryModel>();
+           Commissions = new List<ProposalCommissionModel>();
         }
 
         public string ContactPerson { get; set; }
@@ -52,6 +54,29 @@ namespace ProjectSS.Web.Models
         public decimal TotalEquipmentBilledToClient { get; set; }
         public decimal TotalEquipmentDirectCost { get; set; }
 
+        public decimal TotalLaboratoryBilledToClient { get; set; }
+        public decimal TotalLaboratoryDirectCost { get; set; }
+
+        public decimal TotalCommissionBilledToClient { get; set; }
+        public decimal TotalCommissionDirectCost { get; set; }
+
+        public decimal DirectCost { get; set; }
+        public decimal CostWithFactor { get; set; }
+        public decimal NegotiationAllowance { get; set; }
+        public decimal OtherRevenues { get; set; }
+        public decimal TotalBilledToClient { get; set; }
+        public decimal Vat { get; set; }
+        public decimal TotalRevenue { get; set; }
+        public decimal NetFactor { get; set; }
+        public string CreatedBy { get; set; }
+        public string CreatedByName { get; set; }
+        public string ModifiedBy { get; set; }
+        public string ModifiedByName { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+
+
         public int CRMId { get; set; }
         public int Id { get; set; }
 
@@ -59,6 +84,9 @@ namespace ProjectSS.Web.Models
         public List<ProposalExpenseModel> Expenses { get; set; }
         public List<ProposalStaffModel> Staffs { get; set; }
         public List<ProposalEquipmentModel> Equipments { get; set; }
+        public List<ProposalLaboratoryModel> Laboratories { get; set; }
+        public List<ProposalCommissionModel> Commissions { get; set; }
+
     }
 
 
@@ -120,5 +148,35 @@ namespace ProjectSS.Web.Models
         public int Id { get; set; }
         public int ProposalId { get; set; }
         public int InventoryId { get; set; }
+    }
+
+    public class ProposalLaboratoryModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Parameters { get; set; }
+        public int NoOfStations { get; set; }
+        public string Replicate { get; set; }
+        public int Cost { get; set; }
+        public decimal Factor { get; set; }
+
+        public decimal DirectCost { get; set; }
+        public decimal BilledToClient { get; set; }
+
+        public bool IsDeleted { get; set; }
+        public int ProposalId { get; set; }
+    }
+
+    public class ProposalCommissionModel
+    {
+        public string Name { get; set; }
+        public string Note { get; set; }
+        public decimal Cost { get; set; }
+        public decimal Factor { get; set; }
+        public bool IsDeleted { get; set; }
+        public decimal BilledToClient { get; set; }
+
+        public int Id { get; set; }
+        public int ProposalId { get; set; }
     }
 }

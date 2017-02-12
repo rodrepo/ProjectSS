@@ -293,6 +293,10 @@ namespace ProjectSS.Db
             latestProposal.Title = proposal.Title;
             latestProposal.Cost = proposal.Cost;
             latestProposal.Description = proposal.Description;
+            latestProposal.BDId = proposal.BDId;
+            latestProposal.THId = proposal.THId;
+            latestProposal.TSId = proposal.TSId;
+            latestProposal.NegotiationAllowance = proposal.NegotiationAllowance;
             return latestProposal;
         }
 
@@ -312,7 +316,7 @@ namespace ProjectSS.Db
             {
                 keys.Reference = "PRP-1";
                 keys.Number = 1;
-            }
+            }   
             return keys;
         }
 
@@ -430,6 +434,57 @@ namespace ProjectSS.Db
         }
 
 
+        #endregion
+
+        #region Proposal Laboratory
+        public async Task<List<ProposalLaboratory>> GetProposalLaboratoriesByProposalAsync(int proposalId)
+        {
+            return await _db.ProposalLaboratories.Where(p => !p.IsDeleted && p.Id == proposalId).ToListAsync();
+        }
+
+        public void AddProposalLaboratory(ProposalLaboratory proposalLaboratory, string userId)
+        {
+            _db.UserId = userId;
+            _db.ProposalLaboratories.Add(proposalLaboratory);
+        }
+
+        public async Task<ProposalLaboratory> GetProposalLaboratoryByIdAync(int id)
+        {
+            return await _db.ProposalLaboratories.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
+
+        }
+
+        public async Task DeleteProposalLaboratory(int id)
+        {
+            var laboratory = await GetProposalLaboratoryByIdAync(id);
+            laboratory.IsDeleted = true;
+            _db.Entry(laboratory).State = EntityState.Modified;
+        }
+        #endregion
+        
+        #region Commission
+        public async Task<List<ProposalCommission>> GetProposalCommissionsByProposalIdAsync(int proposalId)
+        {
+            return await _db.ProposalCommissions.Where(c => c.ProposalId == proposalId && !c.IsDeleted).ToListAsync();
+        }
+
+        public void AddProposalCommission(ProposalCommission proposalCommission, string userId)
+        {
+            _db.UserId = userId;
+            _db.ProposalCommissions.Add(proposalCommission);
+        }
+
+        public async Task<ProposalCommission> GetProposalCommissionByIdAsync(int id)
+        {
+            return await _db.ProposalCommissions.Where(p => p.Id == id && !p.IsDeleted).FirstOrDefaultAsync();
+        }
+
+        public async Task DeleteProposalCommission(int id)
+        {
+            var commission = await GetProposalCommissionByIdAsync(id);
+            commission.IsDeleted = true;
+            _db.Entry(commission).State = EntityState.Modified;
+        }
         #endregion
 
         #region Inventory

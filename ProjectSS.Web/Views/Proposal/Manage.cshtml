@@ -16,9 +16,6 @@
     @Html.HiddenFor(m => m.ProjectNumber);
     @Html.HiddenFor(m => m.ProposalNumber);
     @Html.HiddenFor(m => m.RevisionNumber);
-    @Html.HiddenFor(m => m.BDId);
-    @Html.HiddenFor(m => m.THId);
-    @Html.HiddenFor(m => m.TSId);
     @Html.HiddenFor(m => m.Id);
     @Html.HiddenFor(m => m.Amount);
 
@@ -29,18 +26,18 @@
                     <h4>Proposal Number: @Model.ProposalNumber</h4>
                     @if (!Model.RevisionNumber.IsEmpty())
                     {
-                    <h4>@Model.RevisionNumber</h4>
+                        <h4>@Model.RevisionNumber</h4>
                     }
                 </div>
                 <div class="col-sm-6">
                     <div class="pull-right" style="padding-top:10px">
                         @if (canAccessOM == true || canAccessBD == true)
                         {
-                        <button type="submit" class="btn btn-success btn-xs">Update</button>
+                            <button type="submit" class="btn btn-success btn-xs">Update</button>
                         }
                         @if (canAccessOM == true)
                         {
-                        <button type="button" data-toggle="modal" data-target="#deletemodal" class="btn btn-danger btn-xs">Delete</button>
+                            <button type="button" data-toggle="modal" data-target="#deletemodal" class="btn btn-danger btn-xs">Delete</button>
                         }
                         &nbsp;<a type="button" class="btn btn-info btn-xs" href="@Url.Action("Index", "Proposal")">Back</a>
                     </div>
@@ -70,20 +67,25 @@
                     @Html.TextBoxFor(model => model.ContactPersonPosition, new { @class = "form-control", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.ContactPersonPosition, "", new { @class = "text-danger" })
                 </div>
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-3">
                     <label>Industry</label>
                     @Html.TextBoxFor(model => model.Industry, new { @class = "form-control", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.Industry, "", new { @class = "text-danger" })
                 </div>
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-3">
                     <label>Location</label>
                     @Html.TextBoxFor(model => model.Location, new { @class = "form-control", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
                 </div>
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-3">
                     <label>Project Cost</label>
                     @Html.TextBoxFor(model => model.Cost, new { @class = "form-control", @Value = string.Format("{0:P" + " " + "#,0.00}", Model.Cost), @required = "required" })
                     @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label>Negotiation Allowance</label>
+                    @Html.TextBoxFor(model => model.NegotiationAllowance, new { @class = "form-control", @Value = string.Format("{0:P" + " " + "#,0.00}", Model.NegotiationAllowance), @required = "required" })
+                    @Html.ValidationMessageFor(model => model.NegotiationAllowance, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-sm-12">
                     <label>Description</label>
@@ -92,15 +94,15 @@
                 </div>
                 <div class="form-group col-sm-4">
                     <label>Business Developement</label>
-                    @Html.DropDownListFor(model => model.BDId, (List<SelectListItem>)ViewBag.BDs, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.DropDownListFor(model => model.BDId, (List<SelectListItem>)ViewBag.BDs, new { @class = "form-control" })
                 </div>
                 <div class="form-group col-sm-4">
                     <label>Technical Head</label>
-                    @Html.DropDownListFor(model => model.THId, (List<SelectListItem>)ViewBag.THs, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.DropDownListFor(model => model.THId, (List<SelectListItem>)ViewBag.THs, new { @class = "form-control" })
                 </div>
                 <div class="form-group col-sm-4">
                     <label>Technical Specialist</label>
-                    @Html.DropDownListFor(model => model.TSId, (List<SelectListItem>)ViewBag.TSs, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.DropDownListFor(model => model.TSId, (List<SelectListItem>)ViewBag.TSs, new { @class = "form-control" })
                 </div>
             </form>
         </div>
@@ -118,7 +120,7 @@
                     <div class="pull-right" style="padding-top:10px">
                         @if (canAccessOM == true || canAccessBD == true)
                         {
-                        <button type="submit" data-toggle="modal" data-target="#createStaff" class="btn btn-success btn-xs">New</button>
+                            <button type="submit" data-toggle="modal" data-target="#createStaff" class="btn btn-success btn-xs">New</button>
                         }
                     </div>
                 </div>
@@ -145,29 +147,29 @@
                 {
                     foreach (var u in Model.Staffs)
                     {
-                    <tr>
-                        <td>@u.Name</td>
-                        <td>@u.ManHours</td>
-                        <td>@u.ManMonths</td>
-                        <td>@u.TotalManHours</td>
-                        <td>P @u.BillingRate.ToString("0,00.00")</td>
-                        <td>P @u.DirectCost.ToString("0,00.00")</td>
-                        <td>@u.Factor.ToString("0.0#")</td>
-                        <td>P @u.BilledToClient.ToString("0,00.00")</td>
-                        <td><button type="submit" data-toggle="modal" data-target="#deleteStaff-@u.Id" class="btn btn-danger btn-xs"></button></td>
-                    </tr>
+                            <tr>
+                                <td>@u.Name</td>
+                                <td>@u.ManHours</td>
+                                <td>@u.ManMonths</td>
+                                <td>@u.TotalManHours</td>
+                                <td>P @u.BillingRate.ToString("0,00.00")</td>
+                                <td>P @u.DirectCost.ToString("0,00.00")</td>
+                                <td>@u.Factor.ToString("0.0#")</td>
+                                <td>P @u.BilledToClient.ToString("0,00.00")</td>
+                                <td><button type="submit" data-toggle="modal" data-target="#deleteStaff-@u.Id" class="btn btn-danger btn-xs"></button></td>
+                            </tr>
                         }
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><i><b>SubTotal</b></i></td>
-                        <td>P @Model.TotalStaffDirectCost.ToString("0,00.00")</td>
-                        <td></td>
-                        <td>P @Model.TotalStaffBilledToClient.ToString("0,00.00")</td>
-                        <td></td>
-                    </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><i><b>SubTotal</b></i></td>
+                            <td>P @Model.TotalStaffDirectCost.ToString("0,00.00")</td>
+                            <td></td>
+                            <td>P @Model.TotalStaffBilledToClient.ToString("0,00.00")</td>
+                            <td></td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -214,7 +216,7 @@
                     <div class="pull-right" style="padding-top:10px">
                         @if (canAccessOM == true || canAccessBD == true)
                         {
-                        <button type="submit" data-toggle="modal" data-target="#createContractor" class="btn btn-success btn-xs">New</button>
+                            <button type="submit" data-toggle="modal" data-target="#createContractor" class="btn btn-success btn-xs">New</button>
                         }
                     </div>
                 </div>
@@ -240,27 +242,27 @@
                 {
                     foreach (var u in Model.Contractors)
                     {
-                    <tr>
-                        <td>@u.Name</td>
-                        <td>@u.Description</td>
-                        <td>@u.NoOfDay</td>
-                        <td>P @u.Rate.ToString("0,00.00")</td>
-                        <td>P @u.DirectCost.ToString("0,00.00")</td>
-                        <td>@u.Factor.ToString("0.0#")</td>
-                        <td>P @u.BilledToClient.ToString("0,00.00")</td>
-                        <td><button type="submit" data-toggle="modal" data-target="#deleteStaff-@u.Id" class="btn btn-danger btn-xs"></button></td>
-                    </tr>
+                            <tr>
+                                <td>@u.Name</td>
+                                <td>@u.Description</td>
+                                <td>@u.NoOfDay</td>
+                                <td>P @u.Rate.ToString("0,00.00")</td>
+                                <td>P @u.DirectCost.ToString("0,00.00")</td>
+                                <td>@u.Factor.ToString("0.0#")</td>
+                                <td>P @u.BilledToClient.ToString("0,00.00")</td>
+                                <td><button type="submit" data-toggle="modal" data-target="#deleteStaff-@u.Id" class="btn btn-danger btn-xs"></button></td>
+                            </tr>
                         }
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><i><b>SubTotal</b></i></td>
-                        <td>P @Model.TotalContractorDirectCost.ToString("0,00.00")</td>
-                        <td></td>
-                        <td>P @Model.TotalContractorBilledToClient.ToString("0,00.00")</td>
-                        <td></td>
-                    </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><i><b>SubTotal</b></i></td>
+                            <td>P @Model.TotalContractorDirectCost.ToString("0,00.00")</td>
+                            <td></td>
+                            <td>P @Model.TotalContractorBilledToClient.ToString("0,00.00")</td>
+                            <td></td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -363,17 +365,17 @@
                         {
                             if (u.IsDeleted == false)
                             {
-                            <tr>
-                                <td>@u.Name</td>
-                                <td>@u.Hours</td>
-                                <td>@u.Months</td>
-                                <td>@u.TotalHours</td>
-                                <td>P @u.Rate.ToString("0,00.00")</td>
-                                <td>P @u.DirectCost.ToString("0,00.00")</td>
-                                <td>@u.Factor.ToString("0.0#")</td>
-                                <td>P @u.BilledToClient.ToString("0,00.00")</td>
-                                <td><button type="submit" data-toggle="modal" data-target="#deleteEquipment-@u.Id" class="btn btn-danger btn-xs"></button></td>
-                            </tr>
+                                <tr>
+                                    <td>@u.Name</td>
+                                    <td>@u.Hours</td>
+                                    <td>@u.Months</td>
+                                    <td>@u.TotalHours</td>
+                                    <td>P @u.Rate.ToString("0,00.00")</td>
+                                    <td>P @u.DirectCost.ToString("0,00.00")</td>
+                                    <td>@u.Factor.ToString("0.0#")</td>
+                                    <td>P @u.BilledToClient.ToString("0,00.00")</td>
+                                    <td><button type="submit" data-toggle="modal" data-target="#deleteEquipment-@u.Id" class="btn btn-danger btn-xs"></button></td>
+                                </tr>
                             }
                         }
                         <tr>
@@ -392,27 +394,241 @@
             </table>
         </div>
     </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <h4>LABORATORY ANALYSIS</h4>
+                </div>
+                <div class="col-sm-6">
+                    <div class="pull-right" style="padding-top:10px">
+                        @if (canAccessOM == true || canAccessBD == true)
+                        {
+                            <button type="submit" data-toggle="modal" data-target="#createLaboratory" class="btn btn-success btn-xs">New</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="panel-body">
+            <table id="datatable" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>PARAMETERS</th>
+                        <th>NO. OF STATIONS</th>
+                        <th>REPLICATE</th>
+                        <th>UNIT COST</th>
+                        <th>DIRECT COST</th>
+                        <th>FACTOR</th>
+                        <th>BILLED TO CLIENT</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                {
+                    foreach (var u in Model.Laboratories)
+                    {
+                        if (u.IsDeleted == false)
+                        {
+                                <tr>
+                                    <td>@u.Parameters</td>
+                                    <td>@u.NoOfStations</td>
+                                    <td>@u.Replicate</td>
+                                    <td>@u.Cost</td>
+                                    <td>P @u.DirectCost.ToString("0,00.00")</td>
+                                    <td>@u.Factor.ToString("0.0#")</td>
+                                    <td>P @u.BilledToClient.ToString("0,00.00")</td>
+                                    <td><button type="submit" data-toggle="modal" data-target="#deleteLaboratory-@u.Id" class="btn btn-danger btn-xs"></button></td>
+                                </tr>
+                            }
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><i><b>SubTotal</b></i></td>
+                            <td>P @Model.TotalLaboratoryDirectCost.ToString("0,00.00")</td>
+                            <td></td>
+                            <td>P @Model.TotalLaboratoryBilledToClient.ToString("0,00.00")</td>
+                            <td></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <h4>COMMISSIONS/REPRESENTATIONS</h4>
+                </div>
+                <div class="col-sm-6">
+                    <div class="pull-right" style="padding-top:10px">
+                        @if (canAccessOM == true || canAccessBD == true)
+                        {
+                            <button type="submit" data-toggle="modal" data-target="#createCommission" class="btn btn-success btn-xs">New</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="panel-body">
+            <table id="datatable" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>NOTES/DESCRIPTION</th>
+                        <th>DIRECT COST</th>
+                        <th>FACTOR</th>
+                        <th>BILLED TO CLIENT</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                {
+                    foreach (var u in Model.Commissions)
+                    {
+                        if (u.IsDeleted == false)
+                        {
+                                <tr>
+                                    <td>@u.Name</td>
+                                    <td>@u.Note</td>
+                                    <td>P @u.Cost.ToString("0,00.00")</td>
+                                    <td>@u.Factor.ToString("0.0#")</td>
+                                    <td>P @u.BilledToClient.ToString("0,00.00")</td>
+                                    <td><button type="submit" data-toggle="modal" data-target="#deleteCommission-@u.Id" class="btn btn-danger btn-xs"></button></td>
+                                </tr>
+                            }
+                        }
+                        <tr>
+                            <td></td>
+                            <td><i><b>SubTotal</b></i></td>
+                            <td>P @Model.TotalCommissionDirectCost.ToString("0,00.00")</td>
+                            <td></td>
+                            <td>P @Model.TotalCommissionBilledToClient.ToString("0,00.00")</td>
+                            <td></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-2" style="text-align:right">
+                        <b>Prepared by:</b> 
+                    </div>
+                    <div class="col-sm-4">
+                       @Model.CreatedByName
+                    </div>
+                    <div class="col-sm-4" style="text-align:right">
+                        <b>Direct Cost:</b>
+                    </div>
+                    <div class="col-sm-2">
+                        P @Model.DirectCost.ToString("0,00.00")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2" style="text-align:right">
+                        <b>Prepared Date:</b>
+                    </div>
+                    <div class="col-sm-4">
+                        @Model.CreatedDate.Value.ToShortDateString()
+                    </div>
+                    <div class="col-sm-4" style="text-align:right">
+                        <b>Cost with Factor:</b> 
+                    </div>
+                    <div class="col-sm-2">
+                        P @Model.CostWithFactor.ToString("0,00.00")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2" style="text-align:right">
+                        <b>Modified by:</b>
+                    </div>
+                    <div class="col-sm-4">
+                        @Model.ModifiedByName
+                    </div>
+                    <div class="col-sm-4" style="text-align:right">
+                        <b>Other Revenues:</b> 
+                    </div>
+                    <div class="col-sm-2">
+                        P @Model.OtherRevenues.ToString("0,00.00")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2" style="text-align:right">
+                        <b>Modified Date:</b>
+                    </div>
+                    <div class="col-sm-4">
+                        @Model.ModifiedDate.Value.ToShortDateString()
+                    </div>
+                    <div class="col-sm-4" style="text-align:right">
+                        <b>Total Billed to Client:</b> 
+                    </div>
+                    <div class="col-sm-2">
+                        P @Model.TotalBilledToClient.ToString("0,00.00")
+                    </div>
+                </div>
+                <div class="row">
+                 <div class="col-sm-6"></div>
+                    <div class="col-sm-4" style="text-align:right">
+                        <b>12% VAT:</b> 
+                    </div>
+                    <div class="col-sm-2">
+                        P @Model.Vat.ToString("0,00.00")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"></div>
+                    <div class="col-sm-4" style="text-align:right">
+                        <b>Total Revenue:</b> 
+                    </div>
+                    <div class="col-sm-2">
+                        P @Model.TotalRevenue.ToString("0,00.00")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"></div>
+                    <div class="col-sm-4" style="text-align:right">
+                        <b>Net Factor:</b>
+                    </div>
+                    <div class="col-sm-2">
+                        P @Model.NetFactor.ToString("0,00.00")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 @section BodyArea {
+
     <div id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
         <div class="modal-dialog modal-sm">
             @using (Html.BeginForm("Delete", "Proposal", new { @id = Model.Id }, FormMethod.Post))
             {
-                @Html.AntiForgeryToken()
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 id="myModalLabelSmall" class="modal-title">Delete</h4>
-                    </div>
-                    <div class="modal-body"><span>Are you sure you want to delete this proposal?</span></div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success btn-xs">Yes</button>
-                        <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
-                    </div>
+            @Html.AntiForgeryToken()
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 id="myModalLabelSmall" class="modal-title">Delete</h4>
                 </div>
+                <div class="modal-body"><span>Are you sure you want to delete this proposal?</span></div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success btn-xs">Yes</button>
+                    <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
+                </div>
+            </div>
             }
         </div>
     </div>
@@ -420,22 +636,22 @@
         <div class="modal-dialog">
             @using (Html.BeginForm("CreateStaff", "Proposal", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
-                            <span aria-hidden="true"> </span>
-                        </button>
-                        <h4 id="myModalLabelSmall" class="modal-title">New Staff</h4>
-                    </div>
-                    <div class="modal-body">
-                        @Html.AntiForgeryToken()
-                        @Html.Partial("_Staff", new ProposalStaffModel { ProposalId = Model.Id })
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success btn-xs">Save</button>
-                        <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
-                    </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                        <span aria-hidden="true"> </span>
+                    </button>
+                    <h4 id="myModalLabelSmall" class="modal-title">New Staff</h4>
                 </div>
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    @Html.Partial("_Staff", new ProposalStaffModel { ProposalId = Model.Id })
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success btn-xs">Save</button>
+                    <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
+                </div>
+            </div>
             }
         </div>
     </div>
@@ -443,22 +659,22 @@
         <div class="modal-dialog">
             @using (Html.BeginForm("CreateContractor", "Proposal", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
-                            <span aria-hidden="true"> </span>
-                        </button>
-                        <h4 id="myModalLabelSmall" class="modal-title">New Contractor</h4>
-                    </div>
-                    <div class="modal-body">
-                        @Html.AntiForgeryToken()
-                        @Html.Partial("_Contractor", new ProposalContractorModel { ProposalId = Model.Id })
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success btn-xs">Save</button>
-                        <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
-                    </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                        <span aria-hidden="true"> </span>
+                    </button>
+                    <h4 id="myModalLabelSmall" class="modal-title">New Contractor</h4>
                 </div>
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    @Html.Partial("_Contractor", new ProposalContractorModel { ProposalId = Model.Id })
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success btn-xs">Save</button>
+                    <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
+                </div>
+            </div>
             }
         </div>
     </div>
@@ -466,50 +682,94 @@
         <div class="modal-dialog">
             @using (Html.BeginForm("CreateExpense", "Proposal", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
-                            <span aria-hidden="true"> </span>
-                        </button>
-                        <h4 id="myModalLabelSmall" class="modal-title">New expense</h4>
-                    </div>
-                    <div class="modal-body">
-                        @Html.AntiForgeryToken()
-                        @Html.Partial("_Expense", new ProposalExpenseModel { ProposalId = Model.Id })
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success btn-xs">Save</button>
-                        <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
-                    </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                        <span aria-hidden="true"> </span>
+                    </button>
+                    <h4 id="myModalLabelSmall" class="modal-title">New expense</h4>
                 </div>
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    @Html.Partial("_Expense", new ProposalExpenseModel { ProposalId = Model.Id })
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success btn-xs">Save</button>
+                    <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
+                </div>
+            </div>
             }
         </div>
     </div>
-
     <div id="createEquipment" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
         <div class="modal-dialog">
             @using (Html.BeginForm("CreateEquipment", "Proposal", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
-                            <span aria-hidden="true"> </span>
-                        </button>
-                        <h4 id="myModalLabelSmall" class="modal-title">New Equipment</h4>
-                    </div>
-                    <div class="modal-body">
-                        @Html.AntiForgeryToken()
-                        @Html.Partial("_Equipment", new ProposalEquipmentModel { ProposalId = Model.Id })
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success btn-xs">Save</button>
-                        <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
-                    </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                        <span aria-hidden="true"> </span>
+                    </button>
+                    <h4 id="myModalLabelSmall" class="modal-title">New Equipment</h4>
                 </div>
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    @Html.Partial("_Equipment", new ProposalEquipmentModel { ProposalId = Model.Id })
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success btn-xs">Save</button>
+                    <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
+                </div>
+            </div>
             }
         </div>
     </div>
-
+    <div id="createLaboratory" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
+        <div class="modal-dialog">
+            @using (Html.BeginForm("CreateLaboratory", "Proposal", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                        <span aria-hidden="true"> </span>
+                    </button>
+                    <h4 id="myModalLabelSmall" class="modal-title">New Laboratory Analysis</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    @Html.Partial("_Laboratory", new ProposalLaboratoryModel { ProposalId = Model.Id })
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success btn-xs">Save</button>
+                    <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+    <div id="createCommission" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
+        <div class="modal-dialog">
+            @using (Html.BeginForm("CreateCommission", "Proposal", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                        <span aria-hidden="true"> </span>
+                    </button>
+                    <h4 id="myModalLabelSmall" class="modal-title">New Commission/Representation</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    @Html.Partial("_Commission", new ProposalCommissionModel { ProposalId = Model.Id })
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success btn-xs">Save</button>
+                    <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
     @foreach (var staff in Model.Staffs)
     {
         <div id="deleteStaff-@staff.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
@@ -534,7 +794,30 @@
             </div>
         </div>
     }
-
+    @foreach (var lab in Model.Laboratories)
+    {
+        <div id="deleteLaboratory-@lab.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
+            <div class="modal-dialog modal-sm">
+                @using (Html.BeginForm("DeleteLaboratory", "Proposal", new { @id = lab.Id, @proposalId = Model.Id }, FormMethod.Post))
+                {
+                @Html.AntiForgeryToken()
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 id="myModalLabelSmall" class="modal-title">Delete</h4>
+                    </div>
+                    <div class="modal-body"><span>Are you sure you want to delete this laboratory</span></div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success btn-xs">Yes</button>
+                        <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    }
     @foreach (var con in Model.Contractors)
     {
         <div id="deleteStaff-@con.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
@@ -559,52 +842,74 @@
             </div>
         </div>
     }
-
     @foreach (var con in Model.Expenses)
     {
         <div id="deleteExpense-@con.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
             <div class="modal-dialog modal-sm">
                 @using (Html.BeginForm("DeleteExpense", "Proposal", new { @id = con.Id, @proposalId = Model.Id }, FormMethod.Post))
                 {
-                    @Html.AntiForgeryToken()
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" data-dismiss="modal" aria-label="Close" class="close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 id="myModalLabelSmall" class="modal-title">Delete</h4>
-                        </div>
-                        <div class="modal-body"><span>Are you sure you want to delete this expense?</span></div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success btn-xs">Yes</button>
-                            <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
-                        </div>
+                @Html.AntiForgeryToken()
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 id="myModalLabelSmall" class="modal-title">Delete</h4>
                     </div>
+                    <div class="modal-body"><span>Are you sure you want to delete this expense?</span></div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success btn-xs">Yes</button>
+                        <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
+                    </div>
+                </div>
                 }
             </div>
         </div>
     }
-
     @foreach (var con in Model.Equipments)
     {
         <div id="deleteEquipment-@con.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
             <div class="modal-dialog modal-sm">
                 @using (Html.BeginForm("DeleteEquipment", "Proposal", new { @id = con.Id, @proposalId = Model.Id }, FormMethod.Post))
                 {
-                    @Html.AntiForgeryToken()
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" data-dismiss="modal" aria-label="Close" class="close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 id="myModalLabelSmall" class="modal-title">Delete</h4>
-                        </div>
-                        <div class="modal-body"><span>Are you sure you want to delete this equipment?</span></div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success btn-xs">Yes</button>
-                            <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
-                        </div>
+                @Html.AntiForgeryToken()
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 id="myModalLabelSmall" class="modal-title">Delete</h4>
                     </div>
+                    <div class="modal-body"><span>Are you sure you want to delete this equipment?</span></div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success btn-xs">Yes</button>
+                        <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    }
+    @foreach (var con in Model.Commissions)
+    {
+        <div id="deleteCommission-@con.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
+            <div class="modal-dialog modal-sm">
+                @using (Html.BeginForm("DeleteCommission", "Proposal", new { @id = con.Id, @proposalId = Model.Id }, FormMethod.Post))
+                {
+                @Html.AntiForgeryToken()
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 id="myModalLabelSmall" class="modal-title">Delete</h4>
+                    </div>
+                    <div class="modal-body"><span>Are you sure you want to delete this item?</span></div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success btn-xs">Yes</button>
+                        <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
+                    </div>
+                </div>
                 }
             </div>
         </div>
