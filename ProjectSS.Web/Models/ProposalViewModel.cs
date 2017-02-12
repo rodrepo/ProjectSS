@@ -60,6 +60,15 @@ namespace ProjectSS.Web.Models
         public decimal TotalCommissionBilledToClient { get; set; }
         public decimal TotalCommissionDirectCost { get; set; }
 
+        public decimal DirectCost { get; set; }
+        public decimal CostWithFactor { get; set; }
+        public decimal NegotiationAllowance { get; set; }
+        public decimal OtherRevenues { get; set; }
+        public decimal TotalBilledToClient { get; set; }
+        public decimal Vat { get; set; }
+        public decimal TotalRevenue { get; set; }
+        public decimal NetFactor { get; set; }
+
         public int CRMId { get; set; }
         public int Id { get; set; }
 

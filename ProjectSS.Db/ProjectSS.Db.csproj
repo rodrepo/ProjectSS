@@ -116,6 +116,10 @@
     <Compile Include="Migrations\201702120206126_AddsCommissionsTable.Designer.cs">
       <DependentUpon>201702120206126_AddsCommissionsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702120439546_AddsNegotiationAllowanceToProposal.cs" />
+    <Compile Include="Migrations\201702120439546_AddsNegotiationAllowanceToProposal.Designer.cs">
+      <DependentUpon>201702120439546_AddsNegotiationAllowanceToProposal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -156,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702120206126_AddsCommissionsTable.resx">
       <DependentUpon>201702120206126_AddsCommissionsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702120439546_AddsNegotiationAllowanceToProposal.resx">
+      <DependentUpon>201702120439546_AddsNegotiationAllowanceToProposal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

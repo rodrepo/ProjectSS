@@ -521,6 +521,16 @@ namespace ProjectSS.Web.Controllers.Admin
                 }
                 model.Expenses = expenseResult;
                 #endregion
+
+                #region GrandTotal
+                model.DirectCost = model.TotalStaffDirectCost + model.TotalContractorDirectCost + model.TotalExpenseDirectCost + model.TotalEquipmentDirectCost + model.TotalLaboratoryDirectCost + model.TotalCommissionDirectCost;
+                model.CostWithFactor = model.TotalStaffBilledToClient + model.TotalContractorBilledToClient + model.TotalExpenseBilledToClient + model.TotalEquipmentBilledToClient + model.TotalLaboratoryBilledToClient + model.TotalLaboratoryBilledToClient + model.MangementFeeBilledToClient;
+                model.OtherRevenues = model.Cost - model.CostWithFactor - model.MangementFeeBilledToClient;
+                model.TotalBilledToClient = model.CostWithFactor + model.NegotiationAllowance + model.OtherRevenues + model.MangementFeeBilledToClient;
+                model.Vat = model.CostWithFactor * decimal.Parse("0.12");
+                model.TotalRevenue = model.TotalBilledToClient - model.DirectCost;
+                model.NetFactor = model.TotalBilledToClient / model.DirectCost;
+                #endregion
             }
             return model;
         }
