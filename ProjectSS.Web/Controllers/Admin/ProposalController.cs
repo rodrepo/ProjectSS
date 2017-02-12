@@ -55,6 +55,14 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     proposal.Equipments = _mapper.Map<List<ProposalEquipmentModel>>(getValues.ProposalEquipments);
                 }
+                if(getValues.ProposalLaboratories?.Any() ?? false)
+                {
+                    proposal.Laboratories = _mapper.Map<List<ProposalLaboratoryModel>>(getValues.ProposalLaboratories);
+                }
+                if (getValues.ProposalCommissions?.Any() ?? false)
+                {
+                    proposal.Commissions = _mapper.Map<List<ProposalCommissionModel>>(getValues.ProposalCommissions);
+                }
                 var mergeValues = await MergeToProposal(proposal);
                 await DropdownListForUsers();
                 await SetListItemsAsync(mergeValues);
@@ -75,12 +83,37 @@ namespace ProjectSS.Web.Controllers.Admin
             {
                 await _repo.DeleteProposalStaff(id);
                 if (await _repo.SaveAllAsync())
-                {
+                {   
                     TempData["Success"] = $"Successfully deleted staff";
                 }
                 else
                 {
                     TempData["Error"] = "Unable to delete staff due to some internal issues.";
+                }
+                return RedirectToAction("Manage", new { @id = proposalId });
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteLaboratory(int id, int proposalId)
+        {
+            try
+            {
+                await _repo.DeleteProposalLaboratory(id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = $"Successfully deleted laboratory";
+                }
+                else
+                {
+                    TempData["Error"] = "Unable to delete laboratory due to some internal issues.";
                 }
                 return RedirectToAction("Manage", new { @id = proposalId });
             }
@@ -182,6 +215,31 @@ namespace ProjectSS.Web.Controllers.Admin
                 else
                 {
                     TempData["Error"] = "Unable to delete equipment due to some internal issues.";
+                }
+                return RedirectToAction("Manage", new { @id = proposalId });
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteCommission(int id, int proposalId)
+        {
+            try
+            {
+                await _repo.DeleteProposalCommission(id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = $"Successfully deleted commission/representation";
+                }
+                else
+                {
+                    TempData["Error"] = "Unable to delete commission/representation due to some internal issues.";
                 }
                 return RedirectToAction("Manage", new { @id = proposalId });
             }
@@ -323,6 +381,52 @@ namespace ProjectSS.Web.Controllers.Admin
         }
 
         [HttpPost]
+        public async Task<ActionResult> CreateCommission(ProposalCommissionModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _repo.AddProposalCommission(_mapper.Map<ProposalCommission>(model), CurrentUser.Id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = string.Format("Cmmission/Representations has been successfully Created");
+                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                }
+                TempData["Error"] = "Unable to create Cmmission/Representations due to some internal issues.";
+            }
+            foreach (var value in ModelState.Values)
+            {
+                foreach (var error in value.Errors)
+                {
+                    TempData["Error"] = error.ErrorMessage;
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateLaboratory(ProposalLaboratoryModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _repo.AddProposalLaboratory(_mapper.Map<ProposalLaboratory>(model), CurrentUser.Id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = string.Format("Laboratory has been successfully Created");
+                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                }
+                TempData["Error"] = "Unable to create laboratory due to some internal issues.";
+            }
+            foreach (var value in ModelState.Values)
+            {
+                foreach (var error in value.Errors)
+                {
+                    TempData["Error"] = error.ErrorMessage;
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public async Task<ActionResult> Create(ProposalViewModel model)
         {
             if (model.CRMId != 0)
@@ -387,6 +491,26 @@ namespace ProjectSS.Web.Controllers.Admin
                 model.Expenses = expenseResult;
                 #endregion
 
+                #region Laboratory
+                var laboratoryResult = model.Laboratories.Where(l => !l.IsDeleted).ToList();
+                if(laboratoryResult?.Any() ?? false)
+                {
+                    laboratoryResult = MapNeedFieldForLaboratoryModel(laboratoryResult);
+                    model.TotalLaboratoryBilledToClient = laboratoryResult.Select(l => l.BilledToClient).Sum();
+                    model.TotalLaboratoryDirectCost = laboratoryResult.Select(l => l.DirectCost).Sum();
+                }
+                #endregion
+
+                #region Commision
+                var commissionResult = model.Commissions.Where(l => !l.IsDeleted).ToList();
+                if (commissionResult?.Any() ?? false)
+                {
+                    commissionResult = MapNeedFieldForCommissionModel(commissionResult);
+                    model.TotalCommissionBilledToClient = commissionResult.Select(l => l.BilledToClient).Sum();
+                    model.TotalCommissionDirectCost = commissionResult.Select(l => l.Cost).Sum();
+                }
+                #endregion
+
                 #region Equipment
                 var equipmentResult = model.Equipments.Where(c => !c.IsDeleted).ToList();
                 if (equipmentResult?.Any() ?? false)
@@ -397,8 +521,63 @@ namespace ProjectSS.Web.Controllers.Admin
                 }
                 model.Expenses = expenseResult;
                 #endregion
+
+                #region GrandTotal
+                model.DirectCost = model.TotalStaffDirectCost + model.TotalContractorDirectCost + model.TotalExpenseDirectCost + model.TotalEquipmentDirectCost + model.TotalLaboratoryDirectCost + model.TotalCommissionDirectCost;
+                model.CostWithFactor = model.TotalStaffBilledToClient + model.TotalContractorBilledToClient + model.TotalExpenseBilledToClient + model.TotalEquipmentBilledToClient + model.TotalLaboratoryBilledToClient + model.TotalLaboratoryBilledToClient + model.MangementFeeBilledToClient;
+                model.OtherRevenues = model.Cost - model.CostWithFactor - model.MangementFeeBilledToClient;
+                model.TotalBilledToClient = model.CostWithFactor + model.NegotiationAllowance + model.OtherRevenues + model.MangementFeeBilledToClient;
+                model.Vat = model.CostWithFactor * decimal.Parse("0.12");
+                model.TotalRevenue = model.TotalBilledToClient - model.DirectCost;
+                model.NetFactor = model.TotalBilledToClient / model.DirectCost;
+                var user = await _repo.GetUserByIdAsync(model.CreatedBy);
+                if(user != null)
+                {
+                    model.CreatedByName = user.FirstName + " " + user.MiddleName + " " + user.LastName;
+                }
+                var usermodified = await _repo.GetUserByIdAsync(model.ModifiedBy);
+                if (user != null)
+                {
+                    model.ModifiedByName = usermodified.FirstName + " " + usermodified.MiddleName + " " + usermodified.LastName;
+                }
+                else
+                {
+                    model.ModifiedByName = "Never been modified";
+                }
+                #endregion
             }
             return model;
+        }
+
+        private List<ProposalCommissionModel> MapNeedFieldForCommissionModel(List<ProposalCommissionModel> commissions)
+        {
+            if (commissions?.Any() ?? false)
+            {
+                foreach (var commission in commissions)
+                {
+                    if (commission != null)
+                    {
+                        commission.BilledToClient = commission.Cost * commission.Factor;
+                    }
+                }
+            }
+            return commissions;
+        }
+
+        private List<ProposalLaboratoryModel> MapNeedFieldForLaboratoryModel(List<ProposalLaboratoryModel> laboratories)
+        {
+            if (laboratories?.Any() ?? false)
+            {
+                foreach (var laboratory in laboratories)
+                {
+                    if (laboratory != null)
+                    {
+                        laboratory.DirectCost = laboratory.Cost * laboratory.NoOfStations * int.Parse(laboratory.Replicate);
+                        laboratory.BilledToClient = laboratory.DirectCost * laboratory.Factor;
+                    }
+                }
+            }
+            return laboratories;
         }
 
         private async Task<List<ProposalEquipmentModel>> MapNeedFieldForEquipmentModel(List<ProposalEquipmentModel> equipments)

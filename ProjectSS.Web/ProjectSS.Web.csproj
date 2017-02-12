@@ -100,7 +100,6 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -642,6 +641,8 @@
     <Content Include="Views\Inventory\Create.cshtml" />
     <Content Include="Views\Inventory\Edit.cshtml" />
     <Content Include="Views\Proposal\_Equipment.cshtml" />
+    <Content Include="Views\Proposal\_Laboratory.cshtml" />
+    <Content Include="Views\Proposal\_Commission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,6 +17,7 @@ namespace ProjectSS.Db.Entities
         public string Location { get; set; }
         public decimal Amount { get; set; }
         public decimal Cost { get; set; }
+        public decimal NegotiationAllowance { get; set; }
         public string BDId { get; set; }
         public string TSId { get; set; }
         public string THId { get; set; }
@@ -36,6 +37,8 @@ namespace ProjectSS.Db.Entities
         public virtual ICollection<ProposalContractor> ProposalContractors { get; set; }
         public virtual ICollection<ProposalExpense> ProposalExpenses { get; set; }
         public virtual ICollection<ProposalEquipment> ProposalEquipments { get; set; }
+        public virtual ICollection<ProposalLaboratory> ProposalLaboratories { get; set; }
+        public virtual ICollection<ProposalCommission> ProposalCommissions { get; set; }
 
         public Proposal()
         {
@@ -43,6 +46,8 @@ namespace ProjectSS.Db.Entities
             ProposalContractors = new HashSet<ProposalContractor>();
             ProposalExpenses = new HashSet<ProposalExpense>();
             ProposalEquipments = new HashSet<ProposalEquipment>();
+            ProposalLaboratories = new HashSet<ProposalLaboratory>();
+            ProposalCommissions = new HashSet<ProposalCommission>();
         }
     }
 }
