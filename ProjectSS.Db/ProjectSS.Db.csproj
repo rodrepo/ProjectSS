@@ -112,9 +112,9 @@
     <Compile Include="Migrations\201702091201366_AddsProposalLaboratoryTable.Designer.cs">
       <DependentUpon>201702091201366_AddsProposalLaboratoryTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702120200208_AddCommissionTable.cs" />
-    <Compile Include="Migrations\201702120200208_AddCommissionTable.Designer.cs">
-      <DependentUpon>201702120200208_AddCommissionTable.cs</DependentUpon>
+    <Compile Include="Migrations\201702120206126_AddsCommissionsTable.cs" />
+    <Compile Include="Migrations\201702120206126_AddsCommissionsTable.Designer.cs">
+      <DependentUpon>201702120206126_AddsCommissionsTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -154,8 +154,8 @@
     <EmbeddedResource Include="Migrations\201702091201366_AddsProposalLaboratoryTable.resx">
       <DependentUpon>201702091201366_AddsProposalLaboratoryTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702120200208_AddCommissionTable.resx">
-      <DependentUpon>201702120200208_AddCommissionTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702120206126_AddsCommissionsTable.resx">
+      <DependentUpon>201702120206126_AddsCommissionsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

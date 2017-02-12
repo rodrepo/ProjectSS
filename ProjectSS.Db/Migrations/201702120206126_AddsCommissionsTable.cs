@@ -3,7 +3,7 @@ namespace ProjectSS.Db.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddCommissionTable : DbMigration
+    public partial class AddsCommissionsTable : DbMigration
     {
         public override void Up()
         {
@@ -15,6 +15,7 @@ namespace ProjectSS.Db.Migrations
                         Name = c.String(),
                         Note = c.String(),
                         Cost = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Factor = c.Decimal(nullable: false, precision: 18, scale: 2),
                         ProposalId = c.Int(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                         IsDeleted = c.Boolean(nullable: false),

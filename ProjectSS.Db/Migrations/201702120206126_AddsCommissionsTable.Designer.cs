@@ -7,13 +7,13 @@ namespace ProjectSS.Db.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddCommissionTable : IMigrationMetadata
+    public sealed partial class AddsCommissionsTable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddCommissionTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddsCommissionsTable));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702120200208_AddCommissionTable"; }
+            get { return "201702120206126_AddsCommissionsTable"; }
         }
         
         string IMigrationMetadata.Source

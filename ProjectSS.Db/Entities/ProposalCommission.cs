@@ -11,6 +11,7 @@ namespace ProjectSS.Db.Entities
         public string Name { get; set; }
         public string Note { get; set; }
         public decimal Cost { get; set; }
+        public decimal Factor { get; set; }
 
         public int ProposalId { get; set; }
         public virtual Proposal Proposal{ get; set; }
