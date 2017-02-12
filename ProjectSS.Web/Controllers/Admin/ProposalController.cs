@@ -79,7 +79,7 @@ namespace ProjectSS.Web.Controllers.Admin
             {
                 await _repo.DeleteProposalStaff(id);
                 if (await _repo.SaveAllAsync())
-                {
+                {   
                     TempData["Success"] = $"Successfully deleted staff";
                 }
                 else

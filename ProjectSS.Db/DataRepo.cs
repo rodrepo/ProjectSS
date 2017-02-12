@@ -293,6 +293,9 @@ namespace ProjectSS.Db
             latestProposal.Title = proposal.Title;
             latestProposal.Cost = proposal.Cost;
             latestProposal.Description = proposal.Description;
+            latestProposal.BDId = proposal.BDId;
+            latestProposal.THId = proposal.THId;
+            latestProposal.TSId = proposal.TSId;
             return latestProposal;
         }
 

@@ -1,0 +1,41 @@
+﻿@model ProjectSS.Web.Models.ProposalLaboratoryModel
+@{
+    ViewBag.Title = "_Equipment";
+}
+@Html.HiddenFor(m => m.ProposalId)
+<div class="modal-body row">
+    <div class="form-group col-sm-12">
+        <label>Parameters</label>
+        @Html.TextBoxFor(model => model.Parameters, new { @class = "form-control", @type = "text", @required = "required" , @placeholder = "Enter Parameters"})
+    </div>
+    <div class="form-group col-sm-12">
+        <label>No. Of Stations</label>
+        @Html.TextBoxFor(model => model.NoOfStations, new { @class = "form-control", @type = "Number", @required = "required" })
+    </div>
+    <div class="form-group col-sm-12">
+        <label>Relicate</label>
+        @Html.TextBoxFor(model => model.Replicate, new { @class = "form-control", @type = "number", @required = "required" })
+    </div>
+    <div class="form-group col-sm-12">
+        <label>Unit Cost</label>
+        @Html.TextBoxFor(model => model.Cost, new { @class = "form-control", @type = "number", @required = "required" })
+    </div>
+    <div class="form-group col-sm-12">
+        <label>Factor</label>
+        <select class="form-control" id="Factor" name="Factor" required="required">
+            <option value="">Select Factor</option>
+            <option @(Model.Factor == decimal.Parse("1.0") ? "selected" : " ") value="1.0">1.0</option>
+            <option @(Model.Factor == decimal.Parse("1.1") ? "selected" : " ") value="1.1">1.1</option>
+            <option @(Model.Factor == decimal.Parse("1.2") ? "selected" : " ") value="1.2">1.2</option>
+            <option @(Model.Factor == decimal.Parse("1.3") ? "selected" : " ") value="1.3">1.3</option>
+            <option @(Model.Factor == decimal.Parse("1.4") ? "selected" : " ") value="1.4">1.4</option>
+            <option @(Model.Factor == decimal.Parse("1.5") ? "selected" : " ") value="1.5">1.5</option>
+            <option @(Model.Factor == decimal.Parse("1.6") ? "selected" : " ") value="1.6">1.6</option>
+        </select>
+    </div>
+    <div class="form-group col-sm-offset-2 col-sm-8">
+        <h5 style="color:red" align="center">Warning : Please double check values before pressing <i><b>Save</b></i> entered values will not be <b>edited</b></h5>
+    </div>
+</div>
+
+
