@@ -530,6 +530,20 @@ namespace ProjectSS.Web.Controllers.Admin
                 model.Vat = model.CostWithFactor * decimal.Parse("0.12");
                 model.TotalRevenue = model.TotalBilledToClient - model.DirectCost;
                 model.NetFactor = model.TotalBilledToClient / model.DirectCost;
+                var user = await _repo.GetUserByIdAsync(model.CreatedBy);
+                if(user != null)
+                {
+                    model.CreatedByName = user.FirstName + " " + user.MiddleName + " " + user.LastName;
+                }
+                var usermodified = await _repo.GetUserByIdAsync(model.ModifiedBy);
+                if (user != null)
+                {
+                    model.ModifiedByName = usermodified.FirstName + " " + usermodified.MiddleName + " " + usermodified.LastName;
+                }
+                else
+                {
+                    model.ModifiedByName = "Never been modified";
+                }
                 #endregion
             }
             return model;

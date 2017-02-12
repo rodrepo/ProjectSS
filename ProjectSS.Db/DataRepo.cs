@@ -296,6 +296,7 @@ namespace ProjectSS.Db
             latestProposal.BDId = proposal.BDId;
             latestProposal.THId = proposal.THId;
             latestProposal.TSId = proposal.TSId;
+            latestProposal.NegotiationAllowance = proposal.NegotiationAllowance;
             return latestProposal;
         }
 
