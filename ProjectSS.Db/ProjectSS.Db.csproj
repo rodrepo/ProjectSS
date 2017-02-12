@@ -73,6 +73,7 @@
     <Compile Include="Entities\CRMRevisionHistory.cs" />
     <Compile Include="Entities\Inventory.cs" />
     <Compile Include="Entities\Proposal.cs" />
+    <Compile Include="Entities\ProposalCommission.cs" />
     <Compile Include="Entities\ProposalContractor.cs" />
     <Compile Include="Entities\ProposalEquipment.cs" />
     <Compile Include="Entities\ProposalExpense.cs" />
@@ -111,6 +112,10 @@
     <Compile Include="Migrations\201702091201366_AddsProposalLaboratoryTable.Designer.cs">
       <DependentUpon>201702091201366_AddsProposalLaboratoryTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702120200208_AddCommissionTable.cs" />
+    <Compile Include="Migrations\201702120200208_AddCommissionTable.Designer.cs">
+      <DependentUpon>201702120200208_AddCommissionTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -148,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702091201366_AddsProposalLaboratoryTable.resx">
       <DependentUpon>201702091201366_AddsProposalLaboratoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702120200208_AddCommissionTable.resx">
+      <DependentUpon>201702120200208_AddCommissionTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
