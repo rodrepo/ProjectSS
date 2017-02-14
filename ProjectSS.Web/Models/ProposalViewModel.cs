@@ -27,6 +27,7 @@ namespace ProjectSS.Web.Models
         public string Location { get; set; }
         public decimal Amount { get; set; }
         public decimal Cost { get; set; }
+        public string SCost { get; set; }
 
         public decimal MangementFeeBilledToClient { get; set; }
         public string BDId { get; set; }
@@ -63,6 +64,8 @@ namespace ProjectSS.Web.Models
         public decimal DirectCost { get; set; }
         public decimal CostWithFactor { get; set; }
         public decimal NegotiationAllowance { get; set; }
+        public string SNegotiationAllowance { get; set; }
+
         public decimal OtherRevenues { get; set; }
         public decimal TotalBilledToClient { get; set; }
         public decimal Vat { get; set; }

@@ -79,13 +79,13 @@
                 </div>
                 <div class="form-group col-sm-3">
                     <label>Project Cost</label>
-                    @Html.TextBoxFor(model => model.Cost, new { @class = "form-control", @Value = string.Format("{0:P" + " " + "#,0.00}", Model.Cost), @required = "required" })
-                    @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(model => model.SCost, new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.SCost, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-sm-3">
                     <label>Negotiation Allowance</label>
-                    @Html.TextBoxFor(model => model.NegotiationAllowance, new { @class = "form-control", @Value = string.Format("{0:P" + " " + "#,0.00}", Model.NegotiationAllowance), @required = "required" })
-                    @Html.ValidationMessageFor(model => model.NegotiationAllowance, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(model => model.SNegotiationAllowance, new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.SNegotiationAllowance, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-sm-12">
                     <label>Description</label>
@@ -152,10 +152,10 @@
                                 <td>@u.ManHours</td>
                                 <td>@u.ManMonths</td>
                                 <td>@u.TotalManHours</td>
-                                <td>P @u.BillingRate.ToString("0,00.00")</td>
-                                <td>P @u.DirectCost.ToString("0,00.00")</td>
+                                <td>@u.BillingRate.ToString("P" + " " + "#,0.00")</td>
+                                <td>@u.DirectCost.ToString("P" + " " + "#,0.00")</td>
                                 <td>@u.Factor.ToString("0.0#")</td>
-                                <td>P @u.BilledToClient.ToString("0,00.00")</td>
+                                <td>@u.BilledToClient.ToString("P" + " " + "#,0.00")</td>
                                 <td><button type="submit" data-toggle="modal" data-target="#deleteStaff-@u.Id" class="btn btn-danger btn-xs"></button></td>
                             </tr>
                         }
@@ -165,9 +165,9 @@
                             <td></td>
                             <td></td>
                             <td><i><b>SubTotal</b></i></td>
-                            <td>P @Model.TotalStaffDirectCost.ToString("0,00.00")</td>
+                            <td>@Model.TotalStaffDirectCost.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
-                            <td>P @Model.TotalStaffBilledToClient.ToString("0,00.00")</td>
+                            <td>@Model.TotalStaffBilledToClient.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
                         </tr>
                     }
@@ -199,7 +199,7 @@
                 <tbody>
                     <tr>
                         <td>Management Fee ( 4% of Contract Price )</td>
-                        <td>P @Model.MangementFeeBilledToClient.ToString("0,00.00")</td>
+                        <td>@Model.MangementFeeBilledToClient.ToString("P" + " " + "#,0.00")</td>
                     </tr>
                 </tbody>
             </table>
@@ -246,10 +246,10 @@
                                 <td>@u.Name</td>
                                 <td>@u.Description</td>
                                 <td>@u.NoOfDay</td>
-                                <td>P @u.Rate.ToString("0,00.00")</td>
-                                <td>P @u.DirectCost.ToString("0,00.00")</td>
+                                <td>@u.Rate.ToString("P" + " " + "#,0.00")</td>
+                                <td>@u.DirectCost.ToString("P" + " " + "#,0.00")</td>
                                 <td>@u.Factor.ToString("0.0#")</td>
-                                <td>P @u.BilledToClient.ToString("0,00.00")</td>
+                                <td>@u.BilledToClient.ToString("P" + " " + "#,0.00")</td>
                                 <td><button type="submit" data-toggle="modal" data-target="#deleteStaff-@u.Id" class="btn btn-danger btn-xs"></button></td>
                             </tr>
                         }
@@ -258,9 +258,9 @@
                             <td></td>
                             <td></td>
                             <td><i><b>SubTotal</b></i></td>
-                            <td>P @Model.TotalContractorDirectCost.ToString("0,00.00")</td>
+                            <td>@Model.TotalContractorDirectCost.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
-                            <td>P @Model.TotalContractorBilledToClient.ToString("0,00.00")</td>
+                            <td>@Model.TotalContractorBilledToClient.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
                         </tr>
                     }
@@ -306,18 +306,18 @@
                             <tr>
                                 <td>@u.Item</td>
                                 <td>@u.Description</td>
-                                <td>P @u.DirectCost.ToString("0,00.00")</td>
+                                <td>@u.DirectCost.ToString("P" + " " + "#,0.00")</td>
                                 <td>@u.Factor.ToString("0.0#")</td>
-                                <td>P @u.BilledToClient.ToString("0,00.00")</td>
+                                <td>@u.BilledToClient.ToString("P" + " " + "#,0.00")</td>
                                 <td><button type="submit" data-toggle="modal" data-target="#deleteExpense-@u.Id" class="btn btn-danger btn-xs"></button></td>
                             </tr>
                         }
                         <tr>
                             <td></td>
                             <td><i><b>SubTotal</b></i></td>
-                            <td>P @Model.TotalContractorDirectCost.ToString("0,00.00")</td>
+                            <td>@Model.TotalContractorDirectCost.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
-                            <td>P @Model.TotalContractorBilledToClient.ToString("0,00.00")</td>
+                            <td>@Model.TotalContractorBilledToClient.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
                         </tr>
                     }
@@ -370,10 +370,10 @@
                                     <td>@u.Hours</td>
                                     <td>@u.Months</td>
                                     <td>@u.TotalHours</td>
-                                    <td>P @u.Rate.ToString("0,00.00")</td>
-                                    <td>P @u.DirectCost.ToString("0,00.00")</td>
+                                    <td>@u.Rate.ToString("P" + " " + "#,0.00")</td>
+                                    <td>@u.DirectCost.ToString("P" + " " + "#,0.00")</td>
                                     <td>@u.Factor.ToString("0.0#")</td>
-                                    <td>P @u.BilledToClient.ToString("0,00.00")</td>
+                                    <td>@u.BilledToClient.ToString("P" + " " + "#,0.00")</td>
                                     <td><button type="submit" data-toggle="modal" data-target="#deleteEquipment-@u.Id" class="btn btn-danger btn-xs"></button></td>
                                 </tr>
                             }
@@ -384,9 +384,9 @@
                             <td></td>
                             <td></td>
                             <td><i><b>SubTotal</b></i></td>
-                            <td>P @Model.TotalEquipmentDirectCost.ToString("0,00.00")</td>
+                            <td>@Model.TotalEquipmentDirectCost.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
-                            <td>P @Model.TotalEquipmentBilledToClient.ToString("0,00.00")</td>
+                            <td>@Model.TotalEquipmentBilledToClient.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
                         </tr>
                     }
@@ -437,9 +437,9 @@
                                     <td>@u.NoOfStations</td>
                                     <td>@u.Replicate</td>
                                     <td>@u.Cost</td>
-                                    <td>P @u.DirectCost.ToString("0,00.00")</td>
+                                    <td>@u.DirectCost.ToString("P" + " " + "#,0.00")</td>
                                     <td>@u.Factor.ToString("0.0#")</td>
-                                    <td>P @u.BilledToClient.ToString("0,00.00")</td>
+                                    <td>@u.BilledToClient.ToString("P" + " " + "#,0.00")</td>
                                     <td><button type="submit" data-toggle="modal" data-target="#deleteLaboratory-@u.Id" class="btn btn-danger btn-xs"></button></td>
                                 </tr>
                             }
@@ -449,9 +449,9 @@
                             <td></td>
                             <td></td>
                             <td><i><b>SubTotal</b></i></td>
-                            <td>P @Model.TotalLaboratoryDirectCost.ToString("0,00.00")</td>
+                            <td>@Model.TotalLaboratoryDirectCost.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
-                            <td>P @Model.TotalLaboratoryBilledToClient.ToString("0,00.00")</td>
+                            <td>@Model.TotalLaboratoryBilledToClient.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
                         </tr>
                     }
@@ -498,9 +498,9 @@
                                 <tr>
                                     <td>@u.Name</td>
                                     <td>@u.Note</td>
-                                    <td>P @u.Cost.ToString("0,00.00")</td>
+                                    <td>@u.Cost.ToString("P" + " " + "#,0.00")</td>
                                     <td>@u.Factor.ToString("0.0#")</td>
-                                    <td>P @u.BilledToClient.ToString("0,00.00")</td>
+                                    <td>@u.BilledToClient.ToString("P" + " " + "#,0.00")</td>
                                     <td><button type="submit" data-toggle="modal" data-target="#deleteCommission-@u.Id" class="btn btn-danger btn-xs"></button></td>
                                 </tr>
                             }
@@ -508,9 +508,9 @@
                         <tr>
                             <td></td>
                             <td><i><b>SubTotal</b></i></td>
-                            <td>P @Model.TotalCommissionDirectCost.ToString("0,00.00")</td>
+                            <td>@Model.TotalCommissionDirectCost.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
-                            <td>P @Model.TotalCommissionBilledToClient.ToString("0,00.00")</td>
+                            <td>@Model.TotalCommissionBilledToClient.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
                         </tr>
                     }
@@ -532,7 +532,7 @@
                         <b>Direct Cost:</b>
                     </div>
                     <div class="col-sm-2">
-                        P @Model.DirectCost.ToString("0,00.00")
+                        @Model.DirectCost.ToString("P" + " " + "#,0.00")
                     </div>
                 </div>
                 <div class="row">
@@ -546,7 +546,7 @@
                         <b>Cost with Factor:</b> 
                     </div>
                     <div class="col-sm-2">
-                        P @Model.CostWithFactor.ToString("0,00.00")
+                        @Model.CostWithFactor.ToString("P" + " " + "#,0.00")
                     </div>
                 </div>
                 <div class="row">
@@ -560,7 +560,7 @@
                         <b>Other Revenues:</b> 
                     </div>
                     <div class="col-sm-2">
-                        P @Model.OtherRevenues.ToString("0,00.00")
+                        @Model.OtherRevenues.ToString("P" + " " + "#,0.00")
                     </div>
                 </div>
                 <div class="row">
@@ -574,7 +574,7 @@
                         <b>Total Billed to Client:</b> 
                     </div>
                     <div class="col-sm-2">
-                        P @Model.TotalBilledToClient.ToString("0,00.00")
+                        @Model.TotalBilledToClient.ToString("P" + " " + "#,0.00")
                     </div>
                 </div>
                 <div class="row">
@@ -583,7 +583,7 @@
                         <b>12% VAT:</b> 
                     </div>
                     <div class="col-sm-2">
-                        P @Model.Vat.ToString("0,00.00")
+                        @Model.Vat.ToString("P" + " " + "#,0.00")
                     </div>
                 </div>
                 <div class="row">
@@ -592,7 +592,7 @@
                         <b>Total Revenue:</b> 
                     </div>
                     <div class="col-sm-2">
-                        P @Model.TotalRevenue.ToString("0,00.00")
+                        @Model.TotalRevenue.ToString("P" + " " + "#,0.00")
                     </div>
                 </div>
                 <div class="row">

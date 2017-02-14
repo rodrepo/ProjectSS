@@ -6,6 +6,7 @@ using ProjectSS.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -262,6 +263,10 @@ namespace ProjectSS.Web.Controllers.Admin
             {
                 if (ModelState.IsValid)
                 {
+                    #region String Convertion
+                    model.Cost = ConvertStringToDecimal(model.SCost);
+                    model.NegotiationAllowance = ConvertStringToDecimal(model.SNegotiationAllowance);
+                    #endregion
                     await _repo.UpdateProposal(_mapper.Map<Proposal>(model), CurrentUser.Id);
                     if (await _repo.SaveAllAsync())
                     {
@@ -454,6 +459,8 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     model.MangementFeeBilledToClient = decimal.Parse("0.4") * model.Cost;
                 }
+                model.SCost = ConvertDecimalToPesos(model.Cost);
+                model.SNegotiationAllowance = ConvertDecimalToPesos(model.NegotiationAllowance);
 
                 #region Staff
                 var result = model.Staffs.Where(s => !s.IsDeleted).ToList();

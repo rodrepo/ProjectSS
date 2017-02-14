@@ -8,9 +8,12 @@ using ProjectSS.Db.Contracts;
 using ProjectSS.Db.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace ProjectSS.Web.Controllers
 {
@@ -79,6 +82,28 @@ namespace ProjectSS.Web.Controllers
             {
                 ModelState.AddModelError("", error);
             }
+        }
+
+        //Remove all letters and return decimal
+        public decimal ConvertStringToDecimal(string str)
+        {
+            decimal dec = 0;
+            if (str.Any(char.IsDigit) && !str.IsEmpty())
+            {
+                str = Regex.Replace(str, @"[^0-9\.]+", string.Empty);
+                dec = decimal.Parse(str);
+            }
+            return dec;
+        }
+
+        public string ConvertDecimalToPesos(decimal dec)
+        {
+            string str = "P 0.00";
+            if(dec > 0)
+            {
+                str = string.Format("{0:P" + " " + "#,0.00}", dec);
+            }
+            return str;
         }
 
         public ActionResult ServerError()
