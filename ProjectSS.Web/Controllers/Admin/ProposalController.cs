@@ -529,7 +529,10 @@ namespace ProjectSS.Web.Controllers.Admin
                 model.TotalBilledToClient = model.CostWithFactor + model.NegotiationAllowance + model.OtherRevenues + model.MangementFeeBilledToClient;
                 model.Vat = model.CostWithFactor * decimal.Parse("0.12");
                 model.TotalRevenue = model.TotalBilledToClient - model.DirectCost;
-                model.NetFactor = model.TotalBilledToClient / model.DirectCost;
+                if (model.TotalBilledToClient > 0 && model.DirectCost > 0)
+                {
+                    model.NetFactor = model.TotalBilledToClient / model.DirectCost;
+                }
                 var user = await _repo.GetUserByIdAsync(model.CreatedBy);
                 if(user != null)
                 {
