@@ -530,8 +530,8 @@ namespace ProjectSS.Web.Controllers.Admin
                 #endregion
 
                 #region GrandTotal
-                model.DirectCost = model.TotalStaffDirectCost + model.TotalContractorDirectCost + model.TotalExpenseDirectCost + model.TotalEquipmentDirectCost + model.TotalLaboratoryDirectCost + model.TotalCommissionDirectCost;
-                model.CostWithFactor = model.TotalStaffBilledToClient + model.TotalContractorBilledToClient + model.TotalExpenseBilledToClient + model.TotalEquipmentBilledToClient + model.TotalLaboratoryBilledToClient + model.TotalLaboratoryBilledToClient + model.MangementFeeBilledToClient;
+                model.DirectCost = model.TotalLaboratoryDirectCost + model.TotalExpenseDirectCost + model.TotalContractorDirectCost + model.TotalStaffDirectCost + model.MangementFeeBilledToClient + model.TotalContractorDirectCost;
+                model.CostWithFactor = model.TotalLaboratoryBilledToClient + model.TotalExpenseBilledToClient + model.TotalContractorBilledToClient + model.MangementFeeBilledToClient + model.TotalStaffBilledToClient + model.TotalContractorBilledToClient;
                 model.OtherRevenues = model.Cost - model.CostWithFactor - model.MangementFeeBilledToClient;
                 model.TotalBilledToClient = model.CostWithFactor + model.NegotiationAllowance + model.OtherRevenues + model.MangementFeeBilledToClient;
                 model.Vat = model.CostWithFactor * decimal.Parse("0.12");
