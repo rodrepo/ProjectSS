@@ -8,6 +8,14 @@
         <label>Item</label>
         <select class="form-control" id="Item" name="Item" required="required">
             <option value="">Select Item</option>
+            <option @(Model.Item == "Per Diem" ? "selected" : " ") value="Per Diem">Per Diem</option>
+            <option @(Model.Item == "Field Allowance" ? "selected" : " ") value="Field Allowance">Field Allowance</option>
+            <option @(Model.Item == "Fuel" ? "selected" : " ") value="Fuel">Fuel</option>
+            <option @(Model.Item == "Toll Fee" ? "selected" : " ") value="Toll Fee">Toll Fee</option>
+            <option @(Model.Item == "Vehicle Rental" ? "selected" : " ") value="Vehicle Rental">Vehicle Rental</option>
+            <option @(Model.Item == "Freight" ? "selected" : " ") value="Freight">Freight</option>
+            <option @(Model.Item == "Miscellaneous" ? "selected" : " ") value="Miscellaneous">Miscellaneous</option>
+            <option @(Model.Item == "Supplies" ? "selected" : " ") value="Supplies">Supplies</option>
             <option @(Model.Item == "Accommodation" ? "selected" : " ") value="Accommodation">Accommodation</option>
             <option @(Model.Item == "Transportation" ? "selected" : " ") value="Transportation">Transportation</option>
             <option @(Model.Item == "Food/Meals" ? "selected" : " ") value="Food/Meals">Food/Meals</option>
