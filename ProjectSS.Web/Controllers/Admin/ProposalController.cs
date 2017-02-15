@@ -457,7 +457,7 @@ namespace ProjectSS.Web.Controllers.Admin
             {
                 if (model.Cost > 0)
                 {
-                    model.MangementFeeBilledToClient = decimal.Parse("0.4") * model.Cost;
+                    model.MangementFeeBilledToClient = model.Cost * decimal.Parse("0.04") ;
                 }
                 model.SCost = ConvertDecimalToPesos(model.Cost);
                 model.SNegotiationAllowance = ConvertDecimalToPesos(model.NegotiationAllowance);
@@ -492,8 +492,8 @@ namespace ProjectSS.Web.Controllers.Admin
                 if (expenseResult?.Any() ?? false)
                 {
                     expenseResult = MapNeedFieldForProposalExpense(expenseResult);
-                    model.TotalContractorBilledToClient = expenseResult.Select(m => m.BilledToClient).Sum();
-                    model.TotalContractorDirectCost = expenseResult.Select(m => m.DirectCost).Sum();
+                    model.TotalExpenseBilledToClient = expenseResult.Select(m => m.BilledToClient).Sum();
+                    model.TotalExpenseDirectCost = expenseResult.Select(m => m.DirectCost).Sum();
                 }
                 model.Expenses = expenseResult;
                 #endregion
