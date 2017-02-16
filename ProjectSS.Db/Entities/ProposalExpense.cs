@@ -12,6 +12,8 @@ namespace ProjectSS.Db.Entities
         public string Description { get; set; }
         public decimal Factor { get; set; }
         public decimal DirectCost { get; set; }
+        public int Quantity { get; set; }
+        public int NoOfDay { get; set; }
 
         public int ProposalId { get; set; }
         public virtual Proposal Proposal { get; set; }

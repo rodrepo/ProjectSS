@@ -120,6 +120,10 @@
     <Compile Include="Migrations\201702120439546_AddsNegotiationAllowanceToProposal.Designer.cs">
       <DependentUpon>201702120439546_AddsNegotiationAllowanceToProposal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702161248286_AddsQuantityAndNoOfDayToExpense.cs" />
+    <Compile Include="Migrations\201702161248286_AddsQuantityAndNoOfDayToExpense.Designer.cs">
+      <DependentUpon>201702161248286_AddsQuantityAndNoOfDayToExpense.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -163,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702120439546_AddsNegotiationAllowanceToProposal.resx">
       <DependentUpon>201702120439546_AddsNegotiationAllowanceToProposal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702161248286_AddsQuantityAndNoOfDayToExpense.resx">
+      <DependentUpon>201702161248286_AddsQuantityAndNoOfDayToExpense.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

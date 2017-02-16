@@ -620,7 +620,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     if (expense != null)
                     {
-                        expense.BilledToClient = expense.DirectCost * expense.Factor;
+                        expense.BilledToClient = expense.Quantity * expense.NoOfDay * expense.DirectCost * expense.Factor;
                     }
                 }
             }

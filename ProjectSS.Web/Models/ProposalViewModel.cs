@@ -113,6 +113,8 @@ namespace ProjectSS.Web.Models
         public string Item { get; set; }
         public string Description { get; set; }
         public decimal Factor { get; set; }
+        public int Quantity { get; set; }
+        public int NoOfDay { get; set; }
         public decimal DirectCost { get; set; }
         public bool IsDeleted { get; set; }
         public decimal BilledToClient { get; set; }

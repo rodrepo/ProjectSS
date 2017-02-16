@@ -292,6 +292,8 @@
                     <tr>
                         <th>ITEM</th>
                         <th>Description</th>
+                        <th>QUANTITY</th>
+                        <th>No. of Days</th>
                         <th>DIRECT COST</th>
                         <th>FACTOR</th>
                         <th>BILLED TO CLIENT</th>
@@ -306,6 +308,8 @@
                             <tr>
                                 <td>@u.Item</td>
                                 <td>@u.Description</td>
+                                <td>@u.Quantity</td>
+                                <td>@u.NoOfDay</td>
                                 <td>@u.DirectCost.ToString("P" + " " + "#,0.00")</td>
                                 <td>@u.Factor.ToString("0.0#")</td>
                                 <td>@u.BilledToClient.ToString("P" + " " + "#,0.00")</td>
@@ -313,6 +317,8 @@
                             </tr>
                         }
                         <tr>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td><i><b>SubTotal</b></i></td>
                             <td>@Model.TotalExpenseDirectCost.ToString("P" + " " + "#,0.00")</td>
