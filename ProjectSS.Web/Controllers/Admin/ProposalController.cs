@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.ApplicationInsights;
+using ProjectSS.Common;
 using ProjectSS.Db.Contracts;
 using ProjectSS.Db.Entities;
 using ProjectSS.Web.Models;
@@ -451,6 +452,8 @@ namespace ProjectSS.Web.Controllers.Admin
         #endregion
 
         #region Private Helpers
+
+        #region Mapping
         private async Task<ProposalViewModel> MergeToProposal(ProposalViewModel model)
         {
             if (model != null)
@@ -674,6 +677,56 @@ namespace ProjectSS.Web.Controllers.Admin
             }
             return staffs;
         }
+
+        #endregion
+
+        #region Approved
+        public async Task<ActionResult> Approved(int id)
+        {
+            if (id > 0)
+            {
+                var model = await _repo.GetProposalByIdAsync(id);
+                if(model.Cost <= 0)
+                {
+                    TempData["Error"] = "Please add Project Cost";
+                    return RedirectToAction("Manage", new { @id = id });
+                }
+                if (User.IsInRole(RoleType.OM.ToString()))
+                {
+                    model.Status = "Approved";
+                    var project = new Project
+                    {
+                        CRMId = model.CRMId,
+                        ProposalId = id
+                    };
+                    await _repo.AddProjectAsync(project, CurrentUser.Id);
+                    await _repo.UpdateProposal(_mapper.Map<Proposal>(model), CurrentUser.Id);
+                    if (await _repo.SaveAllAsync())
+                    {
+                        TempData["Success"] = string.Format("Proposal has been successfully Updated");
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Unable to update due to some internal issues.";
+                        return RedirectToAction("Manage", new { @id = id });
+                    }
+                }
+
+                else
+                {
+                    TempData["Error"] = "Access denied";
+                    return RedirectToAction("Manage", new { @id = id });
+                }
+            }
+            else
+            {
+                TempData["Error"] = "Unable to update due to some internal issues.";
+                return RedirectToAction("Manage", new { @id = id });
+            }
+      
+        }
+        #endregion
 
         #endregion
 

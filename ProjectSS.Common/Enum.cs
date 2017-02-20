@@ -26,5 +26,4 @@ namespace ProjectSS.Common
         Owner = 1,
         Staff = 2
     }
-
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@model List<ProjectSS.Web.Models.ProjectViewModel>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,55 +16,85 @@
 
 
 <div class="row">
-    <div class="col-lg-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">Project PJ-0001 <button class="btn btn-success btn-xs pull-right">Show</button></div>
-            <div class="panel-body">
-                <div role="alert" class="alert alert-success">
-                    <strong>Well done!</strong>You successfully read this important alert message.
+    @foreach (var project in Model)
+    {
+      <div class="col-lg-3">
+        <!-- START panel-->
+        <div id="panelDemo1" class="panel panel-primary">
+            <div class="panel-heading">
+                Project @project.ProjectNo
+                <a href="#" data-tool="panel-collapse" data-toggle="tooltip" title="Collapse Panel" class="pull-right">
+                    <em class="fa fa-minus"></em>
+                </a>
+            </div>
+            <div class="panel-wrapper collapse in">
+                <div class="panel-body">
+                    <p>@project.ProposalTitle</p>
+                    <p>@project.CRMName</p>
                 </div>
+                <div class="panel-footer" style="color:blue">Show</div>
             </div>
         </div>
+        <!-- END panel-->
     </div>
+    }
     <div class="col-lg-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">Project PJ-0002 <button class="btn btn-success btn-xs pull-right">Show</button></div>
-            <div class="panel-body">
-                <div role="alert" class="alert alert-info">
-                    <strong>Heads up!</strong>This alert needs your attention, but it&apos;s not super important.
+        <!-- START panel-->
+        <div id="panelDemo1" class="panel panel-danger">
+            <div class="panel-heading">
+                Project PJ-XX
+                <a href="#" data-tool="panel-collapse" data-toggle="tooltip" title="Collapse Panel" class="pull-right">
+                    <em class="fa fa-minus"></em>
+                </a>
+            </div>
+            <div class="panel-wrapper collapse in">
+                <div class="panel-body">
+                    <p>This is a Test Panel</p>
+                    <p>Test Client name</p>
                 </div>
+                <div class="panel-footer" style="color:red">Show</div>
             </div>
         </div>
+        <!-- END panel-->
     </div>
     <div class="col-lg-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">Project PJ-0003 <button class="btn btn-success btn-xs pull-right">Show</button></div>
-            <div class="panel-body">
-                <div role="alert" class="alert alert-warning">
-                    <strong>Warning!</strong>Better check yourself, you&apos;re not looking too good.
+        <!-- START panel-->
+        <div id="panelDemo1" class="panel panel-warning">
+            <div class="panel-heading">
+                Project PJ-XX
+                <a href="#" data-tool="panel-collapse" data-toggle="tooltip" title="Collapse Panel" class="pull-right">
+                    <em class="fa fa-minus"></em>
+                </a>
+            </div>
+            <div class="panel-wrapper collapse in">
+                <div class="panel-body">
+                    <p>This is a Test Panel</p>
+                    <p>Test Client name</p>
                 </div>
+                <div class="panel-footer" style="color:orange">Show</div>
             </div>
         </div>
+        <!-- END panel-->
     </div>
     <div class="col-lg-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">Project PJ-0004<button class="btn btn-success btn-xs pull-right">Show</button></div>
-            <div class="panel-body">
-                <div role="alert" class="alert alert-danger">
-                    <strong>Oh snap!</strong>Change a few things up and try submitting again.
+        <!-- START panel-->
+        <div id="panelDemo1" class="panel panel-success">
+            <div class="panel-heading">
+                Project PJ-XX
+                <a href="#" data-tool="panel-collapse" data-toggle="tooltip" title="Collapse Panel" class="pull-right">
+                    <em class="fa fa-minus"></em>
+                </a>
+            </div>
+            <div class="panel-wrapper collapse in">
+                <div class="panel-body">
+                    <p>This is a Test Panel</p>
+                    <p>Test Client name</p>
                 </div>
+                <div class="panel-footer" style="color:green">Show</div>
             </div>
         </div>
+        <!-- END panel-->
     </div>
-    <div class="col-lg-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">Project PJ-0005 <button class="btn btn-success btn-xs pull-right">Show</button></div>
-            <div class="panel-body">
-                <div role="alert" class="alert alert-info">
-                    <strong>Heads up!</strong>This alert needs your attention, but it&apos;s not super important.
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+ </div>
 
+ 

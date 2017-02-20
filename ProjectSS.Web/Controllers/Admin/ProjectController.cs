@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.ApplicationInsights;
 using ProjectSS.Db.Contracts;
+using ProjectSS.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -20,10 +22,10 @@ namespace ProjectSS.Web.Controllers.Admin
             _repo = repo;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-
-            return View();
+            var model = _mapper.Map<List<ProjectViewModel>>( await _repo.GetProjectsAsync());
+            return View(model);
         }
     }
 }

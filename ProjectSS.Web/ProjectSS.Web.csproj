@@ -222,6 +222,7 @@
     <Compile Include="Models\CRMViewModel.cs" />
     <Compile Include="Models\InventoryViewModel.cs" />
     <Compile Include="Models\ManageCRMViewModel.cs" />
+    <Compile Include="Models\ProjectViewModel.cs" />
     <Compile Include="Models\ProposalViewModel.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />

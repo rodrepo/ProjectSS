@@ -72,6 +72,7 @@
     <Compile Include="Entities\CRMEmailHistory.cs" />
     <Compile Include="Entities\CRMRevisionHistory.cs" />
     <Compile Include="Entities\Inventory.cs" />
+    <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\Proposal.cs" />
     <Compile Include="Entities\ProposalCommission.cs" />
     <Compile Include="Entities\ProposalContractor.cs" />
@@ -124,6 +125,14 @@
     <Compile Include="Migrations\201702161248286_AddsQuantityAndNoOfDayToExpense.Designer.cs">
       <DependentUpon>201702161248286_AddsQuantityAndNoOfDayToExpense.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702201031303_AddsStatusToProposal.cs" />
+    <Compile Include="Migrations\201702201031303_AddsStatusToProposal.Designer.cs">
+      <DependentUpon>201702201031303_AddsStatusToProposal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702201202403_AddsProjectTable.cs" />
+    <Compile Include="Migrations\201702201202403_AddsProjectTable.Designer.cs">
+      <DependentUpon>201702201202403_AddsProjectTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -170,6 +179,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702161248286_AddsQuantityAndNoOfDayToExpense.resx">
       <DependentUpon>201702161248286_AddsQuantityAndNoOfDayToExpense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702201031303_AddsStatusToProposal.resx">
+      <DependentUpon>201702201031303_AddsStatusToProposal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702201202403_AddsProjectTable.resx">
+      <DependentUpon>201702201202403_AddsProjectTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

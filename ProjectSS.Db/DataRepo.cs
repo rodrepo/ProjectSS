@@ -296,6 +296,7 @@ namespace ProjectSS.Db
             latestProposal.BDId = proposal.BDId;
             latestProposal.THId = proposal.THId;
             latestProposal.TSId = proposal.TSId;
+            latestProposal.Status = proposal.Status;
             latestProposal.NegotiationAllowance = proposal.NegotiationAllowance;
             return latestProposal;
         }
@@ -530,6 +531,44 @@ namespace ProjectSS.Db
             storedInventory.UserId = inventory.UserId;
             storedInventory.Quantity = inventory.Quantity;
             return storedInventory;
+        }
+        #endregion
+
+        #region Project
+
+        public async Task<List<Project>> GetProjectsAsync()
+        {
+            return await _db.Projects.Where(p => !p.IsDeleted).ToListAsync();
+        }
+        public async Task<Project> AddProjectAsync(Project project, string userId)
+        {
+            var key = await GenerateProjectNumber();
+            project.ProjectNo = key.Reference;
+            project.PJNumber = key.Number;
+
+            _db.UserId = userId;
+            var result = _db.Projects.Add(project);
+            return result;
+        }
+
+        private async Task<ReferenceModel> GenerateProjectNumber()
+        {
+            var keys = new ReferenceModel();
+
+            var latestProject = await _db.Projects.Where(m => !m.IsDeleted).OrderByDescending(d => d.CreatedDate).FirstOrDefaultAsync();
+            if (latestProject != null && latestProject.PJNumber > 0)
+            {
+                int multi = 1;
+                multi += latestProject.PJNumber;
+                keys.Reference = "PJ-" + multi.ToString();
+                keys.Number = multi;
+            }
+            else
+            {
+                keys.Reference = "PJ-1";
+                keys.Number = 1;
+            }
+            return keys;
         }
         #endregion
 

@@ -87,6 +87,7 @@ namespace ProjectSS.Db
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<ProposalLaboratory> ProposalLaboratories { get; set; }
         public DbSet<ProposalCommission> ProposalCommissions { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
         #endregion
 

@@ -41,20 +41,9 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            <li class="@Html.isActive(controller: "CRM")">
-                <a href="/CRM">
-                    <em class="icon-briefcase"></em>
-                    <span>CRM</span>
-                </a>
-            </li>
             @if (canAccessOM)
             {
-                <li class="@Html.isActive(controller: "Project")">
-                    <a href="/Project">
-                        <em class="icon-chart"></em>
-                        <span>Projects</span>
-                    </a>
-                </li>
+
                 <li class="@Html.isActive(controller: "User")">
                     <a href="/User">
                         <em class="icon-user"></em>
@@ -63,6 +52,12 @@
                 </li>
 
             }
+            <li class="@Html.isActive(controller: "CRM")">
+                <a href="/CRM">
+                    <em class="icon-briefcase"></em>
+                    <span>CRM</span>
+                </a>
+            </li>
             @if (canAccessOM || canAccessBD || canAccessAH || canAccessTH)
             {
                 <li class="@Html.isActive(controller: "Proposal")">
@@ -72,6 +67,13 @@
                     </a>
                 </li>
             }
+
+            <li class="@Html.isActive(controller: "Project")">
+                <a href="/Project">
+                    <em class="icon-chart"></em>
+                    <span>Projects</span>
+                </a>
+            </li>
             <li class="@Html.isActive(controller: "Inventory")">
                 <a href="/Inventory">
                     <em class="icon-social-dropbox"></em>

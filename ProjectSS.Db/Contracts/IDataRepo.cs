@@ -97,6 +97,11 @@ namespace ProjectSS.Db.Contracts
         Task DeleteProposalCommission(int id);
         #endregion
 
+        #region Project
+        Task<Project> AddProjectAsync(Project project, string userId);
+        Task<List<Project>> GetProjectsAsync();
+        #endregion
+
         #region Inventory
         Task<List<Inventory>> GetInventoriesAsync();
         Task<Inventory> GetInventoryByIdAsync(int id);

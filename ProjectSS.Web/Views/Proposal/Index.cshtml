@@ -53,7 +53,14 @@
                                     <td>@u.CompanyName</td>
                                     <td>@u.ContactPerson</td>
                                     <td>@u.Location</td>
-                                    <td>@u.Status</td>
+                                    @if (u.Status.IsEmpty())
+                                    {
+                                        <td style="color:red">For Approval</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="color:green">@u.Status</td>
+                                    }
                                     <td>
                                         <a data-toggle="tooltip" data-placement="top" title="Manage" href="@Url.Action("Manage", "Proposal", new { id = u.Id })" class="btn btn-primary btn-xs"><i class="icon-menu"></i></a>
                                     </td>
