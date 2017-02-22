@@ -644,6 +644,7 @@
     <Content Include="Views\Proposal\_Equipment.cshtml" />
     <Content Include="Views\Proposal\_Laboratory.cshtml" />
     <Content Include="Views\Proposal\_Commission.cshtml" />
+    <Content Include="Views\Project\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

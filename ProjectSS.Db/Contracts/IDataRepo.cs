@@ -100,6 +100,8 @@ namespace ProjectSS.Db.Contracts
         #region Project
         Task<Project> AddProjectAsync(Project project, string userId);
         Task<List<Project>> GetProjectsAsync();
+        Task<Project> GetProjectByIdAsync(int id);
+
         #endregion
 
         #region Inventory

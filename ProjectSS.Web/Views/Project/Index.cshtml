@@ -32,7 +32,9 @@
                     <p>@project.ProposalTitle</p>
                     <p>@project.CRMName</p>
                 </div>
-                <div class="panel-footer" style="color:blue">Show</div>
+                <div class="panel-footer">
+                <a  style="color:blue" href="@Url.Action("Show", "Project", new { id = project.Id })">Show</a>
+                </div>
             </div>
         </div>
         <!-- END panel-->

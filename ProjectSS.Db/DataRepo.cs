@@ -540,6 +540,12 @@ namespace ProjectSS.Db
         {
             return await _db.Projects.Where(p => !p.IsDeleted).ToListAsync();
         }
+
+        public async Task<Project> GetProjectByIdAsync(int id)
+        {
+            return await _db.Projects.Where(p => p.Id == id).FirstOrDefaultAsync();
+        }
+
         public async Task<Project> AddProjectAsync(Project project, string userId)
         {
             var key = await GenerateProjectNumber();
