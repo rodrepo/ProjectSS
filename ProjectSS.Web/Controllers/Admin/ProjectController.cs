@@ -34,6 +34,9 @@ namespace ProjectSS.Web.Controllers.Admin
             var model = _mapper.Map<ProjectViewModel>(await _repo.GetProjectByIdAsync(id));
             var proposal = await _repo.GetProposalByIdAsync(model.ProposalId);
             model = MapProposal(proposal, model);
+            model.BDName = GetUserName(model.ProposalModel.BDId);
+            model.THName = GetUserName(model.ProposalModel.THId);
+            model.TSName = GetUserName(model.ProposalModel.TSId);
             return View(model);
         }
 
@@ -66,6 +69,11 @@ namespace ProjectSS.Web.Controllers.Admin
                 model.ProposalModel.Commissions = _mapper.Map<List<ProposalCommissionModel>>(proposal.ProposalCommissions);
             }
             return model;
+        }
+
+        public string GetUserName(string userId)
+        {
+            return _repo.GetUserName(userId);
         }
         #endregion
     }

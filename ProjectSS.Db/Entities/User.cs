@@ -34,5 +34,12 @@ namespace ProjectSS.Db.Entities
             // Add custom user claims here
             return userIdentity;
         }
+        public string DisplayName
+        {
+            get
+            {
+                return (FirstName + " " + MiddleName + " " + LastName);
+            }
+        }
     }
 }

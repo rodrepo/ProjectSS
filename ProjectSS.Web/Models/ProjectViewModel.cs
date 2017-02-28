@@ -23,6 +23,10 @@ namespace ProjectSS.Web.Models
         public int ProposalId { get; set; }
         public int CRMId { get; set; }
 
+        public string BDName { get; set; }
+        public string THName { get; set; }
+        public string TSName { get; set; }
+
         public ProposalViewModel ProposalModel { get; set; }
     }
 }

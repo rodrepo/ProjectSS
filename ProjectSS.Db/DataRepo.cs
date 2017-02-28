@@ -47,6 +47,11 @@ namespace ProjectSS.Db
             return _db.Users.FirstOrDefault(u => u.Id == userId);
         }
 
+        public string GetUserName(string userId)
+        {
+            return _db.Users.FirstOrDefault(u => u.Id == userId).DisplayName;
+
+        }
         #endregion
 
         #region Users
