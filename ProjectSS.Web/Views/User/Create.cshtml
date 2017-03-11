@@ -3,7 +3,18 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<h3>
+    New User
+    <ol class="breadcrumb">
+        <li>
+            <a href="/Home">Home</a>
+        </li>
+        <li>
+            <a href="/Users">Users</a>
+        </li>
+        <li class="active">New</li>
+    </ol>
+</h3>
 @using (Html.BeginForm("Create", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -13,7 +24,8 @@
         <div class="col-sm-12">
             <!-- START panel-->
             <div class="panel panel-default">
-                <div class="panel-heading"><h4>Create New User</h4></div>
+                <div class="panel-heading">
+                </div>
                 <div class="panel-body">
                     <form role="form">
                         <div class="row">
