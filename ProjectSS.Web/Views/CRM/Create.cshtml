@@ -3,6 +3,18 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h3>
+    Add CRM
+    <ol class="breadcrumb">
+        <li>
+            <a href="/Home">Home</a>
+        </li>
+        <li>
+            <a href="/CRM">CRM</a>
+        </li>
+        <li class="active">New CRM</li>
+    </ol>
+</h3>
 @using (Html.BeginForm("Create", "CRM", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -11,7 +23,6 @@
         <div class="col-sm-12">
             <!-- START panel-->
             <div class="panel panel-default">
-                <div class="panel-heading"><h4>Create New CRM</h4></div>
                 <div class="panel-body">
                     <form role="form">
                         <div class="form-group col-sm-4">
@@ -116,11 +127,17 @@
                             @Html.TextBoxFor(model => model.MobileNo, new { @class = "form-control", @type = "text", @placeholder = "Enter Mobile Number" })
                             @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
                         </div>
-                        <div class="pull-right">
-                            <button type="submit" class="btn btn-success btn-xs">Save</button>&nbsp;
-                            <a type="button" class="btn btn-info btn-xs" href="@Url.Action("Index", "CRM")">Back</a>
-                        </div>
                     </form>
+                </div>
+                <div class="panel-footer">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                        </div>
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <a href="/CRM" type="button" class="btn btn-info">Back</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- END panel-->

@@ -9,17 +9,7 @@
     var canAccessAH = User.IsInRole(RoleType.AH.ToString());
 }
 
-<div class="row">
-    <div class="col-sm-12">
-        <!-- CRM-->
-        @using (Html.BeginForm("Manage", "CRM", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.Partial("_CRM", Model.CRM)
-        }
-        <!-- CRM-->
 
-    </div>
-</div>
 <div class="row">
     <div class="col-sm-12">
 

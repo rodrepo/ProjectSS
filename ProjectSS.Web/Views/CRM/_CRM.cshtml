@@ -11,6 +11,17 @@
 @Html.HiddenFor(m => m.Id)
 @Html.AntiForgeryToken()
 @Html.ValidationSummary(true)
+<h3>
+    <ol class="breadcrumb">
+        <li>
+            <a href="/Home">Home</a>
+        </li>
+        <li>
+            <a href="/CRM">CRM</a>
+        </li>
+        <li class="active">Manage</li>
+    </ol>
+</h3>
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="col-sm-12">
