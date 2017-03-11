@@ -123,7 +123,7 @@ namespace ProjectSS.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult ChangePassword(string userId)
+        public async Task<ActionResult> ChangePassword(string userId)
         {
             var model = new ChangePasswordViewModel();
             if(!userId.IsEmpty())
@@ -131,13 +131,14 @@ namespace ProjectSS.Web.Controllers
                 model.UserId = userId;
                 model.OldPassword = "Xxxxxx0xx";
             }
+            model.UserDisplayName = await _repo.GetUserNameByIdAsync(userId);
             return View(model);
         }
 
         [HttpPost]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
-
+            bool admin = false;
             if (!ModelState.IsValid)
             {
                 foreach (var value in ModelState.Values)
@@ -160,6 +161,7 @@ namespace ProjectSS.Web.Controllers
                 {
                     result = UserManager.AddPassword(userId, model.ConfirmPassword);
                 }
+                admin = true;
             }
             else
             {
@@ -168,13 +170,21 @@ namespace ProjectSS.Web.Controllers
             }
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
+                if(admin == false)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                    if (user != null)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    }
+                    TempData["Success"] = string.Format("Password successfully changed please log in using your new password");
+                    return RedirectToAction("Login");
                 }
-                TempData["Success"] = string.Format("Changed password successfully please log in using your new password");
-                return RedirectToAction("Login");
+                else
+                {
+                    TempData["Success"] = string.Format("Password successfully Updated");
+                    return RedirectToAction("Edit", "User", new {@id = userId });
+                }
             }
             AddErrors(result);
             return View(model);
