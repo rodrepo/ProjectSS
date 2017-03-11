@@ -9,13 +9,13 @@ namespace ProjectSS.Web.Models.admin
     {
         public string Id { get; set; }
         [Required]
-        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Invalid characters")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "First Name Contains a Invalid characters")]
         public string FirstName { get; set; }
         [Required]
-        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Invalid characters")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Middle Name Contains a Invalid characters")]
         public string MiddleName { get; set; }
         [Required]
-        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Invalid characters")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Last Name Contains a Invalid characters")]
         public string LastName { get; set; }
         [EmailAddress]
         public string Email { get; set; }

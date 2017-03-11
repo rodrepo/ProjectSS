@@ -36,7 +36,7 @@ namespace ProjectSS.Web.Controllers.Admin
                         user.Roles = roles;
                     }
 
-                    foreach (var role in user.Roles )
+                    foreach (var role in user.Roles)
                     {
                         role.Name = GetProperRoleName(role.Name);
                     }
@@ -80,12 +80,13 @@ namespace ProjectSS.Web.Controllers.Admin
                         return RedirectToAction("Index");
                     }
                 }
-                foreach(var v in ModelState.Values)
+                foreach (var v in ModelState.Values)
                 {
-                    foreach(var e in v.Errors)
+                    foreach (var e in v.Errors)
                     {
                         TempData["Error"] = e.ErrorMessage;
                     }
+
                 }
                 await SetListItemsAsync(model);
                 return View(model);
@@ -163,9 +164,9 @@ namespace ProjectSS.Web.Controllers.Admin
                         return RedirectToAction("Index");
                     }
                 }
-                foreach(var value in  ModelState.Values)
+                foreach (var value in ModelState.Values)
                 {
-                    foreach(var error in value.Errors)
+                    foreach (var error in value.Errors)
                     {
                         TempData["Error"] = error.ErrorMessage;
 
@@ -247,7 +248,8 @@ namespace ProjectSS.Web.Controllers.Admin
                 Gender = model.Gender,
                 Birthday = model.Birthday,
                 Mobile = model.Mobile,
-                Rate = model.Rate
+                Rate = model.Rate,
+                IsActive = model.IsActive,
             };
             return (user);
         }
