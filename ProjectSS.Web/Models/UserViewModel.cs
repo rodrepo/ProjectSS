@@ -48,6 +48,7 @@ namespace ProjectSS.Web.Models.admin
                 return (FirstName +" "+ MiddleName +" "+ LastName );
             }
         }
+        public bool IsCurrentUser { get; set; }
     }
 
     public class ActivateViewModel

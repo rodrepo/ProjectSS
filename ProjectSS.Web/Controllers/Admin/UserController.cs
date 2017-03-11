@@ -35,13 +35,15 @@ namespace ProjectSS.Web.Controllers.Admin
                     {
                         user.Roles = roles;
                     }
-
                     foreach (var role in user.Roles)
                     {
                         role.Name = GetProperRoleName(role.Name);
                     }
+                    if (user.Id == CurrentUser.Id)
+                    {
+                        user.IsCurrentUser = true;
+                    }
                 }
-
             }
             return View(model);
         }
@@ -122,6 +124,10 @@ namespace ProjectSS.Web.Controllers.Admin
                         model.RoleId = role.Id;
                         break;
                     }
+                }
+                if (model.Id == CurrentUser.Id)
+                {
+                    model.IsCurrentUser = true;
                 }
                 await SetListItemsAsync(model);
                 return View(model);
