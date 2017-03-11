@@ -11,35 +11,7 @@
 @Html.HiddenFor(m => m.Id)
 @Html.AntiForgeryToken()
 @Html.ValidationSummary(true)
-<h3>
-    <ol class="breadcrumb">
-        <li>
-            <a href="/Home">Home</a>
-        </li>
-        <li>
-            <a href="/CRM">CRM</a>
-        </li>
-        <li class="active">Manage</li>
-    </ol>
-</h3>
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="col-sm-12">
-            <div class="col-sm-6">
-                <h4>@Model.Reference</h4>
-            </div>
-            <div class="col-sm-6">
-                <div class="pull-right" style="padding-top:10px">
-                    <button type="submit" class="btn btn-success btn-xs">Update</button>&nbsp;
-                    @if (canAccessOM == true || canAccessTH == true || canAccessAH == true)
-                    {
-                        <button type="button" data-toggle="modal" data-target="#deletemodal" class="btn btn-danger btn-xs">Delete</button>
-                    }
-                    &nbsp;<a type="button" class="btn btn-info btn-xs" href="@Url.Action("Index", "CRM")">Back</a>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="panel-body">
         <form role="form">
             <div class="form-group col-sm-4">
@@ -144,11 +116,16 @@
                 @Html.TextBoxFor(model => model.MobileNo, new { @class = "form-control", @type = "text", @placeholder = "Enter Mobile Number" })
                 @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group col-sm-4">
-                <a href="@Url.Action("ManageWithEmail", "CRM", new { id = Model.Id })" class="btn btn-success btn-xs">Email History</a>
-                <a href="@Url.Action("ManageWithCall", "CRM", new { id = Model.Id })" class="btn btn-success btn-xs">Call History</a>
-                <a href="@Url.Action("ManageWithRevision", "CRM", new { id = Model.Id })" class="btn btn-success btn-xs">Revision History</a>
-            </div>
         </form>
+    </div>
+    <div class="panel-footer">
+        <div class="clearfix">
+            <div class="pull-left">
+            </div>
+            <div class="pull-right">
+                <button type="submit" class="btn btn-success">Update</button>
+                <a href="/CRM" type="button" class="btn btn-info">Back</a>
+            </div>
+        </div>
     </div>
 </div>

@@ -8,7 +8,48 @@
     var canAccessTH = User.IsInRole(RoleType.TH.ToString());
     var canAccessAH = User.IsInRole(RoleType.AH.ToString());
 }
-
+<h3>
+    @Model.CRM.Reference
+    <div class="pull-right">
+        <button type="button" data-toggle="modal" data-target="#emailmodal" class="btn btn-success">Email</button>
+        <button type="button" data-toggle="modal" data-target="#callmodal" class="btn btn-success">Call</button>
+        <div class="btn-group">
+            <button type="button" data-toggle="dropdown" class="btn btn-info">Option</button>
+            <button type="button" data-toggle="dropdown" class="btn dropdown-toggle btn-info">
+                <span class="caret"></span>
+                <span class="sr-only">primary</span>
+            </button>
+            <ul role="menu" class="dropdown-menu">
+                <li>
+                    <a href="@Url.Action("ManageWithEmail", "CRM", new { id = Model.CRM.Id })">Email History</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("ManageWithCall", "CRM", new { id = Model.CRM.Id })">Call History</a>
+                <li>
+                    <a href="@Url.Action("ManageWithRevision", "CRM", new { id = Model.CRM.Id })">Revision History</a>
+                </li>
+                @if (canAccessOM == true || canAccessTH == true || canAccessAH == true)
+                {
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#deletemodal" style="color:red">Delete</a>
+                    </li>
+                }
+                <li>
+                    <a href="/CRM">Back</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <ol class="breadcrumb">
+        <li>
+            <a href="/Home">Home</a>
+        </li>
+        <li>
+            <a href="/CRM">CRM</a>
+        </li>
+        <li class="active">Manage</li>
+    </ol>
+</h3>
 <div class="row">
     <div class="col-sm-12">
         <!-- CRM-->
@@ -47,8 +88,8 @@
                     </div>
                     <div class="modal-body"><span>Are you sure you want to delete this SMR?</span></div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success btn-xs">Yes</button>
-                        <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
+                        <button type="submit" class="btn btn-success">Yes</button>
+                        <a href="" type="button" class="btn btn-info" data-dismiss="modal">No</a>
                     </div>
                 </div>
             }
@@ -74,13 +115,40 @@
                         @Html.Partial("_EmailEntry", new CRMEmailHistoryModel { CRMId = Model.CRM.Id })
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success btn-xs">Yes</button>
-                        <a href="" type="button" class="btn btn-info btn-xs" data-dismiss="modal">No</a>
+                        <button type="submit" class="btn btn-success">Yes</button>
+                        <a href="" type="button" class="btn btn-info" data-dismiss="modal">No</a>
                     </div>
                 </div>
             }
         </div>
     </div>
+    <div id="callmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            @using (Html.BeginForm("Call", "CRM", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                            <span aria-hidden="true"> </span>
+                        </button>
+                        <h4 id="myModalLabelSmall" class="modal-title">Remark</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5 style="color:red">Warning : The time and date will be base on your computer time date please confirm time and date before submitting entry</h5>
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.Partial("_CallEntry", new CRMCallHistoryModel { CRMId = Model.CRM.Id })
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Yes</button>
+                        <a href="" type="button" class="btn btn-info" data-dismiss="modal">No</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
 
 }
 
