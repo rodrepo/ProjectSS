@@ -5,6 +5,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var canAccessOM = User.IsInRole(RoleType.OM.ToString());
 }
+<h3>
+    Edit Item
+    <ol class="breadcrumb">
+        <li>
+            <a href="/Home">Home</a>
+        </li>
+        <li>
+            <a href="/Inventory">Inventory</a>
+        </li>
+        <li class="active">Edit</li>
+    </ol>
+</h3>
 @using (Html.BeginForm("Edit", "Inventory", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -13,7 +25,6 @@
         <div class="col-sm-6">
             <!-- START panel-->
             <div class="panel panel-default">
-                <div class="panel-heading"><h4>Edit Item</h4></div>
                 <div class="panel-body">
                     <form role="form">
                         <div class="row">
@@ -41,6 +52,7 @@
                                     <option value="">Select Item</option>
                                     <option @(Model.Location == "Manila" ? "selected" : " ") value="Manila">Manila</option>
                                     <option @(Model.Location == "Davao" ? "selected" : " ") value="Davao">Davao</option>
+                                    <option @(Model.Location == "Other" ? "selected" : " ") value="Other">Other</option>
                                 </select>
                             </div>
                             <div class="form-group col-sm-4">
@@ -52,14 +64,18 @@
                                 @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control", @type = "number", @placeholder = "Enter Quantity", @required = "required" })
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="pull-right">
-                                <button type="submit" class="btn btn-success btn-xs">Save</button>
-                                @if (canAccessOM == true)
-                                {
-                                    <button type="button" data-toggle="modal" data-target="#deletemodal" class="btn btn-danger btn-xs">Delete</button>
-                                }
-                                <a type="button" class="btn btn-info btn-xs" href="@Url.Action("Index", "Inventory")">Back</a>
+                        <div class="panel-footer">
+                            <div class="clearfix">
+                                <div class="pull-left">
+                                </div>
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                    @if (canAccessOM == true)
+                                    {
+                                        <button type="button" data-toggle="modal" data-target="#deletemodal" class="btn btn-danger">Delete</button>
+                                    }
+                                    <a type="button" class="btn btn-info" href="@Url.Action("Index", "Inventory")">Cancel</a>
+                                </div>
                             </div>
                         </div>
                     </form>
