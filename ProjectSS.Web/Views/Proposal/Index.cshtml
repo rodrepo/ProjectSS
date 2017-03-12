@@ -7,7 +7,23 @@
     var canAccessOM = User.IsInRole(RoleType.OM.ToString());
     var canAccessBD = User.IsInRole(RoleType.BD.ToString());
 }
+<h3>
+    List of Proposal
+    @if (canAccessOM == true || canAccessBD == true)
+    {
+        <a class="btn btn-labeled btn-success pull-right" data-toggle="modal" data-target="#create">
+            <span class="btn-label"><i class="fa fa-plus"></i></span>
+            ADD PROPOSAL
+        </a>
+    }
+    <ol class="breadcrumb">
+        <li>
+            <a href="/Home">Home</a>
 
+        </li>
+        <li class="active">Proposal</li>
+    </ol>
+</h3>
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -16,17 +32,7 @@
                     <div class="col-sm-6">
                         <h4>List of Proposal</h4>
                     </div>
-                    @if (canAccessOM == true || canAccessBD == true)
-                    {
-                        <div class="col-sm-6">
-                            <div class="pull-right" style="padding-top:10px">
-                                <a class="btn btn-labeled btn-success btn-xs" data-toggle="modal" data-target="#create">
-                                    <span class="btn-label"><i class="fa fa-plus"></i></span>
-                                    New Proposal
-                                </a>
-                            </div>
-                        </div>
-                    }
+
                 </div>
             </div>
             <div class="panel-body">
