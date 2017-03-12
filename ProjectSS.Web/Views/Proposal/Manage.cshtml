@@ -7,6 +7,23 @@
     var canAccessOM = User.IsInRole(RoleType.OM.ToString());
     var canAccessBD = User.IsInRole(RoleType.BD.ToString());
 }
+<h3>
+   @Model.ProposalNumber
+    @if (!Model.RevisionNumber.IsEmpty())
+    {
+        @Model.RevisionNumber
+    }
+    <ol class="breadcrumb">
+        <li>
+            <a href="/Home">Home</a>
+        </li>
+        <li>
+            <a href="/Proposal">Proposal</a>
+        </li>
+        <li class="active">Manage</li>
+    </ol>
+</h3>
+
 @using (Html.BeginForm("Manage", "Proposal", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(m => m.CRMId);
@@ -23,11 +40,7 @@
         <div class="panel-heading">
             <div class="col-sm-12">
                 <div class="col-sm-6">
-                    <h4>Proposal Number: @Model.ProposalNumber</h4>
-                    @if (!Model.RevisionNumber.IsEmpty())
-                    {
-                        <h4>@Model.RevisionNumber</h4>
-                    }
+                
                 </div>
                 <div class="col-sm-6">
                     <div class="pull-right" style="padding-top:10px">
