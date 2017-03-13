@@ -65,5 +65,10 @@
     @RenderSection("scripts", required: false)
     <!-- =============== APP SCRIPTS ===============-->
     @Scripts.Render("~/bundles/Angle")
+    <script type="text/javascript">
+        $.ajaxPrefilter(function (options, original_Options, jqXHR) {
+            options.async = true;
+        });
+    </script>
 </body>
 </html>
