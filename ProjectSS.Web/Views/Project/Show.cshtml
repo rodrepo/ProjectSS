@@ -3,93 +3,147 @@
     ViewBag.Title = "Show";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="panel panel-default">
-    <div class="panel-heading">
-        Project Number: @Model.ProjectNo
+<h3>
+    @Model.ProjectNo
+    <div class="pull-right">
+        <a type="button" href="/Project" class="btn btn-info">Back</a>
     </div>
-    <div class="panel-body">
-        <div class="col-sm-12">
-            <div class="row">
-                <div class="col-md-4">
-                    <p class="lead bb">Details</p>
-                    <form class="form-horizontal p-20">
-                        <div class="form-group">
-                            <div class="col-sm-5">Title: </div>
-                            <div class="col-sm-7">
-                                <strong>@Model.ProposalTitle</strong>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-5">Company Name: </div>
-                            <div class="col-sm-7">
-                                <strong>@Model.ProposalModel.CompanyName</strong>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-5">Industry: </div>
-                            <div class="col-sm-7">
-                                <strong>@Model.ProposalModel.Industry</strong>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-5">Description: </div>
-                            <div class="col-sm-7">
-                                <strong>@Model.ProposalModel.Description</strong>
-                            </div>
-                        </div>
-                    </form>
+    <ol class="breadcrumb">
+        <li>
+            <a href="/Home">Home</a>
+        </li>
+        <li>
+            <a href="/Project">Projects</a>
+        </li>
+        <li class="active">Show</li>
+    </ol>
+</h3>
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Main panel-->
+        <div class="panel b">
+            <div class="panel-heading">
+                <div class="pull-right mt">
+                    <div class="label label-info">Status</div>
                 </div>
-                <div class="col-md-4">
-                    <p class="lead bb">&nbsp;</p>
-                    <form class="form-horizontal p-20">
-                        <div class="form-group">
-                            <div class="col-sm-5">Contact Person: </div>
-                            <div class="col-sm-7">
-                                <strong>@Model.ProposalModel.ContactPerson</strong>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-5">Position: </div>
-                            <div class="col-sm-7">
-                                <strong>@Model.ProposalModel.ContactPersonPosition</strong>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-5">Location: </div>
-                            <div class="col-sm-7">
-                                <strong>@Model.ProposalModel.Location</strong>
-                            </div>
-                        </div>
-                    </form>
+                <h4 class="mv">
+                    <span>Assigned</span>
+                </h4>
+            </div>
+            <div class="panel-body bb bt">
+                <div class="form-group">
+                    <div class="col-sm-5">Business Developement: </div>
+                    <div class="col-sm-7">
+                        <strong>@Model.BDName</strong>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <p class="lead bb">&nbsp;</p>
-                    <form class="form-horizontal p-20">
-                        <div class="form-group">
-                            <div class="col-sm-5">Business Developement: </div>
-                            <div class="col-sm-7">
-                                <strong>@Model.BDName</strong>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-5">Technical Head: </div>
-                            <div class="col-sm-7">
-                                <strong>@Model.THName</strong>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-5">Technical Specialist: </div>
-                            <div class="col-sm-7">
-                                <strong>@Model.TSName</strong>
-                            </div>
-                        </div>
-                    </form>
+                <div class="form-group">
+                    <div class="col-sm-5">Technical Head: </div>
+                    <div class="col-sm-7">
+                        <strong>@Model.THName</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-5">Technical Specialist: </div>
+                    <div class="col-sm-7">
+                        <strong>@Model.TSName</strong>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- Main panel-->
+        <div class="panel b">
+            <div class="panel-heading">
+                <h4 class="mv">
+                    <span>Details</span>
+                </h4>
+            </div>
+            <div class="panel-body bb bt">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-5">Title: </div>
+                        <div class="col-sm-7">
+                            <strong>@Model.ProposalTitle</strong>
+                        </div>
+                        <div class="col-sm-5">Company Name: </div>
+                        <div class="col-sm-7">
+                            <strong>@Model.ProposalModel.CompanyName</strong>
+                        </div>
+                        <div class="col-sm-5">Industry: </div>
+                        <div class="col-sm-7">
+                            <strong>@Model.ProposalModel.Industry</strong>
+                        </div>
+                        <div class="col-sm-5">Contact Person: </div>
+                        <div class="col-sm-7">
+                            <strong>@Model.ProposalModel.ContactPerson</strong>
+                        </div>
+                        <div class="col-sm-5">Position: </div>
+                        <div class="col-sm-7">
+                            <strong>@Model.ProposalModel.ContactPersonPosition</strong>
+                        </div>
+                        <div class="col-sm-5">Location: </div>
+                        <div class="col-sm-7">
+                            <strong>@Model.ProposalModel.Location</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <h4>Description</h4>
+                <p>
+                    @Model.ProposalModel.Description
+                </p>
+            </div>
+        </div>
+        <!-- End Main panel-->
+    </div>
+    <div class="col-lg-4">
+        <!-- Aside panel-->
+        <div class="panel b">
+            <div class="panel-heading">
+                <div class="pull-right mt">
+                    <div class="label label-info">Show value</div>
+                </div>
+                <h4 class="mv">
+                    <span>Budget status</span>
+                </h4>
+            </div>
+            <div class="panel-body bb bt">
+                <div class="table-grid table-grid-align-middle mv">
+                    <div class="col">
+                        <div class="progress progress-xs m0">
+                            <div class="progress-bar progress-bar-success" style="width:53%;"></div>
+                        </div>
+                    </div>
+                    <div class="col wd-xxs text-right">
+                        <div class="text-bold text-muted">48%</div>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+        <!-- end Aside panel-->
+    </div>
+    <div class="col-lg-4">
+        <!-- Aside panel-->
+        <div class="panel b">
+            <div class="panel-heading">
+                <div class="pull-right mt">
+                </div>
+                <h4 class="mv">
+                    <span>Transactions</span>
+                </h4>
+            </div>
+            <div class="panel-body bb bt">
+                <button type="button" class="mb-xl btn btn-success col-sm-12">Request Budget</button>
+                <br />
+                <button type="button" class="mb-xl btn btn-primary col-sm-12">My Transactions</button>
+                <br />
+                <button type="button" class="mb-xl btn btn-info col-sm-12">Transactions Summary</button>
+            </div>
+        </div>
+        <!-- end Aside panel-->
     </div>
 </div>
-
-
 
 
