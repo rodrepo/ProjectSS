@@ -14,15 +14,52 @@
     </ol>
 </h3>
 
-
 <div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table id="datatable1" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Title</th>
+                            <th>Contact Person</th>
+                            @*<th>Company</th>
+                            <th>Location</th>*@
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var u in Model)
+                            {
+                                <tr>
+                                    <td>@u.ProjectNo</td>
+                                    <td>@u.ProposalTitle</td>
+                                    <td>@u.CRMName</td>
+                                    @*<td>@u.ProposalModel.CompanyName</td>
+                                    <td>@u.ProposalModel.Location</td>*@
+                                    <td>
+                                        <a style="color:blue" href="@Url.Action("Show", "Project", new { id = u.Id })">Show</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="row">
     @foreach (var project in Model)
     {
       <div class="col-lg-3">
         <!-- START panel-->
         <div id="panelDemo1" class="panel panel-primary">
             <div class="panel-heading">
-                Project @project.ProjectNo
+                @project.ProjectNo
                 <a href="#" data-tool="panel-collapse" data-toggle="tooltip" title="Collapse Panel" class="pull-right">
                     <em class="fa fa-minus"></em>
                 </a>
@@ -97,6 +134,29 @@
         </div>
         <!-- END panel-->
     </div>
- </div>
+ </div>*@
+@section Styles {
+    @Styles.Render("~/bundles/datatablesCss")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+    @Scripts.Render("~/bundles/demoDatatable")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ('@TempData["Error"]' != "") {
+                $.notify('@TempData["Error"]', "danger");
+            }
+            if ('@TempData["Success"]' != "") {
+                $.notify('@TempData["Success"]', "success");
+            }
+            if ('@TempData["Info"]' != "") {
+                $.notify('@TempData["Info"]', "info");
+            }
+            if ('@TempData["Warning"]' != "") {
+                $.notify('@TempData["Warning"]', "warning");
+            }
+        });
+    </script>
+}
 
  
