@@ -35,7 +35,7 @@ namespace ProjectSS.Web.Controllers.Admin
         }
 
         [HttpGet]
-        public async Task<ActionResult> Manage(int id)
+        public async Task<ActionResult> Manage(int id, string from)
         {
             var getValues = await _repo.GetProposalByIdAsync(id);
             var proposal = _mapper.Map<ProposalViewModel>(getValues);
@@ -68,8 +68,10 @@ namespace ProjectSS.Web.Controllers.Admin
                 var mergeValues = await MergeToProposal(proposal);
                 await DropdownListForUsers();
                 await SetListItemsAsync(mergeValues);
+                mergeValues.From = from;
                 return View(mergeValues);
             }
+            proposal.From = from;
             return View(proposal);
         }
 
@@ -92,7 +94,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     TempData["Error"] = "Unable to delete staff due to some internal issues.";
                 }
-                return RedirectToAction("Manage", new { @id = proposalId });
+                return RedirectToAction("Manage", new { @id = proposalId, @from = "staff" });
             }
             catch (Exception e)
             {
@@ -117,7 +119,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     TempData["Error"] = "Unable to delete laboratory due to some internal issues.";
                 }
-                return RedirectToAction("Manage", new { @id = proposalId });
+                return RedirectToAction("Manage", new { @id = proposalId , @from = "laboratory" });
             }
             catch (Exception e)
             {
@@ -168,7 +170,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     TempData["Error"] = "Unable to delete contactor/outsource due to some internal issues.";
                 }
-                return RedirectToAction("Manage", new { @id = proposalId });
+                return RedirectToAction("Manage", new { @id = proposalId , @from = "contractor" });
             }
             catch (Exception e)
             {
@@ -193,7 +195,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     TempData["Error"] = "Unable to delete operating expense due to some internal issues.";
                 }
-                return RedirectToAction("Manage", new { @id = proposalId });
+                return RedirectToAction("Manage", new { @id = proposalId , @from = "operating" });
             }
             catch (Exception e)
             {
@@ -218,7 +220,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     TempData["Error"] = "Unable to delete equipment due to some internal issues.";
                 }
-                return RedirectToAction("Manage", new { @id = proposalId });
+                return RedirectToAction("Manage", new { @id = proposalId , @from = "equipment" });
             }
             catch (Exception e)
             {
@@ -243,7 +245,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     TempData["Error"] = "Unable to delete commission/representation due to some internal issues.";
                 }
-                return RedirectToAction("Manage", new { @id = proposalId });
+                return RedirectToAction("Manage", new { @id = proposalId ,@from = "commissions" });
             }
             catch (Exception e)
             {
@@ -303,7 +305,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
 
                     TempData["Success"] = string.Format("Staff has been successfully Created");
-                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                    return RedirectToAction("Manage", new { @id = model.ProposalId , @from ="staff"});
                 }
                 TempData["Error"] = "Unable to create Staff due to some internal issues.";
             }
@@ -326,7 +328,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 if (await _repo.SaveAllAsync())
                 {
                     TempData["Success"] = string.Format("Contractor/Outsource has been successfully Created");
-                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                    return RedirectToAction("Manage", new { @id = model.ProposalId , @from = "contractor" });
                 }
                 TempData["Error"] = "Unable to create Contractor/Outsource due to some internal issues.";
             }
@@ -349,7 +351,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 if (await _repo.SaveAllAsync())
                 {
                     TempData["Success"] = string.Format("Operating expense has been successfully Created");
-                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                    return RedirectToAction("Manage", new { @id = model.ProposalId , @from = "operating" });
                 }
                 TempData["Error"] = "Unable to create operating expense due to some internal issues.";
             }
@@ -372,7 +374,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 if (await _repo.SaveAllAsync())
                 {
                     TempData["Success"] = string.Format("Equipment has been successfully Created");
-                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                    return RedirectToAction("Manage", new { @id = model.ProposalId ,@from = "equipment" });
                 }
                 TempData["Error"] = "Unable to create equipment due to some internal issues.";
             }
@@ -395,7 +397,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 if (await _repo.SaveAllAsync())
                 {
                     TempData["Success"] = string.Format("Cmmission/Representations has been successfully Created");
-                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                    return RedirectToAction("Manage", new { @id = model.ProposalId ,@from = "commissions" });
                 }
                 TempData["Error"] = "Unable to create Cmmission/Representations due to some internal issues.";
             }
@@ -418,7 +420,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 if (await _repo.SaveAllAsync())
                 {
                     TempData["Success"] = string.Format("Laboratory has been successfully Created");
-                    return RedirectToAction("Manage", new { @id = model.ProposalId });
+                    return RedirectToAction("Manage", new { @id = model.ProposalId , @from = "laboratory" });
                 }
                 TempData["Error"] = "Unable to create laboratory due to some internal issues.";
             }

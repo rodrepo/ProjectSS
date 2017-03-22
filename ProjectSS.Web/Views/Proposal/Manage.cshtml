@@ -137,7 +137,7 @@
                     <label>Technical Head</label>
                     @Html.DropDownListFor(model => model.THId, (List<SelectListItem>)ViewBag.THs, new { @class = "form-control" })
                 </div>
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-4" id="staff">
                     <label>Technical Specialist</label>
                     @Html.DropDownListFor(model => model.TSId, (List<SelectListItem>)ViewBag.TSs, new { @class = "form-control" })
                 </div>
@@ -239,14 +239,14 @@
                 <tbody>
                     <tr>
                         <td>Management Fee ( 4% of Contract Price )</td>
-                        <td>@Model.MangementFeeBilledToClient.ToString("P" + " " + "#,0.00")</td>
+                        <td id="contractor">@Model.MangementFeeBilledToClient.ToString("P" + " " + "#,0.00")</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <div class="panel panel-default">
+    <div class="panel panel-default" >
         <div class="panel-heading">
             <div class="col-sm-12">
                 <div class="col-sm-6">
@@ -304,7 +304,7 @@
                             <td>@Model.TotalContractorDirectCost.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
                             <td>@Model.TotalContractorBilledToClient.ToString("P" + " " + "#,0.00")</td>
-                            <td></td>
+                            <td id="operating"></td>
                         </tr>
                     }
                 </tbody>
@@ -370,7 +370,7 @@
                             <td>@Model.TotalExpenseDirectCost.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
                             <td>@Model.TotalExpenseBilledToClient.ToString("P" + " " + "#,0.00")</td>
-                            <td></td>
+                            <td id="equipment"></td>
                         </tr>
                     }
                 </tbody>
@@ -442,7 +442,7 @@
                             <td>@Model.TotalEquipmentDirectCost.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
                             <td>@Model.TotalEquipmentBilledToClient.ToString("P" + " " + "#,0.00")</td>
-                            <td></td>
+                            <td id="laboratory"></td>
                         </tr>
                     }
                 </tbody>
@@ -510,7 +510,7 @@
                             <td>@Model.TotalLaboratoryDirectCost.ToString("P" + " " + "#,0.00")</td>
                             <td></td>
                             <td>@Model.TotalLaboratoryBilledToClient.ToString("P" + " " + "#,0.00")</td>
-                            <td></td>
+                            <td id="commissions"></td>
                         </tr>
                     }
                 </tbody>
@@ -1052,6 +1052,55 @@
 @section Scripts {
     @Scripts.Render("~/bundles/datatables")
     @Scripts.Render("~/bundles/demoDatatable")
+    @if (Model.From == "staff")
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                document.getElementById("staff").scrollIntoView({ behavior: "smooth" });
+            };
+        </script>
+    }
+    @if (Model.From == "contractor")
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                document.getElementById("contractor").scrollIntoView({ behavior: "smooth" });
+            };
+        </script>
+    }
+    @if (Model.From == "operating")
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                document.getElementById("operating").scrollIntoView({ behavior: "smooth" });
+            };
+        </script>
+    }
+    @if (Model.From == "equipment")
+    {
+        <script type="text/javascript">
+                window.onload = function () {
+                    document.getElementById("equipment").scrollIntoView({ behavior: "smooth" });
+                };
+        </script>
+    }
+    @if (Model.From == "laboratory")
+        {
+        <script type="text/javascript">
+                    window.onload = function () {
+                        document.getElementById("laboratory").scrollIntoView({ behavior: "smooth" });
+                    };
+        </script>
+    }
+    @if (Model.From == "commissions")
+    {
+        <script type="text/javascript">
+                        window.onload = function () {
+                            document.getElementById("commissions").scrollIntoView({ behavior: "smooth" });
+                        };
+        </script>
+    }
+
     <script type="text/javascript">
         $(document).ready(function () {
             if ('@TempData["Error"]' != "") {
@@ -1073,4 +1122,6 @@
             $("#button2").click();
         });
     </script>
+
 }
+
