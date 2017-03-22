@@ -57,7 +57,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     proposal.Equipments = _mapper.Map<List<ProposalEquipmentModel>>(getValues.ProposalEquipments);
                 }
-                if(getValues.ProposalLaboratories?.Any() ?? false)
+                if (getValues.ProposalLaboratories?.Any() ?? false)
                 {
                     proposal.Laboratories = _mapper.Map<List<ProposalLaboratoryModel>>(getValues.ProposalLaboratories);
                 }
@@ -65,14 +65,41 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     proposal.Commissions = _mapper.Map<List<ProposalCommissionModel>>(getValues.ProposalCommissions);
                 }
-                var mergeValues = await MergeToProposal(proposal);
+                proposal = await MergeToProposal(proposal);
                 await DropdownListForUsers();
-                await SetListItemsAsync(mergeValues);
-                mergeValues.From = from;
-                return View(mergeValues);
+                await SetListItemsAsync(proposal);
             }
-            proposal.From = from;
+            if (from != null)
+            {
+                proposal.From = from;
+                await Update(proposal);
+                var result = await _repo.GetProposalByIdAsync(id);
+                proposal.RevisionNumber = result.RevisionNumber;
+                proposal.RVNumber = result.RVNumber;
+            }
+            if(User.IsInRole(RoleType.OM.ToString()) || User.IsInRole(RoleType.BD.ToString()) && CurrentUser.Id == proposal.CreatedBy || CurrentUser.Id == proposal.BDId)
+            {
+                proposal.CanModify = true;
+            }
             return View(proposal);
+        }
+
+        async Task Update(ProposalViewModel model)
+        {
+            try
+            {
+                #region String Convertion
+                model.Cost = ConvertStringToDecimal(model.SCost);
+                model.NegotiationAllowance = ConvertStringToDecimal(model.SNegotiationAllowance);
+                #endregion
+                await _repo.UpdateProposal(_mapper.Map<Proposal>(model), CurrentUser.Id);
+                await _repo.SaveAllAsync();
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+            }
         }
 
         #endregion
@@ -81,13 +108,13 @@ namespace ProjectSS.Web.Controllers.Admin
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteStaff(int id , int proposalId)
+        public async Task<ActionResult> DeleteStaff(int id, int proposalId)
         {
             try
             {
                 await _repo.DeleteProposalStaff(id);
                 if (await _repo.SaveAllAsync())
-                {   
+                {
                     TempData["Success"] = $"Successfully deleted staff";
                 }
                 else
@@ -119,7 +146,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     TempData["Error"] = "Unable to delete laboratory due to some internal issues.";
                 }
-                return RedirectToAction("Manage", new { @id = proposalId , @from = "laboratory" });
+                return RedirectToAction("Manage", new { @id = proposalId, @from = "laboratory" });
             }
             catch (Exception e)
             {
@@ -157,7 +184,7 @@ namespace ProjectSS.Web.Controllers.Admin
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteContractor(int id , int proposalId)
+        public async Task<ActionResult> DeleteContractor(int id, int proposalId)
         {
             try
             {
@@ -170,7 +197,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     TempData["Error"] = "Unable to delete contactor/outsource due to some internal issues.";
                 }
-                return RedirectToAction("Manage", new { @id = proposalId , @from = "contractor" });
+                return RedirectToAction("Manage", new { @id = proposalId, @from = "contractor" });
             }
             catch (Exception e)
             {
@@ -195,7 +222,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     TempData["Error"] = "Unable to delete operating expense due to some internal issues.";
                 }
-                return RedirectToAction("Manage", new { @id = proposalId , @from = "operating" });
+                return RedirectToAction("Manage", new { @id = proposalId, @from = "operating" });
             }
             catch (Exception e)
             {
@@ -220,7 +247,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     TempData["Error"] = "Unable to delete equipment due to some internal issues.";
                 }
-                return RedirectToAction("Manage", new { @id = proposalId , @from = "equipment" });
+                return RedirectToAction("Manage", new { @id = proposalId, @from = "equipment" });
             }
             catch (Exception e)
             {
@@ -245,7 +272,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     TempData["Error"] = "Unable to delete commission/representation due to some internal issues.";
                 }
-                return RedirectToAction("Manage", new { @id = proposalId ,@from = "commissions" });
+                return RedirectToAction("Manage", new { @id = proposalId, @from = "commissions" });
             }
             catch (Exception e)
             {
@@ -303,9 +330,8 @@ namespace ProjectSS.Web.Controllers.Admin
                 _repo.AddProposalStaff(_mapper.Map<ProposalStaff>(model), CurrentUser.Id);
                 if (await _repo.SaveAllAsync())
                 {
-
                     TempData["Success"] = string.Format("Staff has been successfully Created");
-                    return RedirectToAction("Manage", new { @id = model.ProposalId , @from ="staff"});
+                    return RedirectToAction("Manage", new { @id = model.ProposalId, @from = "staff" });
                 }
                 TempData["Error"] = "Unable to create Staff due to some internal issues.";
             }
@@ -328,7 +354,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 if (await _repo.SaveAllAsync())
                 {
                     TempData["Success"] = string.Format("Contractor/Outsource has been successfully Created");
-                    return RedirectToAction("Manage", new { @id = model.ProposalId , @from = "contractor" });
+                    return RedirectToAction("Manage", new { @id = model.ProposalId, @from = "contractor" });
                 }
                 TempData["Error"] = "Unable to create Contractor/Outsource due to some internal issues.";
             }
@@ -351,7 +377,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 if (await _repo.SaveAllAsync())
                 {
                     TempData["Success"] = string.Format("Operating expense has been successfully Created");
-                    return RedirectToAction("Manage", new { @id = model.ProposalId , @from = "operating" });
+                    return RedirectToAction("Manage", new { @id = model.ProposalId, @from = "operating" });
                 }
                 TempData["Error"] = "Unable to create operating expense due to some internal issues.";
             }
@@ -374,7 +400,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 if (await _repo.SaveAllAsync())
                 {
                     TempData["Success"] = string.Format("Equipment has been successfully Created");
-                    return RedirectToAction("Manage", new { @id = model.ProposalId ,@from = "equipment" });
+                    return RedirectToAction("Manage", new { @id = model.ProposalId, @from = "equipment" });
                 }
                 TempData["Error"] = "Unable to create equipment due to some internal issues.";
             }
@@ -397,7 +423,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 if (await _repo.SaveAllAsync())
                 {
                     TempData["Success"] = string.Format("Cmmission/Representations has been successfully Created");
-                    return RedirectToAction("Manage", new { @id = model.ProposalId ,@from = "commissions" });
+                    return RedirectToAction("Manage", new { @id = model.ProposalId, @from = "commissions" });
                 }
                 TempData["Error"] = "Unable to create Cmmission/Representations due to some internal issues.";
             }
@@ -420,7 +446,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 if (await _repo.SaveAllAsync())
                 {
                     TempData["Success"] = string.Format("Laboratory has been successfully Created");
-                    return RedirectToAction("Manage", new { @id = model.ProposalId , @from = "laboratory" });
+                    return RedirectToAction("Manage", new { @id = model.ProposalId, @from = "laboratory" });
                 }
                 TempData["Error"] = "Unable to create laboratory due to some internal issues.";
             }
@@ -462,7 +488,7 @@ namespace ProjectSS.Web.Controllers.Admin
             {
                 if (model.Cost > 0)
                 {
-                    model.MangementFeeBilledToClient = model.Cost * decimal.Parse("0.04") ;
+                    model.MangementFeeBilledToClient = model.Cost * decimal.Parse("0.04");
                 }
                 model.SCost = ConvertDecimalToPesos(model.Cost);
                 model.SNegotiationAllowance = ConvertDecimalToPesos(model.NegotiationAllowance);
@@ -505,7 +531,7 @@ namespace ProjectSS.Web.Controllers.Admin
 
                 #region Laboratory
                 var laboratoryResult = model.Laboratories.Where(l => !l.IsDeleted).ToList();
-                if(laboratoryResult?.Any() ?? false)
+                if (laboratoryResult?.Any() ?? false)
                 {
                     laboratoryResult = MapNeedFieldForLaboratoryModel(laboratoryResult);
                     model.TotalLaboratoryBilledToClient = laboratoryResult.Select(l => l.BilledToClient).Sum();
@@ -546,7 +572,7 @@ namespace ProjectSS.Web.Controllers.Admin
                     model.NetFactor = model.TotalBilledToClient / model.DirectCost;
                 }
                 var user = await _repo.GetUserByIdAsync(model.CreatedBy);
-                if(user != null)
+                if (user != null)
                 {
                     model.CreatedByName = user.FirstName + " " + user.MiddleName + " " + user.LastName;
                 }
@@ -603,7 +629,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 {
                     if (equipment != null)
                     {
-                        if(equipment.InventoryId > 0)
+                        if (equipment.InventoryId > 0)
                         {
                             var inventory = await _repo.GetInventoryByIdAsync(equipment.InventoryId);
                             equipment.Name = inventory.Name;
@@ -688,7 +714,7 @@ namespace ProjectSS.Web.Controllers.Admin
             if (id > 0)
             {
                 var model = await _repo.GetProposalByIdAsync(id);
-                if(model.Cost <= 0)
+                if (model.Cost <= 0)
                 {
                     TempData["Error"] = "Please add Project Cost";
                     return RedirectToAction("Manage", new { @id = id });
@@ -726,7 +752,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 TempData["Error"] = "Unable to update due to some internal issues.";
                 return RedirectToAction("Manage", new { @id = id });
             }
-      
+
         }
         #endregion
 

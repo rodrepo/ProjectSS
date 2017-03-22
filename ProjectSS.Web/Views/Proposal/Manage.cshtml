@@ -5,7 +5,6 @@
     ViewBag.Title = "Manage";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var canAccessOM = User.IsInRole(RoleType.OM.ToString());
-    var canAccessBD = User.IsInRole(RoleType.BD.ToString());
 }
 <h3>
     @Model.ProposalNumber
@@ -16,7 +15,7 @@
     @if (Model.Status != "Approved")
     {
         <div class="pull-right">
-            @if (canAccessOM == true || canAccessBD == true)
+            @if (Model.CanModify)
             {
                 <a id="button1" type="submit" class="btn btn-success">Update</a>
             }
@@ -155,7 +154,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="pull-right" style="padding-top:10px">
-                        @if (Model.Status != "Approved" && canAccessOM == true || canAccessBD == true)
+                        @if (Model.Status != "Approved" && Model.CanModify)
                         {
                             <button type="submit" data-toggle="modal" data-target="#createStaff" class="btn btn-success">New</button>
                         }
@@ -193,7 +192,7 @@
                                 <td>@u.DirectCost.ToString("P" + " " + "#,0.00")</td>
                                 <td>@u.Factor.ToString("0.0#")</td>
                                 <td>@u.BilledToClient.ToString("P" + " " + "#,0.00")</td>
-                                @if (Model.Status != "Approved")
+                                @if (Model.Status != "Approved" && Model.CanModify)
                                 {
                                     <td><button type="submit" data-toggle="modal" data-target="#deleteStaff-@u.Id" class="btn btn-danger btn-xs"></button></td>
                                 }
@@ -254,7 +253,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="pull-right" style="padding-top:10px">
-                        @if (Model.Status != "Approved" && canAccessOM == true || canAccessBD == true)
+                        @if (Model.Status != "Approved" && Model.CanModify)
                         {
                             <button type="submit" data-toggle="modal" data-target="#createContractor" class="btn btn-success">New</button>
                         }
@@ -290,7 +289,7 @@
                                 <td>@u.DirectCost.ToString("P" + " " + "#,0.00")</td>
                                 <td>@u.Factor.ToString("0.0#")</td>
                                 <td>@u.BilledToClient.ToString("P" + " " + "#,0.00")</td>
-                                @if (Model.Status != "Approved")
+                                @if (Model.Status != "Approved" && Model.CanModify)
                                 {
                                     <td><button type="submit" data-toggle="modal" data-target="#deleteStaff-@u.Id" class="btn btn-danger btn-xs"></button></td>
                                 }
@@ -320,7 +319,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="pull-right" style="padding-top:10px">
-                        @if (Model.Status != "Approved" && canAccessOM == true || canAccessBD == true)
+                        @if (Model.Status != "Approved" && Model.CanModify)
                         {
                             <button type="submit" data-toggle="modal" data-target="#createExpense" class="btn btn-success">New</button>
                         }
@@ -356,7 +355,7 @@
                                 <td>@u.DirectCost.ToString("P" + " " + "#,0.00")</td>
                                 <td>@u.Factor.ToString("0.0#")</td>
                                 <td>@u.BilledToClient.ToString("P" + " " + "#,0.00")</td>
-                                @if (Model.Status != "Approved")
+                                @if (Model.Status != "Approved" && Model.CanModify)
                                 {
                                     <td><button type="submit" data-toggle="modal" data-target="#deleteExpense-@u.Id" class="btn btn-danger btn-xs"></button></td>
                                 }
@@ -386,7 +385,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="pull-right" style="padding-top:10px">
-                        @if (Model.Status != "Approved" && canAccessOM == true || canAccessBD == true)
+                        @if (Model.Status != "Approved" && Model.CanModify)
                         {
                             <button type="submit" data-toggle="modal" data-target="#createEquipment" class="btn btn-success ">New</button>
                         }
@@ -426,7 +425,7 @@
                                     <td>@u.DirectCost.ToString("P" + " " + "#,0.00")</td>
                                     <td>@u.Factor.ToString("0.0#")</td>
                                     <td>@u.BilledToClient.ToString("P" + " " + "#,0.00")</td>
-                                    @if (Model.Status != "Approved")
+                                    @if (Model.Status != "Approved" && Model.CanModify)
                                     {
                                         <td><button type="submit" data-toggle="modal" data-target="#deleteEquipment-@u.Id" class="btn btn-danger btn-xs"></button></td>
                                     }
@@ -457,7 +456,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="pull-right" style="padding-top:10px">
-                        @if (Model.Status != "Approved" && canAccessOM == true || canAccessBD == true)
+                        @if (Model.Status != "Approved" && Model.CanModify)
                         {
                             <button type="submit" data-toggle="modal" data-target="#createLaboratory" class="btn btn-success">New</button>
                         }
@@ -495,7 +494,7 @@
                                     <td>@u.DirectCost.ToString("P" + " " + "#,0.00")</td>
                                     <td>@u.Factor.ToString("0.0#")</td>
                                     <td>@u.BilledToClient.ToString("P" + " " + "#,0.00")</td>
-                                    @if (Model.Status != "Approved")
+                                    @if (Model.Status != "Approved" && Model.CanModify)
                                     {
                                         <td><button type="submit" data-toggle="modal" data-target="#deleteLaboratory-@u.Id" class="btn btn-danger btn-xs"></button></td>
                                     }
@@ -525,7 +524,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="pull-right" style="padding-top:10px">
-                        @if (Model.Status != "Approved" && canAccessOM == true || canAccessBD == true)
+                        @if (Model.Status != "Approved" && Model.CanModify)
                         {
                             <button type="submit" data-toggle="modal" data-target="#createCommission" class="btn btn-success">New</button>
                         }
@@ -559,7 +558,7 @@
                                     <td>@u.Cost.ToString("P" + " " + "#,0.00")</td>
                                     <td>@u.Factor.ToString("0.0#")</td>
                                     <td>@u.BilledToClient.ToString("P" + " " + "#,0.00")</td>
-                                    @if (Model.Status != "Approved")
+                                    @if (Model.Status != "Approved" && Model.CanModify)
                                     {
                                         <td><button type="submit" data-toggle="modal" data-target="#deleteCommission-@u.Id" class="btn btn-danger btn-xs"></button></td>
                                     }

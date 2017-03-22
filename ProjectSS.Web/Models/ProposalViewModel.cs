@@ -76,6 +76,7 @@ namespace ProjectSS.Web.Models
         public string CreatedByName { get; set; }
         public string ModifiedBy { get; set; }
         public string ModifiedByName { get; set; }
+        public bool CanModify { get; set; }
 
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
