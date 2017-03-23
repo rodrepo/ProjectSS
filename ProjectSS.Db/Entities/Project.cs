@@ -16,5 +16,12 @@ namespace ProjectSS.Db.Entities
 
         public int CRMId { get; set; }
         public virtual CRM CRM { get; set; }
+
+        public virtual ICollection<BudgetRequest> BudgetRequests { get; set; }
+
+        public Project()
+        {
+            BudgetRequests = new HashSet<BudgetRequest>();
+        }
     }
 }

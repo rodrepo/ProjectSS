@@ -67,6 +67,8 @@
     <Compile Include="Contracts\IAuditable.cs" />
     <Compile Include="Contracts\IDataRepo.cs" />
     <Compile Include="Entities\Base.cs" />
+    <Compile Include="Entities\BudgetRequest.cs" />
+    <Compile Include="Entities\BudgetRequestItem.cs" />
     <Compile Include="Entities\CRM.cs" />
     <Compile Include="Entities\CRMCallHistory.cs" />
     <Compile Include="Entities\CRMEmailHistory.cs" />
@@ -133,6 +135,10 @@
     <Compile Include="Migrations\201702201202403_AddsProjectTable.Designer.cs">
       <DependentUpon>201702201202403_AddsProjectTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703231112534_AddBudgetRequestTables.cs" />
+    <Compile Include="Migrations\201703231112534_AddBudgetRequestTables.Designer.cs">
+      <DependentUpon>201703231112534_AddBudgetRequestTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -185,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702201202403_AddsProjectTable.resx">
       <DependentUpon>201702201202403_AddsProjectTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703231112534_AddBudgetRequestTables.resx">
+      <DependentUpon>201703231112534_AddBudgetRequestTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
