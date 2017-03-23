@@ -219,6 +219,7 @@
     <Compile Include="Controllers\CRMController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
+    <Compile Include="Models\BudgetRequestViewModel.cs" />
     <Compile Include="Models\CRMViewModel.cs" />
     <Compile Include="Models\InventoryViewModel.cs" />
     <Compile Include="Models\ManageCRMViewModel.cs" />
