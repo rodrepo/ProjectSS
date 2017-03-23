@@ -9,7 +9,8 @@ namespace ProjectSS.Web.Models
     {
         public BudgetRequestViewModel()
         {
-            Items = new List<BudgetRequestItem>();
+            item = new BudgetRequestItemViewModel();
+            Items = new List<BudgetRequestItemViewModel>();
         }
         public string RequestNumber { get; set; }
         public int RNumber { get; set; }
@@ -27,7 +28,9 @@ namespace ProjectSS.Web.Models
 
         public int Id { get; set; }
         public int ProjectId { get; set; }
-        public List<BudgetRequestItem> Items { get; set; }
+        public string ProjectNumber { get; set; }
+        public BudgetRequestItemViewModel item { get; set; }
+        public List<BudgetRequestItemViewModel> Items { get; set; }
     }
 
     public class BudgetRequestItemViewModel

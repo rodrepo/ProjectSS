@@ -216,6 +216,7 @@
     <Compile Include="Controllers\Admin\ProjectController.cs" />
     <Compile Include="Controllers\Admin\ProposalController.cs" />
     <Compile Include="Controllers\Admin\UserController.cs" />
+    <Compile Include="Controllers\BudgetRequestController.cs" />
     <Compile Include="Controllers\CRMController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
@@ -646,6 +647,7 @@
     <Content Include="Views\Proposal\_Laboratory.cshtml" />
     <Content Include="Views\Proposal\_Commission.cshtml" />
     <Content Include="Views\Project\Show.cshtml" />
+    <Content Include="Views\BudgetRequest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

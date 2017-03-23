@@ -131,7 +131,7 @@
                 </h4>
             </div>
             <div class="panel-body bb bt">
-                <button type="button" class="mb-xl btn btn-success col-sm-12">Request Budget</button>
+                <a class="mb-xl btn btn-success col-sm-12" href="@Url.Action("Index", "BudgetRequest", new { id = Model.Id, projectNo = Model.ProjectNo })">Request Budget</a>
                 <br />
                 <button type="button" class="mb-xl btn btn-primary col-sm-12">My Transactions</button>
                 <br />
