@@ -581,6 +581,7 @@ namespace ProjectSS.Db
             }
             return keys;
         }
+
         #endregion
 
         #region Private Class
@@ -588,6 +589,46 @@ namespace ProjectSS.Db
         {
             public string Reference { get; set; }
             public int Number { get; set; }
+        }
+        #endregion
+
+        #region BudgetRequest
+
+        public void AddBudGetRequestItem(BudgetRequestItem budgetRequestItem, string userId)
+        {
+            _db.UserId = userId;
+            var result = _db.BudgetRequestItems.Add(budgetRequestItem);
+        }
+
+        public async Task<BudgetRequest> AddBudGetRequest(BudgetRequest budgetRequest, string userId)
+        {
+            var key = await GenerateBudgetRequestNumber();
+            budgetRequest.RequestNumber = key.Reference;
+            budgetRequest.RNumber = key.Number;
+
+            _db.UserId = userId;
+            var result = _db.BudgetRequests.Add(budgetRequest);
+            return result;
+        }
+
+        private async Task<ReferenceModel> GenerateBudgetRequestNumber()
+        {
+            var keys = new ReferenceModel();
+
+            var latestBR = await _db.BudgetRequests.Where(m => !m.IsDeleted).OrderByDescending(d => d.CreatedDate).FirstOrDefaultAsync();
+            if (latestBR != null && latestBR.RNumber > 0)
+            {
+                int multi = 1;
+                multi += latestBR.RNumber;
+                keys.Reference = "BR-" + multi.ToString();
+                keys.Number = multi;
+            }
+            else
+            {
+                keys.Reference = "BR-1";
+                keys.Number = 1;
+            }
+            return keys;
         }
         #endregion
     }

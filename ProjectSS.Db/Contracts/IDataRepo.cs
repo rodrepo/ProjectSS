@@ -113,5 +113,12 @@ namespace ProjectSS.Db.Contracts
         Task DeleteInventory(int id);
 
         #endregion
+
+        #region BugetRequest
+
+        void AddBudGetRequestItem(BudgetRequestItem budgetRequestItem, string userId);
+        Task<BudgetRequest> AddBudGetRequest(BudgetRequest budgetRequest, string userId);
+
+        #endregion
     }
 }

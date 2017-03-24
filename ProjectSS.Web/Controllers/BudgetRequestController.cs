@@ -26,8 +26,77 @@ namespace ProjectSS.Web.Controllers
 
         public ActionResult Index(int id, string projectNo)
         {
-            BudgetRequestViewModel model = new BudgetRequestViewModel {ProjectId = id , ProjectNumber = projectNo};
-            return View(model);
+           BudgetRequestViewModel  model = new BudgetRequestViewModel { ProjectId = id, ProjectNumber = projectNo };
+           return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Index(BudgetRequestViewModel model)
+        {
+            try
+            {
+                // Add Item
+                if(model.Item != null && model.IsCreate.IsEmpty())
+                {
+                    if (!model.Items.Where(m => m.Description == model.Item.Description)?.Any() ?? false)
+                    {
+                        model.Items.Add(model.Item);
+                        TempData["Success"] = "New item added";
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Item already exists.";
+                    }
+                    model.Item = new BudgetRequestItemViewModel();
+                    return View(model);
+                }
+                // Removed Item
+                else if(model.IsCreate != "true")
+                {
+                    var toBeRemoved = model.Items.Where(m => m.Description == model.IsCreate).FirstOrDefault();
+                    model.Items.Remove(toBeRemoved);
+                    model.IsCreate = "";
+                    TempData["Success"] = "Item Removed";
+                    return View(model);
+                }
+                // Save Budget Request
+                if (ModelState.IsValid)
+                {
+                    BudgetRequest request = await _repo.AddBudGetRequest(_mapper.Map<BudgetRequest>(model), CurrentUser.Id);
+                    foreach (var item in model.Items)
+                    {
+                        item.BudgetRequestId = request.Id;
+                        _repo.AddBudGetRequestItem(_mapper.Map<BudgetRequestItem>(item), CurrentUser.Id);
+                    }
+                    if (await _repo.SaveAllAsync())
+                    {
+                        TempData["Success"] = string.Format("BudgetRequest has been successfully Sent");
+                        return RedirectToAction("Show", "Project", new { id = model.ProjectId });
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Unable to send BudgetRequest due to some internal issues.";
+                        return View(model);
+                    }
+                }
+                else
+                {
+                    foreach(var state in ModelState)
+                    {
+                        foreach(var error in state.Value.Errors)
+                        {
+                            TempData["Error"] = error.ErrorMessage;
+                        }
+                    }
+                }
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return View(model);
+
+            }
         }
     }
 }
