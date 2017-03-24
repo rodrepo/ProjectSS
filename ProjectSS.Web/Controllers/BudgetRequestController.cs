@@ -36,7 +36,7 @@ namespace ProjectSS.Web.Controllers
             try
             {
                 // Add Item
-                if(model.Item != null && model.IsCreate.IsEmpty())
+                if(model.Item != null && model.IsCreate == "addItem")
                 {
                     if (!model.Items.Where(m => m.Description == model.Item.Description)?.Any() ?? false)
                     {
