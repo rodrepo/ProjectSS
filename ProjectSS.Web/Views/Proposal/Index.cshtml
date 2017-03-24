@@ -53,11 +53,15 @@
                                     <td>@u.Location</td>
                                     @if (u.Status.IsEmpty())
                                     {
-                                        <td style="color:red">For Approval</td>
+                                        <td>
+                                            <div class="label label-info">For Approval</div>
+                                        </td>
                                     }
                                     else
                                     {
-                                        <td style="color:green">@u.Status</td>
+                                        <td>
+                                            <div class="label label-success">@u.Status</div>
+                                        </td>
                                     }
                                     <td>
                                         <a data-toggle="tooltip" data-placement="top" title="Manage" href="@Url.Action("Manage", "Proposal", new { id = u.Id })" class="btn btn-primary btn-xs"><i class="icon-menu"></i></a>

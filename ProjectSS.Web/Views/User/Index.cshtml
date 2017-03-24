@@ -46,58 +46,103 @@
                                 {
                                     if (u.IsDeleted != true)
                                     {
-                                        <tr>
-                                            <td>@u.Displayname</td>
-                                            <td>@u.Email</td>
-                                            <td>@u.Mobile</td>
-                                            <td>
-                                                @if (u.IsActive)
-                                                {
-                                                    <a style="color:green">Activated</a>
-                                                }
-                                                else
-                                                {
-                                                    <a style="color:red">Deactived</a>
-                                                }
-                                            </td>
-                                            <td>
-                                                @foreach (var role in u.Roles)
-                                                {
-                                                    if (u.Roles.Count > 1)
+                                        if (u.IsActive)
+                                        {
+                                            <tr>
+                                                <td>@u.Displayname</td>
+                                                <td>@u.Email</td>
+                                                <td>@u.Mobile</td>
+                                                <td>
+                                                  <div class="label label-success">Activated</div>
+                                                </td>
+                                                <td>
+                                                    @foreach (var role in u.Roles)
                                                     {
-                                                        <p>
-                                                            @role.Name,
-                                                        </p>
-                                                    }
-                                                    else
-                                                    {
-                                                        <p>
-                                                            @role.Name
-                                                        </p>
-                                                    }
-
-                                                }
-                                            </td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <button type="button" data-toggle="dropdown" class="btn btn-primary btn-xs"><i class="icon-menu"></i></button>
-                                                    <ul role="menu" class="dropdown-menu">
-                                                        <li>
-                                                            <a href="@Url.Action("ChangePassword", "Account", new { @userId = u.Id })">Change Password</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="@Url.Action("Edit", "User", new { id = u.Id })">Manage</a>
-                                                        </li>
-                                                        @if(u.IsCurrentUser == false)
+                                                        if (u.Roles.Count > 1)
                                                         {
-                                                            <li>
-                                                                <a href="#" data-toggle="modal" data-target="#deletemodal-@u.Id" style="color:red">Delete</a>
-                                                            </li>
+                                                            <p>
+                                                                @role.Name,
+                                                            </p>
                                                         }
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                        else
+                                                        {
+                                                            <p>
+                                                                @role.Name
+                                                            </p>
+                                                        }
+
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button type="button" data-toggle="dropdown" class="btn btn-primary btn-xs"><i class="icon-menu"></i></button>
+                                                        <ul role="menu" class="dropdown-menu">
+                                                            <li>
+                                                                <a href="@Url.Action("ChangePassword", "Account", new { @userId = u.Id })">Change Password</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="@Url.Action("Edit", "User", new { id = u.Id })">Manage</a>
+                                                            </li>
+                                                            @if (u.IsCurrentUser == false)
+                                                            {
+                                                                <li>
+                                                                    <a href="#" data-toggle="modal" data-target="#deletemodal-@u.Id" style="color:red">Delete</a>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr class="danger">
+                                                <td>@u.Displayname</td>
+                                                <td>@u.Email</td>
+                                                <td>@u.Mobile</td>
+                                                <td>
+                                                  <div class="label label-danger">Deactived</div>
+                                                </td>
+                                                <td>
+                                                    @foreach (var role in u.Roles)
+                                                    {
+                                                        if (u.Roles.Count > 1)
+                                                        {
+                                                            <p>
+                                                                @role.Name,
+                                                            </p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p>
+                                                                @role.Name
+                                                            </p>
+                                                        }
+
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button type="button" data-toggle="dropdown" class="btn btn-primary btn-xs"><i class="icon-menu"></i></button>
+                                                        <ul role="menu" class="dropdown-menu">
+                                                            <li>
+                                                                <a href="@Url.Action("ChangePassword", "Account", new { @userId = u.Id })">Change Password</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="@Url.Action("Edit", "User", new { id = u.Id })">Manage</a>
+                                                            </li>
+                                                            @if (u.IsCurrentUser == false)
+                                                            {
+                                                                <li>
+                                                                    <a href="#" data-toggle="modal" data-target="#deletemodal-@u.Id" style="color:red">Delete</a>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+
                                     }
                                 }
                             }
