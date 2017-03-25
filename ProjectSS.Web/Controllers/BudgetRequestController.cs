@@ -38,28 +38,37 @@ namespace ProjectSS.Web.Controllers
                 // Add item
                 if(model.Item != null && model.IsCreate == "addItem")
                 {
-                    if (model.Items.Count > 0)
+                    var newItem = new BudgetRequestItemViewModel();
+                    if (model.Items.Count > 0 && model.IsCreate != "delete")
                     {
                         // Asign tempId
-                        model.Item.TempId = model.Items[model.Items.Count - 1].TempId += 1;
+                        int count = model.Items.Last().TempId;
+                        newItem.TempId = count += 1;
                     }
                     else
                     {
                         // Asign defualt value
-                        model.Item.TempId = 1;
+                        newItem.TempId = 1;
                     }
+                    //Map values to new instance
+                    newItem.Description = model.Item.Description;
+
                     // Add item to item list
-                    model.Items.Add(model.Item);
+                    model.Items.Add(newItem);
+                    model.Item = new BudgetRequestItemViewModel();
+                    model.IsCreate = null;
                     TempData["Success"] = "New item added";
+                    model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                     return View(model);
                 }
                 // Removed Item
-                else if(model.IsCreate != "true")
+                else if(model.IsCreate != "true" && model.IsCreate != "addItem")
                 {
                     // Get item to be removed
-                    var toBeRemoved = model.Items.Where(m => m.TempId.ToString() == model.IsCreate).FirstOrDefault();
-                    // Remove Item
-                    model.Items.Remove(toBeRemoved);
+                    int toBeDeleted = model.Items.Where(m => m.TempId == model.TobeDeleted).First().TempId;
+                    model.ListOfDeleted.Add(toBeDeleted);
+                    model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
+                    model.TobeDeleted = 0;
                     TempData["Success"] = "Item Removed";
                     return View(model);
                 }

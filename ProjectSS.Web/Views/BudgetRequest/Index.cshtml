@@ -35,14 +35,19 @@
         for (int i = 0; i < Model.Items.Count; i++)
         {
             @Html.HiddenFor(model => Model.Items[i].Category)
-            @Html.HiddenFor(model => Model.Items[i].Item)
+            @Html.HiddenFor(model => Model.Items[i].ItemName)
             @Html.HiddenFor(model => Model.Items[i].Description)
             @Html.HiddenFor(model => Model.Items[i].Amount)
             @Html.HiddenFor(model => Model.Items[i].TempId)
         }
+        for (int i = 0; i < Model.ListOfDeleted.Count; i++)
+        {
+            @Html.HiddenFor(model => Model.ListOfDeleted[i])
+        }
         @Html.HiddenFor(m => m.ProjectNumber)
         @Html.HiddenFor(m => m.ProjectId)
         @Html.HiddenFor(m => m.IsCreate)
+        @Html.HiddenFor(m => m.TobeDeleted)
         <button type="submit" class="hidden" id="button2"></button>
 
         <div class="col-lg-8">
@@ -78,15 +83,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model.Items)
+                                @foreach (var item in Model.ShowItems)
                                 {
                                     <tr>
                                         <td>@item.Category</td>
-                                        <td>@item.Item</td>
+                                        <td>@item.ItemName</td>
                                         <td>@item.Description</td>
-                                        <td>@item.Amount</td>
+                                        <td>@item.TempId</td>
                                         <td>
-                                            <button type="submit" id="a-@item.TempId" class="btn btn-danger btn-xs"></button>
+                                            <button type="button" id="a-@item.TempId" class="btn btn-danger btn-xs"></button>
                                         </td>
                                     </tr>
                                 }
@@ -129,7 +134,7 @@
                         @Html.TextAreaFor(model => model.Item.Description, new { @class = "form-control", @row = "4" })
                     </div>
                     <div class="form-group">
-                        <button id="addItem" type="submit" class="mb-xl btn btn-success col-sm-12">Add Item</button>
+                        <button id="addItem" type="button" class="mb-xl btn btn-success col-sm-12">Add Item</button>
                     </div>
                 </div>
             </div>
@@ -158,25 +163,25 @@
                 }
             });
     </script>
-   <script type="text/javascript">
-           $('#button1').click(function () {
-               $("#IsCreate").val("true")
-               $("#button2").click();   
-           });
-           $('#deleteItem').click(function () {
-               $("#IsCreate").val("delete")
-           });
-   </script>
     <script type="text/javascript">
-                $('#addItem').click(function () {
-                    $("#IsCreate").val("addItem")
-                });
+        $('#button1').click(function () {
+            $("#IsCreate").val("true")
+            $("#button2").click();
+        });
     </script>
-    @foreach (var item in Model.Items)
+    <script type="text/javascript">
+             $('#addItem').click(function () {
+                 $("#IsCreate").val("addItem")
+                 $("#button2").click();
+             });
+    </script>
+    @foreach (var item in Model.ShowItems)
     {
         <script type="text/javascript">
             $('#a-@item.TempId').click(function () {
-                $("#IsCreate").val('@item.TempId')
+                $("#TobeDeleted").val('@item.TempId')
+                $("#IsCreate").val("delete")
+                $("#button2").click();
             });
         </script>
     }

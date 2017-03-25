@@ -11,6 +11,8 @@ namespace ProjectSS.Web.Models
         {
             Item = new BudgetRequestItemViewModel();
             Items = new List<BudgetRequestItemViewModel>();
+            ShowItems = new List<BudgetRequestItemViewModel>();
+            ListOfDeleted = new List<int>();
         }
         public string RequestNumber { get; set; }
         public int RNumber { get; set; }
@@ -30,14 +32,18 @@ namespace ProjectSS.Web.Models
         public int ProjectId { get; set; }
         public string ProjectNumber { get; set; }
         public string IsCreate { get; set; }
+        public int TobeDeleted { get; set; }
         public BudgetRequestItemViewModel Item { get; set; }
         public List<BudgetRequestItemViewModel> Items { get; set; }
+        public List<BudgetRequestItemViewModel> ShowItems { get; set; }
+        public List<int> ListOfDeleted { get; set; }
+
     }
 
     public class BudgetRequestItemViewModel
     {
         public string Category { get; set; }
-        public string Item { get; set; }
+        public string ItemName { get; set; }
         public string Description { get; set; }
         public decimal Amount { get; set; }
 
