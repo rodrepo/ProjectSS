@@ -165,10 +165,12 @@
            $('#deleteItem').click(function () {
                $("#IsCreate").val("delete")
            });
-           $('#addItem').click(function () {
-               $("#IsCreate").val("addItem")
-           });
    </script>
+    <script type="text/javascript">
+                $('#addItem').click(function () {
+                    $("#IsCreate").val("addItem")
+                });
+    </script>
     @foreach (var item in Model.Items)
     {
         <script type="text/javascript">
