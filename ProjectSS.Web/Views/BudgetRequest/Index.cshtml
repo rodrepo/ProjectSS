@@ -113,11 +113,13 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <label>Category</label>
-                        <select name="account" class="form-control m-b">
-                            <option>Option 1</option>
-                            <option>Option 2</option>
-                            <option>Option 3</option>
-                            <option>Option 4</option>
+                        <select class="form-control" name="CategoryDropdown">
+                            <option @(Model.CategoryDropdown == "" ? "selected" : " ") value="">--Select One--</option>
+                            <option @(Model.CategoryDropdown == "CONTRACTORS/OUTSOURCE" ? "selected" : " ") value="CONTRACTORS/OUTSOURCE">CONTRACTORS/OUTSOURCE</option>
+                            <option @(Model.CategoryDropdown == "OPERATING EXPENSES" ? "selected" : " ") value="OPERATING EXPENSES">OPERATING EXPENSES</option>
+                            <option @(Model.CategoryDropdown == "EQUIPMENT" ? "selected" : " ") value="EQUIPMENT">EQUIPMENT</option>
+                            <option @(Model.CategoryDropdown == "LABORATORY ANALYSIS" ? "selected" : " ") value="LABORATORY ANALYSIS">LABORATORY ANALYSIS</option>
+                            <option @(Model.CategoryDropdown == "COMMISSIONS/REPRESENTATIONS" ? "selected" : " ") value="COMMISSIONS/REPRESENTATIONS">COMMISSIONS/REPRESENTATIONS</option>
                         </select>
                     </div>
                     <div class="form-group">

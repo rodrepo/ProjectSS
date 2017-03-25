@@ -57,6 +57,10 @@ namespace ProjectSS.Web.Controllers
                         model.Item.TempId = 1;
                     }
                     // Add item to item list
+                    if(!model.CategoryDropdown.IsEmpty())
+                    {
+                        model.Item.Category = model.CategoryDropdown;
+                    }
                     model.Items.Add(model.Item);
                     model.IsCreate = null;
                     TempData["Success"] = "New item added";

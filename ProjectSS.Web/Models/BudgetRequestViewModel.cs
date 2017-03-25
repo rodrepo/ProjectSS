@@ -38,6 +38,8 @@ namespace ProjectSS.Web.Models
         public List<BudgetRequestItemViewModel> ShowItems { get; set; }
         public List<int> ListOfDeleted { get; set; }
 
+        public string CategoryDropdown { get; set; }
+
     }
 
     public class BudgetRequestItemViewModel
