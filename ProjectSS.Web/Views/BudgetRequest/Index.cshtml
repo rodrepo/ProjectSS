@@ -38,6 +38,7 @@
             @Html.HiddenFor(model => Model.Items[i].Item)
             @Html.HiddenFor(model => Model.Items[i].Description)
             @Html.HiddenFor(model => Model.Items[i].Amount)
+            @Html.HiddenFor(model => Model.Items[i].TempId)
         }
         @Html.HiddenFor(m => m.ProjectNumber)
         @Html.HiddenFor(m => m.ProjectId)
@@ -85,7 +86,7 @@
                                         <td>@item.Description</td>
                                         <td>@item.Amount</td>
                                         <td>
-                                            <button type="submit" id="@item.Description" class="btn btn-danger btn-xs"></button>
+                                            <button type="submit" id="a-@item.TempId" class="btn btn-danger btn-xs"></button>
                                         </td>
                                     </tr>
                                 }
@@ -160,7 +161,7 @@
    <script type="text/javascript">
            $('#button1').click(function () {
                $("#IsCreate").val("true")
-               $("#button2").click();
+               $("#button2").click();   
            });
            $('#deleteItem').click(function () {
                $("#IsCreate").val("delete")
@@ -174,10 +175,8 @@
     @foreach (var item in Model.Items)
     {
         <script type="text/javascript">
-            var id = '#@item.Description';
-            var val = '@item.Description';
-            $(id).click(function () {
-                $("#IsCreate").val(val)
+            $('#a-@item.TempId').click(function () {
+                $("#IsCreate").val('@item.TempId')
             });
         </script>
     }

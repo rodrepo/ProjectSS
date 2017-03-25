@@ -35,27 +35,31 @@ namespace ProjectSS.Web.Controllers
         {
             try
             {
-                // Add Item
+                // Add item
                 if(model.Item != null && model.IsCreate == "addItem")
                 {
-                    if (!model.Items.Where(m => m.Description == model.Item.Description)?.Any() ?? false)
+                    if (model.Items.Count > 0)
                     {
-                        model.Items.Add(model.Item);
-                        TempData["Success"] = "New item added";
+                        // Asign tempId
+                        model.Item.TempId = model.Items[model.Items.Count - 1].TempId += 1;
                     }
                     else
                     {
-                        TempData["Error"] = "Item already exists.";
+                        // Asign defualt value
+                        model.Item.TempId = 1;
                     }
-                    model.Item = new BudgetRequestItemViewModel();
+                    // Add item to item list
+                    model.Items.Add(model.Item);
+                    TempData["Success"] = "New item added";
                     return View(model);
                 }
                 // Removed Item
                 else if(model.IsCreate != "true")
                 {
-                    var toBeRemoved = model.Items.Where(m => m.Description == model.IsCreate).FirstOrDefault();
+                    // Get item to be removed
+                    var toBeRemoved = model.Items.Where(m => m.TempId.ToString() == model.IsCreate).FirstOrDefault();
+                    // Remove Item
                     model.Items.Remove(toBeRemoved);
-                    model.IsCreate = "";
                     TempData["Success"] = "Item Removed";
                     return View(model);
                 }
