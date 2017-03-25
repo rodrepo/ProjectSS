@@ -35,29 +35,32 @@ namespace ProjectSS.Web.Controllers
         {
             try
             {
+                // How this work evertime you add a new item it will store to Items note this list cant be modified to
+                // as of deleting you need to add the TempId to ToBeDeleted List this list is for the deleted items you can only store id here
+                // like the Items you cant modify this list 
+                // to get the not deleted list you need to just filer the ToBeDeleted list to Items the get the result and add it to ShowItems
+                // note if you refresh the will all temp data will be lost 
+
+
                 // Add item
                 if(model.Item != null && model.IsCreate == "addItem")
                 {
-                    var newItem = new BudgetRequestItemViewModel();
                     if (model.Items.Count > 0 && model.IsCreate != "delete")
                     {
                         // Asign tempId
                         int count = model.Items.Last().TempId;
-                        newItem.TempId = count += 1;
+                        model.Item.TempId = count += 1;
                     }
                     else
                     {
                         // Asign defualt value
-                        newItem.TempId = 1;
+                        model.Item.TempId = 1;
                     }
-                    //Map values to new instance
-                    newItem.Description = model.Item.Description;
-
                     // Add item to item list
-                    model.Items.Add(newItem);
-                    model.Item = new BudgetRequestItemViewModel();
+                    model.Items.Add(model.Item);
                     model.IsCreate = null;
                     TempData["Success"] = "New item added";
+                    // Get not delete items
                     model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                     return View(model);
                 }
@@ -66,7 +69,9 @@ namespace ProjectSS.Web.Controllers
                 {
                     // Get item to be removed
                     int toBeDeleted = model.Items.Where(m => m.TempId == model.TobeDeleted).First().TempId;
+                    // Add tempid to list of deleted
                     model.ListOfDeleted.Add(toBeDeleted);
+                    // Get not delete items
                     model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                     model.TobeDeleted = 0;
                     TempData["Success"] = "Item Removed";
@@ -76,7 +81,9 @@ namespace ProjectSS.Web.Controllers
                 if (ModelState.IsValid)
                 {
                     BudgetRequest request = await _repo.AddBudGetRequest(_mapper.Map<BudgetRequest>(model), CurrentUser.Id);
-                    foreach (var item in model.Items)
+                    // Get proper list
+                    model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
+                    foreach (var item in model.ShowItems)
                     {
                         item.BudgetRequestId = request.Id;
                         _repo.AddBudGetRequestItem(_mapper.Map<BudgetRequestItem>(item), CurrentUser.Id);
