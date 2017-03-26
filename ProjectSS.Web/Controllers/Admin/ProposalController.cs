@@ -72,7 +72,11 @@ namespace ProjectSS.Web.Controllers.Admin
             if (from != null)
             {
                 proposal.From = from;
-                await Update(proposal);
+                //Enable if needed
+                //if (proposal.RVNumber > 1)
+                //{
+                //    await Update(proposal);
+                //}
                 var result = await _repo.GetProposalByIdAsync(id);
                 proposal.RevisionNumber = result.RevisionNumber;
                 proposal.RVNumber = result.RVNumber;
@@ -300,7 +304,7 @@ namespace ProjectSS.Web.Controllers.Admin
                     await _repo.UpdateProposal(_mapper.Map<Proposal>(model), CurrentUser.Id);
                     if (await _repo.SaveAllAsync())
                     {
-                        TempData["Success"] = string.Format("CRM has been successfully Updated");
+                        TempData["Success"] = string.Format("Proposal has been successfully Updated");
                         return RedirectToAction("Manage", new { id = model.Id });
                     }
                 }

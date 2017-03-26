@@ -24,9 +24,10 @@ namespace ProjectSS.Web.Controllers
             _repo = repo;
         }
 
-        public ActionResult Index(int id, string projectNo)
+        public async Task<ActionResult> Index(int id, string projectNo)
         {
            BudgetRequestViewModel  model = new BudgetRequestViewModel { ProjectId = id, ProjectNumber = projectNo };
+           await SetListItemsAsync(model);
            return View(model);
         }
 
@@ -35,7 +36,7 @@ namespace ProjectSS.Web.Controllers
         {
             try
             {
-                // How this work evertime you add a new item it will store to Items note this list cant be modified to
+                // How this work everytime you add a new item it will store to Items note this list cant be modified to
                 // as of deleting you need to add the TempId to ToBeDeleted List this list is for the deleted items you can only store id here
                 // like the Items you cant modify this list 
                 // to get the not deleted list you need to just filer the ToBeDeleted list to Items the get the result and add it to ShowItems
@@ -61,8 +62,17 @@ namespace ProjectSS.Web.Controllers
                     {
                         model.Item.Category = model.CategoryDropdown;
                     }
+                    if(model.ItemId > 0)
+                    {
+                        var contractor = await _repo.GetProposalContractorByIdAsync(model.ItemId);
+                        if (contractor != null)
+                        {
+                            model.Item.ItemName = contractor.Name;
+                        }
+                    }                            
                     model.Items.Add(model.Item);
                     model.IsCreate = null;
+                    await SetListItemsAsync(model);
                     TempData["Success"] = "New item added";
                     // Get not delete items
                     model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
@@ -78,6 +88,7 @@ namespace ProjectSS.Web.Controllers
                     // Get not delete items
                     model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                     model.TobeDeleted = 0;
+                    await SetListItemsAsync(model);
                     TempData["Success"] = "Item Removed";
                     return View(model);
                 }
@@ -99,6 +110,8 @@ namespace ProjectSS.Web.Controllers
                     }
                     else
                     {
+
+                        await SetListItemsAsync(model);
                         TempData["Error"] = "Unable to send BudgetRequest due to some internal issues.";
                         return View(model);
                     }
@@ -113,14 +126,20 @@ namespace ProjectSS.Web.Controllers
                         }
                     }
                 }
+                await SetListItemsAsync(model);
                 return View(model);
             }
             catch (Exception e)
             {
                 TempData["Error"] = e.Message;
+                await SetListItemsAsync(model);
                 return View(model);
 
             }
+        }
+        private async Task SetListItemsAsync(BudgetRequestViewModel model)
+        {
+            ViewBag.Contractors = ViewBag.Contractors ?? await GetContractors(model.ProjectId, model.ItemId);
         }
     }
 }

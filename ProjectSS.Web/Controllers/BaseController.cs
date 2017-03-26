@@ -6,6 +6,7 @@ using Microsoft.Owin.Security;
 using ProjectSS.Common;
 using ProjectSS.Db.Contracts;
 using ProjectSS.Db.Entities;
+using ProjectSS.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -302,6 +303,31 @@ namespace ProjectSS.Web.Controllers
                         Value = invtory.Id.ToString(),
                         Text = invtory.Name
                     };
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
+
+        protected async Task<List<SelectListItem>> GetContractors( int projectId, int id = 0)
+        {
+            var result = new List<SelectListItem>();
+            var project = await _repo.GetProjectByIdAsync(projectId);
+            if (project != null)
+            {
+                var contractors = _mapper.Map<List<ProposalContractorModel>>(await _repo.GetProposalContractorsByProposalIdAsync(project.ProposalId));
+                foreach (var con in contractors)
+                {
+                    var item = new SelectListItem
+                    {
+                        Value = con.Id.ToString(),
+                        Text = con.Name
+                    };
+
+                    if (con.Id == id)
+                    {
+                        item.Selected = true;
+                    }
                     result.Add(item);
                 }
             }

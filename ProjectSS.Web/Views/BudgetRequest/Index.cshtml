@@ -124,12 +124,7 @@
                     </div>
                     <div class="form-group">
                         <label>Item</label>
-                        <select name="account" class="form-control m-b">
-                            <option>Option 1</option>
-                            <option>Option 2</option>
-                            <option>Option 3</option>
-                            <option>Option 4</option>
-                        </select>
+                        @Html.DropDownListFor(model => model.ItemId, (List<SelectListItem>)ViewBag.Contractors, "Select", new { @class = "form-control", @required = "required", })
                     </div>
                     <div class="form-group">
                         <label>Description</label>

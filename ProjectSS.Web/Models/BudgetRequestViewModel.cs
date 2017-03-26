@@ -39,6 +39,7 @@ namespace ProjectSS.Web.Models
         public List<int> ListOfDeleted { get; set; }
 
         public string CategoryDropdown { get; set; }
+        public int ItemId { get; set; }
 
     }
 

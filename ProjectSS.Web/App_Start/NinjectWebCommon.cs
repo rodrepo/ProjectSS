@@ -92,6 +92,7 @@ namespace ProjectSS.Web.App_Start
                 c.CreateMap<Project, ProjectViewModel>().ReverseMap();
                 c.CreateMap<BudgetRequest, BudgetRequestViewModel>().ReverseMap();
                 c.CreateMap<BudgetRequestItem, BudgetRequestItemViewModel>().ReverseMap();
+                c.CreateMap<BudgetRequestItem, BudgetRequestItemViewModel>().ReverseMap();
             });
             kernel.Bind<IMapper>().ToMethod(c => config.CreateMapper()).InRequestScope();
         }
