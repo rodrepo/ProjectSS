@@ -46,6 +46,8 @@ namespace ProjectSS.Web.Models
         public int ItemId4 { get; set; }
         public int ItemId5 { get; set; }
 
+        public bool ItemNameIsNull { get; set; }
+
     }
 
     public class BudgetRequestItemViewModel

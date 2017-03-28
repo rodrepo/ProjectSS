@@ -71,19 +71,10 @@ namespace ProjectSS.Web.Controllers
                         TempData["Error"] = "Please select a Category";
                         return View(model);
                     }
-                    model.CategoryDropdown = "";
 
                     // Add item to item list
-                    int itemId = GetDropdownId(model);
-                    if (itemId > 0)
-                    {
-                        var contractor = await _repo.GetProposalContractorByIdAsync(itemId);
-                        if (contractor != null)
-                        {
-                            model.Item.ItemName = contractor.Name;
-                        }
-                    }
-                    else
+                    model =  await ManageDropDownValues(model);
+                    if (model.ItemNameIsNull == true)
                     {
                         model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                         TempData["Error"] = "Please select a item";
@@ -167,35 +158,47 @@ namespace ProjectSS.Web.Controllers
         }
 
         #region Helper
-        private int GetDropdownId(BudgetRequestViewModel model)
+        private async Task<BudgetRequestViewModel> ManageDropDownValues(BudgetRequestViewModel model)
         {
-            int itemId = 0;
-            if (model.ItemId1 > 0)
+            // Add Item Name
+            string name = "";
+            if (model.CategoryDropdown == "CONTRACTORS/OUTSOURCE")
             {
-                itemId = model.ItemId1;
-                model.ItemId1 = 0;
+                var result = await _repo.GetProposalContractorByIdAsync(model.ItemId1);
+                name = result.Name;
             }
-            else if (model.ItemId2 > 0)
+            else if (model.CategoryDropdown == "OPERATING EXPENSES")
             {
-                itemId = model.ItemId2;
-                model.ItemId2 = 0;
+                var result = await _repo.GetProposalExpenseByIdAsync(model.ItemId2);
+                name = result.Item;
             }
-            else if (model.ItemId3 > 0)
+            else if (model.CategoryDropdown == "EQUIPMENT")
             {
-                itemId = model.ItemId3;
-                model.ItemId3 = 0;
+                var result = await _repo.GetInventoryByIdAsync(model.ItemId3);
+                name = result.Name;
             }
-            else if (model.ItemId4 > 0)
+            else if (model.CategoryDropdown == "LABORATORY ANALYSIS")
             {
-                itemId = model.ItemId4;
-                model.ItemId4 = 0;
+                var result = await _repo.GetProposalLaboratoryByIdAync(model.ItemId4);
+                name = result.Name;
             }
-            else if (model.ItemId5 > 0)
+            else if (model.CategoryDropdown == "COMMISSIONS/REPRESENTATIONS")
             {
-                itemId = model.ItemId5;
-                model.ItemId5 = 0;
+                var result = await _repo.GetProposalCommissionByIdAsync(model.ItemId5);
+                name = result.Name;
             }
-            return itemId;
+            if(name.IsEmpty())
+            {
+                model.ItemNameIsNull = true;
+            }
+            else
+            {
+                model.Item.ItemName = name;
+            }
+            model.CategoryDropdown = "";
+            model.ItemId = 0;
+
+            return model;
         }
         #endregion
         private async Task SetListItemsAsync(BudgetRequestViewModel model)

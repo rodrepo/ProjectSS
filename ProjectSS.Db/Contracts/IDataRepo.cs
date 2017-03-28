@@ -66,6 +66,7 @@ namespace ProjectSS.Db.Contracts
 
         #region Proposal Operationg Expenses
         Task<List<ProposalExpense>> GetProposalExpensesByProposalIdAsync(int proposalId);
+        Task<ProposalExpense> GetProposalExpenseByIdAsync(int id);
         void AddProposalExpenses(ProposalExpense proposalExpense, string userId);
         Task DeleteProposalExpense(int id);
         #endregion
@@ -88,6 +89,7 @@ namespace ProjectSS.Db.Contracts
         #endregion
 
         #region Proposal Laboratory
+        Task<ProposalLaboratory> GetProposalLaboratoryByIdAync(int id);
         Task<List<ProposalLaboratory>> GetProposalLaboratoriesByProposalAsync(int proposalId);
         void AddProposalLaboratory(ProposalLaboratory proposalLaboratory, string userId);
         Task DeleteProposalLaboratory(int id);
@@ -95,6 +97,7 @@ namespace ProjectSS.Db.Contracts
         #endregion
 
         #region Proposal Commission
+        Task<ProposalCommission> GetProposalCommissionByIdAsync(int id);
         Task<List<ProposalCommission>> GetProposalCommissionsByProposalIdAsync(int proposalId);
         void AddProposalCommission(ProposalCommission proposalCommission, string userId);
         Task DeleteProposalCommission(int id);

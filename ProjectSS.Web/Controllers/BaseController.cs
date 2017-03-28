@@ -346,7 +346,7 @@ namespace ProjectSS.Web.Controllers
                     var item = new SelectListItem
                     {
                         Value = exp.Id.ToString(),
-                        Text = exp.Description
+                        Text = exp.Item
                     };
 
                     if (exp.Id == id)
@@ -368,11 +368,12 @@ namespace ProjectSS.Web.Controllers
                 var equipments = _mapper.Map<List<ProposalEquipmentModel>>(await _repo.GetProposalEquipmentsByProposalIdAsync(project.ProposalId));
                 foreach (var equipment in equipments)
                 {
+                    var inventory = await _repo.GetInventoryByIdAsync(equipment.InventoryId);
                     var item = new SelectListItem
                     {
-                        Value = equipment.Id.ToString(),
-                        Text = equipment.Name
-                    };
+                        Value = equipment.InventoryId.ToString(),
+                        Text = inventory.Name
+                };
 
                     if (equipment.Id == id)
                     {
