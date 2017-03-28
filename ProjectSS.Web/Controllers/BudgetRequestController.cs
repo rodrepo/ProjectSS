@@ -26,9 +26,9 @@ namespace ProjectSS.Web.Controllers
 
         public async Task<ActionResult> Index(int id, string projectNo)
         {
-           BudgetRequestViewModel  model = new BudgetRequestViewModel { ProjectId = id, ProjectNumber = projectNo };
-           await SetListItemsAsync(model);
-           return View(model);
+            BudgetRequestViewModel model = new BudgetRequestViewModel { ProjectId = id, ProjectNumber = projectNo };
+            await SetListItemsAsync(model);
+            return View(model);
         }
 
         [HttpPost]
@@ -44,7 +44,8 @@ namespace ProjectSS.Web.Controllers
 
 
                 // Add item
-                if(model.Item != null && model.IsCreate == "addItem")
+                await SetListItemsAsync(model);
+                if (model.Item != null && model.IsCreate == "addItem")
                 {
                     if (model.Items.Count > 0 && model.IsCreate != "delete")
                     {
@@ -57,29 +58,57 @@ namespace ProjectSS.Web.Controllers
                         // Asign defualt value
                         model.Item.TempId = 1;
                     }
-                    // Add item to item list
-                    if(!model.CategoryDropdown.IsEmpty())
+
+                    #region Dropdown
+                    // Add Category to item list
+                    if (!model.CategoryDropdown.IsEmpty())
                     {
                         model.Item.Category = model.CategoryDropdown;
                     }
-                    if(model.ItemId > 0)
+                    else
                     {
-                        var contractor = await _repo.GetProposalContractorByIdAsync(model.ItemId);
+                        model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
+                        TempData["Error"] = "Please select a Category";
+                        return View(model);
+                    }
+                    model.CategoryDropdown = "";
+
+                    // Add item to item list
+                    int itemId = GetDropdownId(model);
+                    if (itemId > 0)
+                    {
+                        var contractor = await _repo.GetProposalContractorByIdAsync(itemId);
                         if (contractor != null)
                         {
                             model.Item.ItemName = contractor.Name;
                         }
-                    }                            
+                    }
+                    else
+                    {
+                        model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
+                        TempData["Error"] = "Please select a item";
+                        return View(model);
+                    }
+            
+                    // Description Validation
+                    if (model.Item.Description.IsEmpty())
+                    {
+                        model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
+                        TempData["Error"] = "Description is required";
+                        return View(model);
+                    }
+                    #endregion
+
                     model.Items.Add(model.Item);
                     model.IsCreate = null;
-                    await SetListItemsAsync(model);
                     TempData["Success"] = "New item added";
                     // Get not delete items
                     model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                     return View(model);
                 }
+
                 // Removed Item
-                else if(model.IsCreate != "true" && model.IsCreate != "addItem")
+                else if (model.IsCreate != "true" && model.IsCreate != "addItem")
                 {
                     // Get item to be removed
                     int toBeDeleted = model.Items.Where(m => m.TempId == model.TobeDeleted).First().TempId;
@@ -88,10 +117,10 @@ namespace ProjectSS.Web.Controllers
                     // Get not delete items
                     model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                     model.TobeDeleted = 0;
-                    await SetListItemsAsync(model);
                     TempData["Success"] = "Item Removed";
                     return View(model);
                 }
+
                 // Save Budget Request
                 if (ModelState.IsValid)
                 {
@@ -118,15 +147,14 @@ namespace ProjectSS.Web.Controllers
                 }
                 else
                 {
-                    foreach(var state in ModelState)
+                    foreach (var state in ModelState)
                     {
-                        foreach(var error in state.Value.Errors)
+                        foreach (var error in state.Value.Errors)
                         {
                             TempData["Error"] = error.ErrorMessage;
                         }
                     }
                 }
-                await SetListItemsAsync(model);
                 return View(model);
             }
             catch (Exception e)
@@ -137,9 +165,47 @@ namespace ProjectSS.Web.Controllers
 
             }
         }
+
+        #region Helper
+        private int GetDropdownId(BudgetRequestViewModel model)
+        {
+            int itemId = 0;
+            if (model.ItemId1 > 0)
+            {
+                itemId = model.ItemId1;
+                model.ItemId1 = 0;
+            }
+            else if (model.ItemId2 > 0)
+            {
+                itemId = model.ItemId2;
+                model.ItemId2 = 0;
+            }
+            else if (model.ItemId3 > 0)
+            {
+                itemId = model.ItemId3;
+                model.ItemId3 = 0;
+            }
+            else if (model.ItemId4 > 0)
+            {
+                itemId = model.ItemId4;
+                model.ItemId4 = 0;
+            }
+            else if (model.ItemId5 > 0)
+            {
+                itemId = model.ItemId5;
+                model.ItemId5 = 0;
+            }
+            return itemId;
+        }
+        #endregion
         private async Task SetListItemsAsync(BudgetRequestViewModel model)
         {
             ViewBag.Contractors = ViewBag.Contractors ?? await GetContractors(model.ProjectId, model.ItemId);
+            ViewBag.Expenses = ViewBag.Expenses ?? await GetExpenses(model.ProjectId, model.ItemId);
+            ViewBag.Equipments = ViewBag.Equipments ?? await GetEquipments(model.ProjectId, model.ItemId);
+            ViewBag.Labarotories = ViewBag.Labarotories ?? await GetLabarotories(model.ProjectId, model.ItemId);
+            ViewBag.Commissions = ViewBag.Commissions ?? await GetCommissions(model.ProjectId, model.ItemId);
+
         }
     }
 }

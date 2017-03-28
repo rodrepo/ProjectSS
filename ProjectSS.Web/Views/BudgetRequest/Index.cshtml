@@ -58,7 +58,7 @@
                 <div class="panel-body">
                     <div class="form-group col-sm-6" style="padding-left:0">
                         <label>Purpose</label>
-                        @Html.TextBoxFor(model => model.Purpose, new { @class = "form-control", @type = "text", @required = "required" })
+                        @Html.TextBoxFor(model => model.Purpose, new { @class = "form-control", @type = "text" })
                     </div>
                     <div class="form-group col-sm-6" style="padding:0">
                         <label>Date Needed</label>
@@ -113,7 +113,7 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <label>Category</label>
-                        <select class="form-control" name="CategoryDropdown">
+                        <select id="mainDropdown" class="form-control" name="CategoryDropdown">
                             <option @(Model.CategoryDropdown == "" ? "selected" : " ") value="">--Select One--</option>
                             <option @(Model.CategoryDropdown == "CONTRACTORS/OUTSOURCE" ? "selected" : " ") value="CONTRACTORS/OUTSOURCE">CONTRACTORS/OUTSOURCE</option>
                             <option @(Model.CategoryDropdown == "OPERATING EXPENSES" ? "selected" : " ") value="OPERATING EXPENSES">OPERATING EXPENSES</option>
@@ -122,11 +122,27 @@
                             <option @(Model.CategoryDropdown == "COMMISSIONS/REPRESENTATIONS" ? "selected" : " ") value="COMMISSIONS/REPRESENTATIONS">COMMISSIONS/REPRESENTATIONS</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div id="contractor" class="hidden">
                         <label>Item</label>
-                        @Html.DropDownListFor(model => model.ItemId, (List<SelectListItem>)ViewBag.Contractors, "Select", new { @class = "form-control", @required = "required", })
+                        @Html.DropDownListFor(model => model.ItemId1, (List<SelectListItem>)ViewBag.Contractors, "Select", new { @class = "form-control" })
                     </div>
-                    <div class="form-group">
+                    <div id="expense" class="hidden">
+                        <label>Item</label>
+                        @Html.DropDownListFor(model => model.ItemId2, (List<SelectListItem>)ViewBag.Expenses, "Select", new { @class = "form-control" })
+                    </div>
+                    <div id="equipment" class="hidden">
+                        <label>Item</label>
+                        @Html.DropDownListFor(model => model.ItemId3, (List<SelectListItem>)ViewBag.Equipments, "Select", new { @class = "form-control" })
+                    </div>
+                    <div id="labarotory" class="hidden">
+                        <label>Item</label>
+                        @Html.DropDownListFor(model => model.ItemId4, (List<SelectListItem>)ViewBag.Labarotories, "Select", new { @class = "form-control"})
+                    </div>
+                    <div id="commission" class="hidden">
+                        <label>Item</label>
+                        @Html.DropDownListFor(model => model.ItemId5, (List<SelectListItem>)ViewBag.Commissions, "Select", new { @class = "form-control" })
+                    </div>
+                    <div id="description" class="form-group">
                         <label>Description</label>
                         @Html.TextAreaFor(model => model.Item.Description, new { @class = "form-control", @row = "4" })
                     </div>
@@ -182,5 +198,46 @@
             });
         </script>
     }
+    <script type="text/javascript">
+            $('#mainDropdown').change(function() {
+                var e = document.getElementById("mainDropdown");
+                switch (e.value) {
+                    case "OPERATING EXPENSES":
+                        document.getElementById("expense").className = "form-group";
+                        document.getElementById("contractor").className = "hidden";
+                        document.getElementById("equipment").className = "hidden";
+                        document.getElementById("labarotory").className = "hidden";
+                        document.getElementById("commission").className = "hidden";
+                        break;
+                    case "CONTRACTORS/OUTSOURCE":
+                        document.getElementById("contractor").className = "form-group";
+                        document.getElementById("expense").className = "hidden";
+                        document.getElementById("equipment").className = "hidden";
+                        document.getElementById("labarotory").className = "hidden";
+                        document.getElementById("commission").className = "hidden";
+                        break;
+                    case "EQUIPMENT":
+                        document.getElementById("equipment").className = "form-group";
+                        document.getElementById("expense").className = "hidden";
+                        document.getElementById("contractor").className = "hidden";
+                        document.getElementById("labarotory").className = "hidden";
+                        document.getElementById("commission").className = "hidden";
+                        break;
+                    case "LABORATORY ANALYSIS":
+                        document.getElementById("labarotory").className = "form-group";
+                        document.getElementById("expense").className = "hidden";
+                        document.getElementById("contractor").className = "hidden";
+                        document.getElementById("equipment").className = "hidden";
+                        document.getElementById("commission").className = "hidden";
+                        break;
+                    case "COMMISSIONS/REPRESENTATIONS":
+                        document.getElementById("commission").className = "form-group";
+                        document.getElementById("expense").className = "hidden";
+                        document.getElementById("contractor").className = "hidden";
+                        document.getElementById("equipment").className = "hidden";
+                        document.getElementById("labarotory").className = "hidden";
+                }
+            });
+    </script>
 
 }

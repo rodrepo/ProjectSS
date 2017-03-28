@@ -333,6 +333,106 @@ namespace ProjectSS.Web.Controllers
             }
             return result;
         }
+
+        protected async Task<List<SelectListItem>> GetExpenses(int projectId, int id = 0)
+        {
+            var result = new List<SelectListItem>();
+            var project = await _repo.GetProjectByIdAsync(projectId);
+            if (project != null)
+            {
+                var expenses = _mapper.Map<List<ProposalExpenseModel>>(await _repo.GetProposalExpensesByProposalIdAsync(project.ProposalId));
+                foreach (var exp in expenses)
+                {
+                    var item = new SelectListItem
+                    {
+                        Value = exp.Id.ToString(),
+                        Text = exp.Description
+                    };
+
+                    if (exp.Id == id)
+                    {
+                        item.Selected = true;
+                    }
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
+
+        protected async Task<List<SelectListItem>> GetEquipments(int projectId, int id = 0)
+        {
+            var result = new List<SelectListItem>();
+            var project = await _repo.GetProjectByIdAsync(projectId);
+            if (project != null)
+            {
+                var equipments = _mapper.Map<List<ProposalEquipmentModel>>(await _repo.GetProposalEquipmentsByProposalIdAsync(project.ProposalId));
+                foreach (var equipment in equipments)
+                {
+                    var item = new SelectListItem
+                    {
+                        Value = equipment.Id.ToString(),
+                        Text = equipment.Name
+                    };
+
+                    if (equipment.Id == id)
+                    {
+                        item.Selected = true;
+                    }
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
+
+        protected async Task<List<SelectListItem>> GetLabarotories(int projectId, int id = 0)
+        {
+            var result = new List<SelectListItem>();
+            var project = await _repo.GetProjectByIdAsync(projectId);
+            if (project != null)
+            {
+                var labarotories = _mapper.Map<List<ProposalLaboratoryModel>>(await _repo.GetProposalLaboratoriesByProposalAsync(project.ProposalId));
+                foreach (var lab in labarotories)
+                {
+                    var item = new SelectListItem
+                    {
+                        Value = lab.Id.ToString(),
+                        Text = lab.Name
+                    };
+
+                    if (lab.Id == id)
+                    {
+                        item.Selected = true;
+                    }
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
+
+        protected async Task<List<SelectListItem>> GetCommissions(int projectId, int id = 0)
+        {
+            var result = new List<SelectListItem>();
+            var project = await _repo.GetProjectByIdAsync(projectId);
+            if (project != null)
+            {
+                var commissions = _mapper.Map<List<ProposalCommissionModel>>(await _repo.GetProposalCommissionsByProposalIdAsync(project.ProposalId));
+                foreach (var com in commissions)
+                {
+                    var item = new SelectListItem
+                    {
+                        Value = com.Id.ToString(),
+                        Text = com.Name
+                    };
+
+                    if (com.Id == id)
+                    {
+                        item.Selected = true;
+                    }
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
         #endregion
 
         public string GetProperRoleName(string roleName)

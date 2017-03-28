@@ -40,6 +40,11 @@ namespace ProjectSS.Web.Models
 
         public string CategoryDropdown { get; set; }
         public int ItemId { get; set; }
+        public int ItemId1 { get; set; }
+        public int ItemId2 { get; set; }
+        public int ItemId3 { get; set; }
+        public int ItemId4 { get; set; }
+        public int ItemId5 { get; set; }
 
     }
 

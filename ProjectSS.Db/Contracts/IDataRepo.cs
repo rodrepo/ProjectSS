@@ -72,6 +72,7 @@ namespace ProjectSS.Db.Contracts
 
         #region Proposal Contractors/OutSource
         Task<List<ProposalContractor>> GetProposalContractorsByProposalIdAsync(int proposalId);
+
         Task<ProposalContractor> GetProposalContractorByIdAsync(int id);
         void AddProposalContractor(ProposalContractor proposalContractor, string userId);
         Task DeleteProposalContractor(int id);
