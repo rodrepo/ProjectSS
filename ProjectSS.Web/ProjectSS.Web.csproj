@@ -351,6 +351,7 @@
     <Content Include="Content\Json\jqgrid.json" />
     <Content Include="Content\Json\xeditable-groups.json" />
     <Content Include="Content\Json\xeditable.res" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\demo\demo-datatable.js" />
     <Content Include="Scripts\demo\demo-flot.js" />
@@ -561,7 +562,9 @@
     <Content Include="Vendor\x-editable\dist\bootstrap3-editable\img\loading.gif" />
     <Content Include="Vendor\x-editable\dist\bootstrap3-editable\js\bootstrap-editable.js" />
     <Content Include="Vendor\x-editable\dist\bootstrap3-editable\js\bootstrap-editable.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
