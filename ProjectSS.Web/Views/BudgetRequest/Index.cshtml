@@ -62,7 +62,12 @@
                     </div>
                     <div class="form-group col-sm-6" style="padding:0">
                         <label>Date Needed</label>
-                        @Html.TextBoxFor(model => model.DateNeeded, new { @class = "form-control" })
+                        <div class="input-group date">
+                            @Html.TextBoxFor(m => m.DateNeeded, new { @class = "form-control datepicker", @placeholder = "Enter Date Needed" })
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -136,7 +141,7 @@
                     </div>
                     <div id="labarotory" class="hidden">
                         <label>Item</label>
-                        @Html.DropDownListFor(model => model.ItemId4, (List<SelectListItem>)ViewBag.Labarotories, "Select", new { @class = "form-control"})
+                        @Html.DropDownListFor(model => model.ItemId4, (List<SelectListItem>)ViewBag.Labarotories, "Select", new { @class = "form-control" })
                     </div>
                     <div id="commission" class="hidden">
                         <label>Item</label>
@@ -156,10 +161,14 @@
 </div>
 @section Styles {
     @Styles.Render("~/bundles/datatablesCss")
+    @Styles.Render("~/bundles/datetimePickerCss")       
 }
 @section Scripts {
     @Scripts.Render("~/bundles/datatables")
     @Scripts.Render("~/bundles/demoDatatable")
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/datetimePicker")
+    @Scripts.Render("~/bundles/parsley")
     <script type="text/javascript">
             $(document).ready(function () {
                 if ('@TempData["Error"]' != "") {
@@ -177,16 +186,26 @@
             });
     </script>
     <script type="text/javascript">
+                $(function () {
+                    $('.datepicker').datetimepicker({
+                        format: 'MM/DD/YYYY'
+                    });
+                    $('.timepicker').datetimepicker({
+                        format: 'HH:mm'
+                    });
+                });
+    </script>
+    <script type="text/javascript">
         $('#button1').click(function () {
             $("#IsCreate").val("true")
             $("#button2").click();
         });
     </script>
     <script type="text/javascript">
-             $('#addItem').click(function () {
-                 $("#IsCreate").val("addItem")
-                 $("#button2").click();
-             });
+        $('#addItem').click(function () {
+            $("#IsCreate").val("addItem")
+            $("#button2").click();
+        });
     </script>
     @foreach (var item in Model.ShowItems)
     {
@@ -199,7 +218,7 @@
         </script>
     }
     <script type="text/javascript">
-            $('#mainDropdown').change(function() {
+            $('#mainDropdown').change(function () {
                 var e = document.getElementById("mainDropdown");
                 switch (e.value) {
                     case "OPERATING EXPENSES":
