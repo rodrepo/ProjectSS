@@ -108,6 +108,21 @@ namespace ProjectSS.Web.Models
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
 
+        public decimal Budget
+        {
+            get
+            {
+                return (NoOfDay * Rate );
+            }
+        }
+        public decimal RemainingBudget
+        {
+            get
+            {
+                return (NoOfDay * Rate);
+            }
+        }
+
     }
 
     public class ProposalExpenseModel
@@ -122,6 +137,21 @@ namespace ProjectSS.Web.Models
         public decimal BilledToClient { get; set; }
         public int ProposalId { get; set; }
         public int Id { get; set; }
+
+        public decimal Budget
+        {
+            get
+            {
+                return (DirectCost);
+            }
+        }
+        public decimal RemainingBudget
+        {
+            get
+            {
+                return (DirectCost);
+            }
+        }
     }
 
     public class ProposalStaffModel
@@ -138,6 +168,9 @@ namespace ProjectSS.Web.Models
         public int ProposalId { get; set; }
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
+
+        public decimal Budget { get; set; }
+        public decimal RemainingBudget { get; set; }
     }
 
     public class ProposalEquipmentModel
@@ -155,6 +188,8 @@ namespace ProjectSS.Web.Models
         public int Id { get; set; }
         public int ProposalId { get; set; }
         public int InventoryId { get; set; }
+        public decimal Budget { get; set; }
+        public decimal RemainingBudget { get; set; }
     }
 
     public class ProposalLaboratoryModel
@@ -172,6 +207,21 @@ namespace ProjectSS.Web.Models
 
         public bool IsDeleted { get; set; }
         public int ProposalId { get; set; }
+
+        public decimal Budget
+        {
+            get
+            {
+                return (Cost * NoOfStations * int.Parse(Replicate));
+            }
+        }
+        public decimal RemainingBudget
+        {
+            get
+            {
+                return (Cost * NoOfStations * int.Parse(Replicate));
+            }
+        }
     }
 
     public class ProposalCommissionModel
@@ -186,5 +236,19 @@ namespace ProjectSS.Web.Models
         public int Id { get; set; }
         public int ProposalId { get; set; }
 
+        public decimal Budget
+        {
+            get
+            {
+                return (Cost);
+            }
+        }
+        public decimal RemainingBudget
+        {
+            get
+            {
+                return (Cost);
+            }
+        }
     }
 }

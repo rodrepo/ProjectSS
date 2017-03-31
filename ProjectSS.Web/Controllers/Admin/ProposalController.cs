@@ -400,6 +400,10 @@ namespace ProjectSS.Web.Controllers.Admin
         {
             if (ModelState.IsValid)
             {
+                model.TotalHours = model.Hours * model.Months;
+                model.Budget = model.Rate *  model.TotalHours;
+                model.RemainingBudget = model.Rate * model.TotalHours;
+
                 _repo.AddProposalEquipment(_mapper.Map<ProposalEquipment>(model), CurrentUser.Id);
                 if (await _repo.SaveAllAsync())
                 {
