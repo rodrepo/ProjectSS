@@ -13,6 +13,9 @@ namespace ProjectSS.Db.Entities
         public decimal Cost { get; set; }
         public decimal Factor { get; set; }
 
+        public decimal Budget { get; set; }
+        public decimal RemainingBudget { get; set; }
+
         public int ProposalId { get; set; }
         public virtual Proposal Proposal{ get; set; }
     }

@@ -185,5 +185,6 @@ namespace ProjectSS.Web.Models
 
         public int Id { get; set; }
         public int ProposalId { get; set; }
+
     }
 }

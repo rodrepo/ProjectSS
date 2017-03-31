@@ -11,6 +11,9 @@ namespace ProjectSS.Db.Entities
         public string ProjectNo { get; set; }
         public int PJNumber { get; set; }
 
+        public decimal Budget { get; set; }
+        public decimal RemainingBudget { get; set; }
+
         public int ProposalId { get; set; }
         public virtual Proposal Proposal { get; set; }
 

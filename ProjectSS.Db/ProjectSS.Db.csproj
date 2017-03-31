@@ -139,6 +139,10 @@
     <Compile Include="Migrations\201703231112534_AddBudgetRequestTables.Designer.cs">
       <DependentUpon>201703231112534_AddBudgetRequestTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703310218021_AddsNeedFieldsForBudget.cs" />
+    <Compile Include="Migrations\201703310218021_AddsNeedFieldsForBudget.Designer.cs">
+      <DependentUpon>201703310218021_AddsNeedFieldsForBudget.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -194,6 +198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703231112534_AddBudgetRequestTables.resx">
       <DependentUpon>201703231112534_AddBudgetRequestTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703310218021_AddsNeedFieldsForBudget.resx">
+      <DependentUpon>201703310218021_AddsNeedFieldsForBudget.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

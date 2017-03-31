@@ -713,7 +713,7 @@ namespace ProjectSS.Web.Controllers.Admin
         #endregion
 
         #region Approved
-        public async Task<ActionResult> Approved(int id)
+        public async Task<ActionResult> Approved(int id, decimal budget)
         {
             if (id > 0)
             {
@@ -728,6 +728,8 @@ namespace ProjectSS.Web.Controllers.Admin
                     model.Status = "Approved";
                     var project = new Project
                     {
+                        Budget = budget,
+                        RemainingBudget = budget,
                         CRMId = model.CRMId,
                         ProposalId = id
                     };
