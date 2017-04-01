@@ -94,7 +94,7 @@
                                         <td>@item.Category</td>
                                         <td>@item.ItemName</td>
                                         <td>@item.Description</td>
-                                        <td>@item.TempId</td>
+                                        <td>@item.Amount.ToString("P" + " " + "#,0.00")</td>
                                         <td>
                                             <button type="button" id="a-@item.TempId" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
                                         </td>
@@ -150,6 +150,10 @@
                     <div id="description" class="form-group">
                         <label>Description</label>
                         @Html.TextAreaFor(model => model.Item.Description, new { @class = "form-control", @row = "4" })
+                    </div>
+                    <div class="form-group">
+                        <label>Amount</label>
+                        @Html.TextBoxFor(model => model.Item.Amount, new { @class = "form-control", @type = "number" })
                     </div>
                     <div class="form-group">
                         <button id="addItem" type="button" class="mb-xl btn btn-success col-sm-12">Add Item</button>

@@ -397,7 +397,7 @@ namespace ProjectSS.Web.Controllers
                     var item = new SelectListItem
                     {
                         Value = lab.Id.ToString(),
-                        Text = lab.Name
+                        Text = lab.Parameters
                     };
 
                     if (lab.Id == id)

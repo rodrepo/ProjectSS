@@ -73,19 +73,25 @@ namespace ProjectSS.Web.Controllers
                     }
 
                     // Add item to item list
-                    model =  await ManageDropDownValues(model);
+                    model = await ManageDropDownValues(model);
                     if (model.ItemNameIsNull == true)
                     {
                         model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                         TempData["Error"] = "Please select a item";
                         return View(model);
                     }
-            
+
                     // Description Validation
                     if (model.Item.Description.IsEmpty())
                     {
                         model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                         TempData["Error"] = "Description is required";
+                        return View(model);
+                    }
+                    if (model.Item.Amount <= 0)
+                    {
+                        model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
+                        TempData["Error"] = "Please enter amount";
                         return View(model);
                     }
                     #endregion
@@ -113,40 +119,45 @@ namespace ProjectSS.Web.Controllers
                 }
 
                 // Save Budget Request
-                if (ModelState.IsValid)
+                //Purpose an Date needed validation
+                if (model.Purpose.IsEmpty())
                 {
-                    BudgetRequest request = await _repo.AddBudGetRequest(_mapper.Map<BudgetRequest>(model), CurrentUser.Id);
-                    // Get proper list
                     model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
-                    foreach (var item in model.ShowItems)
-                    {
-                        item.BudgetRequestId = request.Id;
-                        _repo.AddBudGetRequestItem(_mapper.Map<BudgetRequestItem>(item), CurrentUser.Id);
-                    }
-                    if (await _repo.SaveAllAsync())
-                    {
-                        TempData["Success"] = string.Format("BudgetRequest has been successfully Sent");
-                        return RedirectToAction("Show", "Project", new { id = model.ProjectId });
-                    }
-                    else
-                    {
-
-                        await SetListItemsAsync(model);
-                        TempData["Error"] = "Unable to send BudgetRequest due to some internal issues.";
-                        return View(model);
-                    }
+                    TempData["Error"] = "Please enter Purpose of request";
+                    return View(model);
+                }
+                if (model.DateNeeded == null)
+                {
+                    model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
+                    TempData["Error"] = "Please enter Date Needed";
+                    return View(model);
+                }
+                if(model.Items.Count <= 0)
+                {
+                    model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
+                    TempData["Error"] = "Please add request item";
+                    return View(model);
+                }
+                BudgetRequest request = await _repo.AddBudGetRequest(_mapper.Map<BudgetRequest>(model), CurrentUser.Id);
+                // Get proper list
+                model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
+                foreach (var item in model.ShowItems)
+                {
+                    item.BudgetRequestId = request.Id;
+                    _repo.AddBudGetRequestItem(_mapper.Map<BudgetRequestItem>(item), CurrentUser.Id);
+                }
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = string.Format("BudgetRequest has been successfully Sent");
+                    return RedirectToAction("Show", "Project", new { id = model.ProjectId });
                 }
                 else
                 {
-                    foreach (var state in ModelState)
-                    {
-                        foreach (var error in state.Value.Errors)
-                        {
-                            TempData["Error"] = error.ErrorMessage;
-                        }
-                    }
+
+                    await SetListItemsAsync(model);
+                    TempData["Error"] = "Unable to send BudgetRequest due to some internal issues.";
+                    return View(model);
                 }
-                return View(model);
             }
             catch (Exception e)
             {
@@ -187,7 +198,7 @@ namespace ProjectSS.Web.Controllers
                 var result = await _repo.GetProposalCommissionByIdAsync(model.ItemId5);
                 name = result.Name;
             }
-            if(name.IsEmpty())
+            if (name.IsEmpty())
             {
                 model.ItemNameIsNull = true;
             }
