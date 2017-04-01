@@ -27,6 +27,12 @@ namespace ProjectSS.Web.Controllers
         public async Task<ActionResult> Index(int id, string projectNo)
         {
             BudgetRequestViewModel model = new BudgetRequestViewModel { ProjectId = id, ProjectNumber = projectNo };
+            var project = await _repo.GetProjectByIdAsync(id);
+            if(project.RemainingBudget <= 0)
+            {
+                TempData["Error"] = "Insufficient funds";
+                return RedirectToAction("Show", "Project", new { id = model.ProjectId });
+            }
             await SetListItemsAsync(model);
             return View(model);
         }
@@ -87,10 +93,18 @@ namespace ProjectSS.Web.Controllers
                         TempData["Error"] = "Description is required";
                         return View(model);
                     }
+
+                    // Ammount Validtion
                     if (model.Item.Amount <= 0)
                     {
                         model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                         TempData["Error"] = "Please enter amount";
+                        return View(model);
+                    }
+                    else if(!model.AmmountError.IsEmpty())
+                    {
+                        model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
+                        TempData["Error"] = model.AmmountError;
                         return View(model);
                     }
                     #endregion
@@ -188,26 +202,73 @@ namespace ProjectSS.Web.Controllers
             {
                 var result = await _repo.GetProposalContractorByIdAsync(model.ItemId1);
                 name = result.Name;
+                // Ammount Validation base on remaining budget
+                if(model.Item.Amount > result.RemainingBudget)
+                {
+                    model.AmmountError = "The only allowed budget request for this item is P "+ result.RemainingBudget;
+                }
+                else if(result.RemainingBudget <= 0)
+                {
+                    model.AmmountError = "No more allocated fouds for this item";
+                }
             }
             else if (model.CategoryDropdown == "OPERATING EXPENSES")
             {
                 var result = await _repo.GetProposalExpenseByIdAsync(model.ItemId2);
                 name = result.Item;
+                // Ammount Validation base on remaining budget
+                if (model.Item.Amount > result.RemainingBudget)
+                {
+                    model.AmmountError = "The only allowed budget request for this item is P " + result.RemainingBudget;
+                }
+                else if (result.RemainingBudget <= 0)
+                {
+                    model.AmmountError = "No more allocated fouds for this item";
+                }
             }
             else if (model.CategoryDropdown == "EQUIPMENT")
             {
-                var result = await _repo.GetInventoryByIdAsync(model.ItemId3);
+                var pEquip = await _repo.GetProposalEquipmentByIdAsync(model.ItemId3);
+                var result = await _repo.GetInventoryByIdAsync(pEquip.InventoryId);
                 name = result.Name;
+                // Ammount Validation base on remaining budget
+                if (model.Item.Amount > pEquip.RemainingBudget)
+                {
+                    model.AmmountError = "The only allowed budget request for this item is P " + pEquip.RemainingBudget;
+                }
+                else if (pEquip.RemainingBudget <= 0)
+                {
+                    model.AmmountError = "No more allocated fouds for this item";
+                }
             }
             else if (model.CategoryDropdown == "LABORATORY ANALYSIS")
             {
                 var result = await _repo.GetProposalLaboratoryByIdAync(model.ItemId4);
                 name = result.Name;
+                // Ammount Validation base on remaining budget
+                if (model.Item.Amount > result.RemainingBudget)
+                {
+                    model.AmmountError = "The only allowed budget request for this item is P " + result.RemainingBudget;
+                }
+                else if (result.RemainingBudget <= 0)
+                {
+                    model.AmmountError = "No more allocated fouds for this item";
+                }
+
             }
             else if (model.CategoryDropdown == "COMMISSIONS/REPRESENTATIONS")
             {
                 var result = await _repo.GetProposalCommissionByIdAsync(model.ItemId5);
                 name = result.Name;
+                // Ammount Validation base on remaining budget
+                if (model.Item.Amount > result.RemainingBudget)
+                {
+                    model.AmmountError = "The only allowed budget request for this item is P " + result.RemainingBudget;
+                }
+                else if (result.RemainingBudget <= 0)
+                {
+                    model.AmmountError = "No more allocated fouds for this item";
+                }
             }
             if (name.IsEmpty())
             {

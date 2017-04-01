@@ -371,7 +371,7 @@ namespace ProjectSS.Web.Controllers
                     var inventory = await _repo.GetInventoryByIdAsync(equipment.InventoryId);
                     var item = new SelectListItem
                     {
-                        Value = equipment.InventoryId.ToString(),
+                        Value = equipment.Id.ToString(),
                         Text = inventory.Name
                 };
 

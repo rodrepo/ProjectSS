@@ -55,6 +55,9 @@ namespace ProjectSS.Web.Models
 
         public bool ItemNameIsNull { get; set; }
 
+        // Ammount Validation
+        public string AmmountError { get; set; }
+
     }
 
     public class BudgetRequestItemViewModel
