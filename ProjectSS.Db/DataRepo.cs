@@ -582,6 +582,11 @@ namespace ProjectSS.Db
             return keys;
         }
 
+        public async Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAndUserIdAsync(int projectid, string userId)
+        {
+            return await _db.BudgetRequests.Where(p => p.ProjectId == projectid && p.CreatedBy == userId).ToListAsync();
+        }
+
         #endregion
 
         #region Private Class

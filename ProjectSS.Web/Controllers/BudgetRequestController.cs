@@ -42,7 +42,6 @@ namespace ProjectSS.Web.Controllers
                 // to get the not deleted list you need to just filer the ToBeDeleted list to Items the get the result and add it to ShowItems
                 // note if you refresh the will all temp data will be lost 
 
-
                 // Add item
                 await SetListItemsAsync(model);
                 if (model.Item != null && model.IsCreate == "addItem")
@@ -119,7 +118,7 @@ namespace ProjectSS.Web.Controllers
                 }
 
                 // Save Budget Request
-                //Purpose an Date needed validation
+                // Purpose an Date needed validation
                 if (model.Purpose.IsEmpty())
                 {
                     model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
@@ -138,14 +137,17 @@ namespace ProjectSS.Web.Controllers
                     TempData["Error"] = "Please add request item";
                     return View(model);
                 }
-                BudgetRequest request = await _repo.AddBudGetRequest(_mapper.Map<BudgetRequest>(model), CurrentUser.Id);
-                // Get proper list
                 model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
+                model.TotalAmount = model.TotalAmountForView;
+                BudgetRequest request = await _repo.AddBudGetRequest(_mapper.Map<BudgetRequest>(model), CurrentUser.Id);
+
+                // Get proper list
                 foreach (var item in model.ShowItems)
                 {
                     item.BudgetRequestId = request.Id;
                     _repo.AddBudGetRequestItem(_mapper.Map<BudgetRequestItem>(item), CurrentUser.Id);
                 }
+
                 if (await _repo.SaveAllAsync())
                 {
                     TempData["Success"] = string.Format("BudgetRequest has been successfully Sent");
@@ -166,6 +168,15 @@ namespace ProjectSS.Web.Controllers
                 return View(model);
 
             }
+        }
+
+        public async Task<ActionResult> MyTransactions(int projectId, string projectNo)
+        {
+            ViewBag.ProjectId = projectId;
+            ViewBag.ProjectNo = projectNo;
+            var requests = _mapper.Map<List<BudgetRequestViewModel>>(await _repo.GetBudGetRequestsByProjectIdAndUserIdAsync(projectId, CurrentUser.Id));
+
+            return View(requests);
         }
 
         #region Helper

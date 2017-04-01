@@ -651,6 +651,7 @@
     <Content Include="Views\Proposal\_Commission.cshtml" />
     <Content Include="Views\Project\Show.cshtml" />
     <Content Include="Views\BudgetRequest\Index.cshtml" />
+    <Content Include="Views\BudgetRequest\MyTransactions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

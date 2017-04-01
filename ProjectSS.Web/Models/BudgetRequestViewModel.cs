@@ -19,6 +19,13 @@ namespace ProjectSS.Web.Models
 
         public DateTime? DateNeeded { get; set; }
         public decimal TotalAmount { get; set; }
+        public decimal TotalAmountForView
+        {
+            get
+            {
+                return (ShowItems.Sum(a => a.Amount));
+            }
+        }
         public string Purpose { get; set; }
 
         public bool StatusRecommendingApproval { get; set; }

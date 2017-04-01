@@ -133,7 +133,7 @@
             <div class="panel-body bb bt">
                 <a class="mb-xl btn btn-success col-sm-12" href="@Url.Action("Index", "BudgetRequest", new { id = Model.Id, projectNo = Model.ProjectNo })">Request Budget</a>
                 <br />
-                <button type="button" class="mb-xl btn btn-primary col-sm-12">My Transactions</button>
+                <a class="mb-xl btn btn-primary col-sm-12" href="@Url.Action("MyTransactions", "BudgetRequest", new { projectId = Model.Id,  projectNo = Model.ProjectNo })">My Transactions</a>
                 <br />
                 <button type="button" class="mb-xl btn btn-info col-sm-12">Transactions Summary</button>
             </div>
