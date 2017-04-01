@@ -63,6 +63,15 @@ namespace ProjectSS.Web.Models
         public decimal TotalCommissionDirectCost { get; set; }
 
         public decimal DirectCost { get; set; }
+
+        public decimal Budget
+        {
+            get
+            {
+                return ( Contractors.Sum(s => s.DirectCost) + Expenses.Sum(s => s.DirectCost) + Equipments.Sum(s => s.DirectCost) + Laboratories.Sum(x => x.DirectCost) + Commissions.Sum(x => x.Cost));
+            }
+        }
+
         public decimal CostWithFactor { get; set; }
         public decimal NegotiationAllowance { get; set; }
         public string SNegotiationAllowance { get; set; }
