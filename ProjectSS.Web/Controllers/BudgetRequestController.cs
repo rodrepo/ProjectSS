@@ -207,6 +207,7 @@ namespace ProjectSS.Web.Controllers
         {
             // Add Item Name
             string name = "";
+            var items = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
             if (model.CategoryDropdown == "CONTRACTORS/OUTSOURCE")
             {
                 var result = await _repo.GetProposalContractorByIdAsync(model.ItemId1);
@@ -286,6 +287,10 @@ namespace ProjectSS.Web.Controllers
             else
             {
                 model.Item.ItemName = name;
+            }
+            if (model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId) && m.ItemName == name && m.Amount == model.Item.Amount).Any() && model.AmmountError.IsEmpty())
+            {
+                model.AmmountError = "Request already exists";
             }
             model.CategoryDropdown = "";
             model.ItemId = 0;
