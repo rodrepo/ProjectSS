@@ -65,53 +65,20 @@ namespace ProjectSS.Web.Controllers
                     }
 
                     #region Dropdown
-                    // Add Category to item list
-                    if (!model.CategoryDropdown.IsEmpty())
-                    {
-                        model.Item.Category = model.CategoryDropdown;
-                    }
-                    else
-                    {
-                        model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
-                        TempData["Error"] = "Please select a Category";
-                        return View(model);
-                    }
 
                     // Add item to item list
-                    model = await ManageDropDownValues(model);
-                    if (model.ItemNameIsNull == true)
+                    model = await ManageDropDownValuesAndValidition(model);
+                    if(!model.Error.IsEmpty())
                     {
                         model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
-                        TempData["Error"] = "Please select a item";
-                        return View(model);
-                    }
-
-                    // Description Validation
-                    if (model.Item.Description.IsEmpty())
-                    {
-                        model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
-                        TempData["Error"] = "Description is required";
-                        return View(model);
-                    }
-
-                    // Ammount Validtion
-                    if (model.Item.Amount <= 0)
-                    {
-                        model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
-                        TempData["Error"] = "Please enter amount";
-                        return View(model);
-                    }
-                    else if(!model.AmmountError.IsEmpty())
-                    {
-                        model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
-                        TempData["Error"] = model.AmmountError;
+                        TempData["Error"] = model.Error;
                         return View(model);
                     }
                     #endregion
-
                     model.Items.Add(model.Item);
                     model.IsCreate = null;
                     TempData["Success"] = "New item added";
+
                     // Get not delete items
                     model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                     return View(model);
@@ -133,27 +100,26 @@ namespace ProjectSS.Web.Controllers
 
                 // Save Budget Request
                 // Purpose an Date needed validation
+                model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                 if (model.Purpose.IsEmpty())
                 {
-                    model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
-                    TempData["Error"] = "Please enter Purpose of request";
-                    return View(model);
+                    model.Error = "Please enter Purpose of request";
                 }
-                if (model.DateNeeded == null)
+                else if (model.DateNeeded == null)
                 {
-                    model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
-                    TempData["Error"] = "Please enter Date Needed";
-                    return View(model);
+                    model.Error = "Please enter Date Needed";
                 }
-                if(model.Items.Count <= 0)
+                else if(model.Items.Count <= 0)
                 {
-                    model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
-                    TempData["Error"] = "Please add request item";
+                    model.Error = "Please add request item";
+                }
+                if(!model.Error.IsEmpty())
+                {
+                    TempData["Error"] = model.Error;
                     return View(model);
                 }
                 model.RequestorName = CurrentUser.DisplayName;
                 model.RequestorId = CurrentUser.Id;
-                model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                 model.TotalAmount = model.TotalAmountForView;
                 BudgetRequest request = await _repo.AddBudGetRequest(_mapper.Map<BudgetRequest>(model), CurrentUser.Id);
 
@@ -203,98 +169,152 @@ namespace ProjectSS.Web.Controllers
         }
 
         #region Helper
-        private async Task<BudgetRequestViewModel> ManageDropDownValues(BudgetRequestViewModel model)
+        private async Task<BudgetRequestViewModel> ManageDropDownValuesAndValidition(BudgetRequestViewModel model)
         {
-            // Add Item Name
-            string name = "";
-            var items = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
-            if (model.CategoryDropdown == "CONTRACTORS/OUTSOURCE")
+            // Add Category to item list
+            if (!model.CategoryDropdown.IsEmpty())
             {
-                var result = await _repo.GetProposalContractorByIdAsync(model.ItemId1);
-                name = result.Name;
-                // Ammount Validation base on remaining budget
-                if(model.Item.Amount > result.RemainingBudget)
-                {
-                    model.AmmountError = "The only allowed budget request for this item is P "+ result.RemainingBudget;
-                }
-                else if(result.RemainingBudget <= 0)
-                {
-                    model.AmmountError = "No more allocated fouds for this item";
-                }
-            }
-            else if (model.CategoryDropdown == "OPERATING EXPENSES")
-            {
-                var result = await _repo.GetProposalExpenseByIdAsync(model.ItemId2);
-                name = result.Item;
-                // Ammount Validation base on remaining budget
-                if (model.Item.Amount > result.RemainingBudget)
-                {
-                    model.AmmountError = "The only allowed budget request for this item is P " + result.RemainingBudget;
-                }
-                else if (result.RemainingBudget <= 0)
-                {
-                    model.AmmountError = "No more allocated fouds for this item";
-                }
-            }
-            else if (model.CategoryDropdown == "EQUIPMENT")
-            {
-                var pEquip = await _repo.GetProposalEquipmentByIdAsync(model.ItemId3);
-                var result = await _repo.GetInventoryByIdAsync(pEquip.InventoryId);
-                name = result.Name;
-                // Ammount Validation base on remaining budget
-                if (model.Item.Amount > pEquip.RemainingBudget)
-                {
-                    model.AmmountError = "The only allowed budget request for this item is P " + pEquip.RemainingBudget;
-                }
-                else if (pEquip.RemainingBudget <= 0)
-                {
-                    model.AmmountError = "No more allocated fouds for this item";
-                }
-            }
-            else if (model.CategoryDropdown == "LABORATORY ANALYSIS")
-            {
-                var result = await _repo.GetProposalLaboratoryByIdAync(model.ItemId4);
-                name = result.Name;
-                // Ammount Validation base on remaining budget
-                if (model.Item.Amount > result.RemainingBudget)
-                {
-                    model.AmmountError = "The only allowed budget request for this item is P " + result.RemainingBudget;
-                }
-                else if (result.RemainingBudget <= 0)
-                {
-                    model.AmmountError = "No more allocated fouds for this item";
-                }
-
-            }
-            else if (model.CategoryDropdown == "COMMISSIONS/REPRESENTATIONS")
-            {
-                var result = await _repo.GetProposalCommissionByIdAsync(model.ItemId5);
-                name = result.Name;
-                // Ammount Validation base on remaining budget
-                if (model.Item.Amount > result.RemainingBudget)
-                {
-                    model.AmmountError = "The only allowed budget request for this item is P " + result.RemainingBudget;
-                }
-                else if (result.RemainingBudget <= 0)
-                {
-                    model.AmmountError = "No more allocated fouds for this item";
-                }
-            }
-            if (name.IsEmpty())
-            {
-                model.ItemNameIsNull = true;
+                model.Item.Category = model.CategoryDropdown;
             }
             else
             {
-                model.Item.ItemName = name;
+                model.Error = "Please select a Category";
             }
-            if (model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId) && m.ItemName == name && m.Amount == model.Item.Amount).Any() && model.AmmountError.IsEmpty())
+            if (model.Error.IsEmpty())
             {
-                model.AmmountError = "Request already exists";
-            }
-            model.CategoryDropdown = "";
-            model.ItemId = 0;
+                // Add Item Name
+                string name = "";
+                var items = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
+                if (model.CategoryDropdown == "CONTRACTORS/OUTSOURCE")
+                {
+                    var result = await _repo.GetProposalContractorByIdAsync(model.ItemId1);
+                    if (result != null)
+                    {
+                        name = result.Name;
+                        // Ammount Validation base on remaining budget
+                        if (model.Item.Amount > result.RemainingBudget)
+                        {
+                            model.Error = "The only allowed budget request for this item is P " + result.RemainingBudget;
+                        }
+                        else if (result.RemainingBudget <= 0)
+                        {
+                            model.Error = "No more allocated fouds for this item";
+                        }
+                    }
+                    else
+                    {
+                        model.Error = "Please select a item";
+                    }
+                }
+                else if (model.CategoryDropdown == "OPERATING EXPENSES")
+                {
+                    var result = await _repo.GetProposalExpenseByIdAsync(model.ItemId2);
+                    if (result != null)
+                    {
+                        name = result.Item;
+                        // Ammount Validation base on remaining budget
+                        if (model.Item.Amount > result.RemainingBudget)
+                        {
+                            model.Error = "The only allowed budget request for this item is P " + result.RemainingBudget;
+                        }
+                        else if (result.RemainingBudget <= 0)
+                        {
+                            model.Error = "No more allocated fouds for this item";
+                        }
+                    }
+                    else
+                    {
+                        model.Error = "Please select a item";
+                    }
+                }
+                else if (model.CategoryDropdown == "EQUIPMENT")
+                {
+                    var pEquip = await _repo.GetProposalEquipmentByIdAsync(model.ItemId3);
+                    var result = await _repo.GetInventoryByIdAsync(pEquip.InventoryId);
+                    if (result != null)
+                    {
+                        name = result.Name;
+                        // Ammount Validation base on remaining budget
+                        if (model.Item.Amount > pEquip.RemainingBudget)
+                        {
+                            model.Error = "The only allowed budget request for this item is P " + pEquip.RemainingBudget;
+                        }
+                        else if (pEquip.RemainingBudget <= 0)
+                        {
+                            model.Error = "No more allocated fouds for this item";
+                        }
+                    }
+                    else
+                    {
+                        model.Error = "Please select a item";
+                    }
+                }
+                else if (model.CategoryDropdown == "LABORATORY ANALYSIS")
+                {
+                    var result = await _repo.GetProposalLaboratoryByIdAync(model.ItemId4);
+                    if (result != null)
+                    {
+                        // Ammount Validation base on remaining budget
+                        name = result.Name;
+                        if (model.Item.Amount > result.RemainingBudget)
+                        {
+                            model.Error = "The only allowed budget request for this item is P " + result.RemainingBudget;
+                        }
+                        else if (result.RemainingBudget <= 0)
+                        {
+                            model.Error = "No more allocated fouds for this item";
+                        }
+                    }
+                    else
+                    {
+                        model.Error = "Please select a item";
+                    }
 
+
+                }
+                else if (model.CategoryDropdown == "COMMISSIONS/REPRESENTATIONS")
+                {
+                    var result = await _repo.GetProposalCommissionByIdAsync(model.ItemId5);
+                    if(result != null)
+                    {
+                        name = result.Name;
+                        // Ammount Validation base on remaining budget
+                        if (model.Item.Amount > result.RemainingBudget)
+                        {
+                            model.Error = "The only allowed budget request for this item is P " + result.RemainingBudget;
+                        }
+                        else if (result.RemainingBudget <= 0)
+                        {
+                            model.Error = "No more allocated fouds for this item";
+                        }
+                    }
+                    else
+                    {
+                        model.Error = "Please select a item";
+                    }
+                }
+                if (!name.IsEmpty())
+                { 
+                    model.Item.ItemName = name;
+                }
+                if (model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId) && m.ItemName == name && m.Amount == model.Item.Amount).Any() && model.Error.IsEmpty())
+                {
+                    model.Error = "Request already exists";
+                }
+                // Description Validation
+                if (model.Item.Description.IsEmpty() && model.Error.IsEmpty())
+                {
+                    model.Error = "Description is required";
+                }
+
+                // Ammount Validtion
+                else if (model.Item.Amount <= 0 && model.Error.IsEmpty())
+                {
+                    model.Error = "Please enter amount";
+                }
+                model.CategoryDropdown = "";
+                model.ItemId = 0;
+            }
             return model;
         }
         #endregion
