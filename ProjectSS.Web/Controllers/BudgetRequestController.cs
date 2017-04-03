@@ -151,6 +151,8 @@ namespace ProjectSS.Web.Controllers
                     TempData["Error"] = "Please add request item";
                     return View(model);
                 }
+                model.RequestorName = CurrentUser.DisplayName;
+                model.RequestorId = CurrentUser.Id;
                 model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                 model.TotalAmount = model.TotalAmountForView;
                 BudgetRequest request = await _repo.AddBudGetRequest(_mapper.Map<BudgetRequest>(model), CurrentUser.Id);
@@ -189,7 +191,14 @@ namespace ProjectSS.Web.Controllers
             ViewBag.ProjectId = projectId;
             ViewBag.ProjectNo = projectNo;
             var requests = _mapper.Map<List<BudgetRequestViewModel>>(await _repo.GetBudGetRequestsByProjectIdAndUserIdAsync(projectId, CurrentUser.Id));
+            return View(requests);
+        }
 
+        public async Task<ActionResult> TransactionsSummary(int projectId, string projectNo)
+        {
+            ViewBag.ProjectId = projectId;
+            ViewBag.ProjectNo = projectNo;
+            var requests = _mapper.Map<List<BudgetRequestViewModel>>(await _repo.GetBudGetRequestsByProjectIdAsync(projectId));
             return View(requests);
         }
 

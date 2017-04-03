@@ -126,7 +126,7 @@ namespace ProjectSS.Db.Contracts
         void AddBudGetRequestItem(BudgetRequestItem budgetRequestItem, string userId);
         Task<BudgetRequest> AddBudGetRequest(BudgetRequest budgetRequest, string userId);
         Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAndUserIdAsync(int projectId, string userId);
-
+        Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAsync(int projectId);
         #endregion
     }
 }
