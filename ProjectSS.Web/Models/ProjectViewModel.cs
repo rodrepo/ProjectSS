@@ -27,6 +27,44 @@ namespace ProjectSS.Web.Models
         public string THName { get; set; }
         public string TSName { get; set; }
 
+        public decimal Budget { get; set; }
+        public decimal RemainingBudget { get; set; }
+
+        // For Progress bar
+        public string Progress
+        {
+            get
+            {
+                if( RemainingBudget > 0 && Budget > 0)
+                {
+                    return ((RemainingBudget / Budget * 100).ToString());
+                }
+                else
+                {
+                    return ("0");
+                }
+            }
+        }
+
+        public string Color
+        {
+            get
+            {
+                if (int.Parse(Progress) > 70)
+                {
+                    return ("success");
+                }
+                else if (int.Parse(Progress) > 40 && int.Parse(Progress) < 69)
+                {
+                    return ("Warning");
+                }
+                else
+                {
+                    return ("danger");
+                }
+            }
+        }
+
         public ProposalViewModel ProposalModel { get; set; }
     }
 }

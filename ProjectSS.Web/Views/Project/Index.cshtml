@@ -43,16 +43,12 @@
                                     <td>@u.ProposalModel.Location</td>*@
                                     <td>
                                         <div class="progress progress-striped progress-xs" style="width:60%">
-                                            <div role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-danger progress-20">
-                                                <span class="sr-only">20% Complete</span>
+                                            <div role="progressbar" aria-valuenow="@u.Progress" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-@u.Color progress-@u.Progress">
                                             </div>
                                         </div>
                                     </td>
-
                                     <td>
                                         <a data-toggle="tooltip" data-placement="top" title="Manage" href="@Url.Action("Show", "Project", new { id = u.Id })" class="btn btn-primary btn-xs"><i class="icon-menu"></i></a>
-
-                                        @*<a style="color:blue" href="@Url.Action("Show", "Project", new { id = u.Id })">Show</a>*@
                                     </td>
                                 </tr>
                             }
@@ -63,89 +59,6 @@
         </div>
     </div>
 </div>
-@*<div class="row">
-    @foreach (var project in Model)
-    {
-      <div class="col-lg-3">
-        <!-- START panel-->
-        <div id="panelDemo1" class="panel panel-primary">
-            <div class="panel-heading">
-                @project.ProjectNo
-                <a href="#" data-tool="panel-collapse" data-toggle="tooltip" title="Collapse Panel" class="pull-right">
-                    <em class="fa fa-minus"></em>
-                </a>
-            </div>
-            <div class="panel-wrapper collapse in">
-                <div class="panel-body">
-                    <p>@project.ProposalTitle</p>
-                    <p>@project.CRMName</p>
-                </div>
-                <div class="panel-footer">
-                <a  style="color:blue" href="@Url.Action("Show", "Project", new { id = project.Id })">Show</a>
-                </div>
-            </div>
-        </div>
-        <!-- END panel-->
-    </div>
-    }
-    <div class="col-lg-3">
-        <!-- START panel-->
-        <div id="panelDemo1" class="panel panel-danger">
-            <div class="panel-heading">
-                Project PJ-XX
-                <a href="#" data-tool="panel-collapse" data-toggle="tooltip" title="Collapse Panel" class="pull-right">
-                    <em class="fa fa-minus"></em>
-                </a>
-            </div>
-            <div class="panel-wrapper collapse in">
-                <div class="panel-body">
-                    <p>This is a Test Panel</p>
-                    <p>Test Client name</p>
-                </div>
-                <div class="panel-footer" style="color:red">Show</div>
-            </div>
-        </div>
-        <!-- END panel-->
-    </div>
-    <div class="col-lg-3">
-        <!-- START panel-->
-        <div id="panelDemo1" class="panel panel-warning">
-            <div class="panel-heading">
-                Project PJ-XX
-                <a href="#" data-tool="panel-collapse" data-toggle="tooltip" title="Collapse Panel" class="pull-right">
-                    <em class="fa fa-minus"></em>
-                </a>
-            </div>
-            <div class="panel-wrapper collapse in">
-                <div class="panel-body">
-                    <p>This is a Test Panel</p>
-                    <p>Test Client name</p>
-                </div>
-                <div class="panel-footer" style="color:orange">Show</div>
-            </div>
-        </div>
-        <!-- END panel-->
-    </div>
-    <div class="col-lg-3">
-        <!-- START panel-->
-        <div id="panelDemo1" class="panel panel-success">
-            <div class="panel-heading">
-                Project PJ-XX
-                <a href="#" data-tool="panel-collapse" data-toggle="tooltip" title="Collapse Panel" class="pull-right">
-                    <em class="fa fa-minus"></em>
-                </a>
-            </div>
-            <div class="panel-wrapper collapse in">
-                <div class="panel-body">
-                    <p>This is a Test Panel</p>
-                    <p>Test Client name</p>
-                </div>
-                <div class="panel-footer" style="color:green">Show</div>
-            </div>
-        </div>
-        <!-- END panel-->
-    </div>
- </div>*@
 @section Styles {
     @Styles.Render("~/bundles/datatablesCss")
 }
