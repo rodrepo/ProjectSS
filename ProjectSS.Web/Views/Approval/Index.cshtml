@@ -19,6 +19,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
+                            <th>Project No.</th>
                             <th>Requestor</th>
                             @*<th>Purpose</th>*@
                             <th>Date Needed</th>
@@ -31,6 +32,7 @@
                         {
                             <tr>
                                 <td>@item.RequestNumber</td>
+                                <td>@item.ProjectNumber</td>
                                 <td>@item.RequestorName</td>
                                 @*<td>@item.Purpose</td>*@
                                 @if (item.DateNeeded != null)
