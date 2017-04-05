@@ -30,6 +30,8 @@ namespace ProjectSS.Db.Contracts
         IdentityRole GetRoleById(string Id);
         Task<List<IdentityRole>> GetRolesAsync();
         Task<List<IdentityRole>> GetRolesByUserId(string userId);
+        Task<string> GetRoleNameByUserId(string userId);
+
 
         #endregion
 
@@ -127,6 +129,10 @@ namespace ProjectSS.Db.Contracts
         Task<BudgetRequest> AddBudGetRequest(BudgetRequest budgetRequest, string userId);
         Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAndUserIdAsync(int projectId, string userId);
         Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAsync(int projectId);
+        Task<List<BudgetRequest>> GetBudGetRequestsForOMAsync();
+        Task<List<BudgetRequest>> GetBudGetRequestsForAHAsync();
+        Task<List<BudgetRequest>> GetBudGetRequestsForTHAsync(string userId);
+        Task<int> GetToBeApprovedRequestsCountAsync(string role, string userId);
         #endregion
     }
 }

@@ -436,6 +436,16 @@ namespace ProjectSS.Web.Controllers
         }
         #endregion
 
+        protected async Task RunNotifications()
+        {
+            string userId = GetUserId();
+            var role = await _repo.GetRoleNameByUserId(userId);
+            if (role != null && role == "OM" || role == "TH" || role == "AH")
+            {
+                ViewBag.Count = await _repo.GetToBeApprovedRequestsCountAsync(userId, userId);
+            }
+        }
+
         public string GetProperRoleName(string roleName)
         {
             string name = "";

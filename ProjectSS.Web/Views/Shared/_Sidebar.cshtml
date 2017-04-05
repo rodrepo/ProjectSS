@@ -1,6 +1,7 @@
 @using ProjectSS.Web.Helpers
 @using ProjectSS.Common
 @{
+    var count = ViewBag.Count;
     var canAccessOM = User.IsInRole(RoleType.OM.ToString());
     var canAccessBD = User.IsInRole(RoleType.BD.ToString());
     var canAccessTH = User.IsInRole(RoleType.TH.ToString());
@@ -74,6 +75,19 @@
                     <span>Projects</span>
                 </a>
             </li>
+            @if (canAccessOM || canAccessAH || canAccessTH)
+            {
+                <li class="@Html.isActive(controller: "Approval")">
+                    <a href="/Approval">
+                        @if (count > 0)
+                        {
+                        <div class="label label-success pull-right">@count</div>
+                        }
+                        <em class="icon-book-open"></em>
+                        <span>Approval</span>
+                    </a>
+                </li>
+            }
             <li class="@Html.isActive(controller: "Inventory")">
                 <a href="/Inventory">
                     <em class="icon-social-dropbox"></em>

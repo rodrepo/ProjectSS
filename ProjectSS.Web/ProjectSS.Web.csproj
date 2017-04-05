@@ -216,6 +216,7 @@
     <Compile Include="Controllers\Admin\ProjectController.cs" />
     <Compile Include="Controllers\Admin\ProposalController.cs" />
     <Compile Include="Controllers\Admin\UserController.cs" />
+    <Compile Include="Controllers\ApprovalController.cs" />
     <Compile Include="Controllers\BudgetRequestController.cs" />
     <Compile Include="Controllers\CRMController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
@@ -653,6 +654,7 @@
     <Content Include="Views\BudgetRequest\Index.cshtml" />
     <Content Include="Views\BudgetRequest\MyTransactions.cshtml" />
     <Content Include="Views\BudgetRequest\TransactionsSummary.cshtml" />
+    <Content Include="Views\Approval\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

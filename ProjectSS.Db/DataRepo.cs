@@ -141,6 +141,14 @@ namespace ProjectSS.Db
                           select r
                           ).ToListAsync();
         }
+        public async Task<string> GetRoleNameByUserId(string userId)
+        {
+            return await (from ur in _db.UserRoles
+                          join r in _db.Roles on ur.RoleId equals r.Id
+                          where ur.UserId == userId
+                          select r.Name
+                          ).FirstOrDefaultAsync();
+        }
         #endregion
 
         #region CRM
@@ -584,12 +592,55 @@ namespace ProjectSS.Db
 
         public async Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAndUserIdAsync(int projectid, string userId)
         {
-            return await _db.BudgetRequests.Where(p => p.ProjectId == projectid && p.CreatedBy == userId).ToListAsync();
+            return await _db.BudgetRequests.Where(p => p.ProjectId == projectid && p.CreatedBy == userId && p.IsDeleted == false).ToListAsync();
         }
 
         public async Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAsync(int projectid)
         {
-            return await _db.BudgetRequests.Where(p => p.ProjectId == projectid).ToListAsync();
+            return await _db.BudgetRequests.Where(p => p.ProjectId == projectid && p.IsDeleted == false).ToListAsync();
+        }
+
+        public async Task<List<BudgetRequest>> GetBudGetRequestsForOMAsync()
+        {
+            return await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == false && p.StatusRecommendingApproval == false).ToListAsync();
+        }
+
+        public async Task<List<BudgetRequest>> GetBudGetRequestsForTHAsync(string userId)
+        {
+            var result = (from pro in _db.Proposals.Where(p => p.THId == userId)
+                          join prj in _db.Projects on pro.ProjectNumber equals prj.ProjectNo
+                          join bud in _db.BudgetRequests on prj.Id equals bud.ProjectId
+                          where bud.StatusRecommendingApproval == false && bud.StatusApproval == false && bud.StatusRecommendingApproval == false
+                          select bud
+                          ).ToListAsync();
+
+            return await result;
+        }
+
+        public async Task<List<BudgetRequest>> GetBudGetRequestsForAHAsync()
+        {
+            return await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == true && p.StatusRecommendingApproval == false).ToListAsync();
+        }
+
+        public async Task<int> GetToBeApprovedRequestsCountAsync(string role, string userId)
+        {
+            int count = 0;
+            if(role == "OM")
+            {
+                var om = await GetBudGetRequestsForOMAsync();
+                count = om.Count;
+            }
+            else if(role == "TH")
+            {
+               var th = await GetBudGetRequestsForTHAsync(userId);
+                count = th.Count;
+            }
+            else if(role == "AH")
+            {
+                var ah = await GetBudGetRequestsForAHAsync();
+                count = ah.Count;
+            }
+            return count;
         }
 
 
