@@ -25,12 +25,14 @@ namespace ProjectSS.Web.Controllers.Admin
 
         public async Task<ActionResult> Index()
         {
+            await RunNotifications();
             var model = _mapper.Map<List<ProjectViewModel>>(await _repo.GetProjectsAsync());
             return View(model);
         }
 
         public async Task<ActionResult> Show(int id)
         {
+            await RunNotifications();
             var model = _mapper.Map<ProjectViewModel>(await _repo.GetProjectByIdAsync(id));
             var proposal = await _repo.GetProposalByIdAsync(model.ProposalId);
             model = MapProposal(proposal, model);

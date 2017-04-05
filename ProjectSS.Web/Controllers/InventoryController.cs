@@ -24,6 +24,7 @@ namespace ProjectSS.Web.Controllers
 
         public async Task<ActionResult> Index()
         {
+            await RunNotifications();
             var model = MapNeededValue(await _repo.GetInventoriesAsync());
             return View(model);
         }
@@ -31,6 +32,7 @@ namespace ProjectSS.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Create()
         {
+            await RunNotifications();
             var model = new InventoryViewModel();
             await SetListItemsAsync(model);
              return View(model);
@@ -70,6 +72,7 @@ namespace ProjectSS.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
+            await RunNotifications();
             var model = _mapper.Map<InventoryViewModel>(await _repo.GetInventoryByIdAsync(id));
             await SetListItemsAsync(model);
             return View(model);

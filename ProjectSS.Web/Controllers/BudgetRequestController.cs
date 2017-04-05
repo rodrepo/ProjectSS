@@ -26,6 +26,7 @@ namespace ProjectSS.Web.Controllers
 
         public async Task<ActionResult> Index(int id, string projectNo)
         {
+            await RunNotifications();
             BudgetRequestViewModel model = new BudgetRequestViewModel { ProjectId = id, ProjectNumber = projectNo };
             var project = await _repo.GetProjectByIdAsync(id);
             if(project.RemainingBudget <= 0)
@@ -154,6 +155,7 @@ namespace ProjectSS.Web.Controllers
 
         public async Task<ActionResult> MyTransactions(int projectId, string projectNo)
         {
+            await RunNotifications();
             ViewBag.ProjectId = projectId;
             ViewBag.ProjectNo = projectNo;
             var requests = _mapper.Map<List<BudgetRequestViewModel>>(await _repo.GetBudGetRequestsByProjectIdAndUserIdAsync(projectId, CurrentUser.Id));
@@ -162,6 +164,7 @@ namespace ProjectSS.Web.Controllers
 
         public async Task<ActionResult> TransactionsSummary(int projectId, string projectNo)
         {
+            await RunNotifications();
             ViewBag.ProjectId = projectId;
             ViewBag.ProjectNo = projectNo;
             var requests = _mapper.Map<List<BudgetRequestViewModel>>(await _repo.GetBudGetRequestsByProjectIdAsync(projectId));

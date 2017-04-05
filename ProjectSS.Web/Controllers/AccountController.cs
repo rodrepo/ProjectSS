@@ -125,6 +125,7 @@ namespace ProjectSS.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> ChangePassword(string userId)
         {
+            await RunNotifications();
             var model = new ChangePasswordViewModel();
             if(!userId.IsEmpty())
             {

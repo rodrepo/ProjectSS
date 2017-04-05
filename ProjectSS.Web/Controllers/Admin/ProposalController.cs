@@ -29,6 +29,7 @@ namespace ProjectSS.Web.Controllers.Admin
         [HttpGet]
         public async Task<ActionResult> Index()
         {
+            await RunNotifications();
             var model = _mapper.Map<List<ProposalViewModel>>(await _repo.GetProposalAsync());
             await SetListItemsAsync(new ProposalViewModel());
             return View(model);
@@ -37,6 +38,7 @@ namespace ProjectSS.Web.Controllers.Admin
         [HttpGet]
         public async Task<ActionResult> Manage(int id, string from)
         {
+            await RunNotifications();
             var getValues = await _repo.GetProposalByIdAsync(id);
             var proposal = _mapper.Map<ProposalViewModel>(getValues);
             if (proposal != null)
@@ -721,7 +723,7 @@ namespace ProjectSS.Web.Controllers.Admin
         {
             if (id > 0)
             {
-                var model = await _repo.GetProposalByIdAsync(id);
+                var model = _mapper.Map<ProposalViewModel>(await _repo.GetProposalByIdAsync(id));
                 if (model.Cost <= 0)
                 {
                     TempData["Error"] = "Please add Project Cost";
@@ -735,9 +737,10 @@ namespace ProjectSS.Web.Controllers.Admin
                         Budget = budget,
                         RemainingBudget = budget,
                         CRMId = model.CRMId,
-                        ProposalId = id
+                        ProposalId = id,
                     };
-                    await _repo.AddProjectAsync(project, CurrentUser.Id);
+                    var proposal = await _repo.AddProjectAsync(project, CurrentUser.Id);
+                    model.ProjectNumber = proposal.ProjectNo;
                     await _repo.UpdateProposal(_mapper.Map<Proposal>(model), CurrentUser.Id);
                     if (await _repo.SaveAllAsync())
                     {

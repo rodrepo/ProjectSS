@@ -26,13 +26,15 @@ namespace ProjectSS.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
+            await RunNotifications();
             var model = _mapper.Map<List<CRMViewModel>>(await _repo.GetCRM());
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            await RunNotifications();
             var model = new CRMViewModel();
             return View(model);
         }
@@ -65,6 +67,7 @@ namespace ProjectSS.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Manage(int id)
         {
+            await RunNotifications();
             var model = new ManageCRMViewModel();
             var crm = _mapper.Map<CRMViewModel>(await _repo.GetCRMById(id));
             if (crm != null)
@@ -78,6 +81,7 @@ namespace ProjectSS.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> ManageWithRevision(int id)
         {
+            await RunNotifications();
             var model = new ManageCRMViewModel();
             var crm = _mapper.Map<CRMViewModel>(await _repo.GetCRMById(id));
             if (crm != null)
@@ -96,6 +100,7 @@ namespace ProjectSS.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> ManageWithEmail(int id)
         {
+            await RunNotifications();
             var model = new ManageCRMViewModel();
             var crm = _mapper.Map<CRMViewModel>(await _repo.GetCRMById(id));
             if (crm != null)
@@ -114,6 +119,7 @@ namespace ProjectSS.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> ManageWithCall(int id)
         {
+            await RunNotifications();
             var model = new ManageCRMViewModel();
             var crm = _mapper.Map<CRMViewModel>(await _repo.GetCRMById(id));
             if (crm != null)

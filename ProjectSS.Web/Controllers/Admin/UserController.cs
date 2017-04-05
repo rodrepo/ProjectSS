@@ -24,6 +24,7 @@ namespace ProjectSS.Web.Controllers.Admin
 
         public async Task<ActionResult> Index()
         {
+            await RunNotifications();
             var users = await _repo.GetUsersAsync();
             var model = _mapper.Map<List<UserViewModel>>(users);
             if (model != null)
@@ -51,6 +52,7 @@ namespace ProjectSS.Web.Controllers.Admin
         [HttpGet]
         public async Task<ActionResult> Create()
         {
+            await RunNotifications();
             var model = new UserViewModel();
             await SetListItemsAsync(model);
             return View(model);
@@ -106,6 +108,7 @@ namespace ProjectSS.Web.Controllers.Admin
         {
             try
             {
+                await RunNotifications();
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -194,6 +197,7 @@ namespace ProjectSS.Web.Controllers.Admin
         {
             try
             {
+                await RunNotifications();
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

@@ -311,6 +311,7 @@ namespace ProjectSS.Db
             latestProposal.TSId = proposal.TSId;
             latestProposal.Status = proposal.Status;
             latestProposal.NegotiationAllowance = proposal.NegotiationAllowance;
+            latestProposal.ProjectNumber = proposal.ProjectNumber;
             return latestProposal;
         }
 
@@ -608,7 +609,7 @@ namespace ProjectSS.Db
         public async Task<List<BudgetRequest>> GetBudGetRequestsForTHAsync(string userId)
         {
             var result = (from pro in _db.Proposals.Where(p => p.THId == userId)
-                          join prj in _db.Projects on pro.ProjectNumber equals prj.ProjectNo
+                          join prj in _db.Projects on pro.Id equals prj.ProposalId
                           join bud in _db.BudgetRequests on prj.Id equals bud.ProjectId
                           where bud.StatusRecommendingApproval == false && bud.StatusApproval == false && bud.StatusRecommendingApproval == false
                           select bud

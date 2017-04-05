@@ -33,7 +33,14 @@
                                 <td>@item.RequestNumber</td>
                                 <td>@item.RequestorName</td>
                                 @*<td>@item.Purpose</td>*@
-                                <td>@item.DateNeeded.Value.ToShortDateString()</td>
+                                @if (item.DateNeeded != null)
+                                {
+                                    <td>@item.DateNeeded.Value.ToShortDateString()</td>
+                                }
+                                else
+                                {
+                                    <td> </td>
+                                }
                                 @*<td>@item.TotalAmount.ToString("P" + " " + "#,0.00")</td>*@
                                 <td>
                                     @if (item.StatusRecommendingApproval == true && item.StatusApproval == false && item.StatusRelease == false)

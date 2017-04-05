@@ -22,6 +22,7 @@ namespace ProjectSS.Web.Controllers
 
         public async Task<ActionResult> Index()
         {
+            await RunNotifications();
             var user = CurrentUser;
             var role = await _repo.GetRolesByUserId(user.Id);
             List<BudgetRequestViewModel> request = new List<BudgetRequestViewModel>();
