@@ -11,7 +11,7 @@ namespace ProjectSS.Db.Entities
         public string Item { get; set; }
         public string Description { get; set; }
         public decimal Factor { get; set; }
-        public decimal DirectCost { get; set; }
+        public decimal Cost { get; set; }
         public int Quantity { get; set; }
         public int NoOfDay { get; set; }
 

@@ -141,10 +141,17 @@ namespace ProjectSS.Web.Models
         public decimal Factor { get; set; }
         public int Quantity { get; set; }
         public int NoOfDay { get; set; }
-        public decimal DirectCost { get; set; }
+        public decimal DirectCost
+        {
+            get
+            {
+                return (Cost * Quantity * NoOfDay);
+            }
+        }
         public bool IsDeleted { get; set; }
         public decimal BilledToClient { get; set; }
         public int ProposalId { get; set; }
+        public decimal Cost { get; set; }
         public int Id { get; set; }
 
         public decimal Budget
