@@ -42,5 +42,14 @@ namespace ProjectSS.Web.Controllers
             }
             return View(request);
         }
+
+        public async Task<ActionResult> Approved(int id)
+        {
+            var role = await _repo.GetRolesByUserId(CurrentUser.Id);
+            var roleName = role.Select(r => r.Name).FirstOrDefault();
+            await _repo.ApprovedBudgetRequest(id, roleName);
+            await _repo.SaveAllAsync();
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -58,6 +58,9 @@ namespace ProjectSS.Web.Models
         // For Validation
         public string Error { get; set; }
 
+        // For Approval
+        public string CurrentUserRole { get; set; }
+
     }
 
     public class BudgetRequestItemViewModel

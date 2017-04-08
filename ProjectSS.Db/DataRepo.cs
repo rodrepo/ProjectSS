@@ -331,7 +331,7 @@ namespace ProjectSS.Db
             {
                 keys.Reference = "PRP-1";
                 keys.Number = 1;
-            }   
+            }
             return keys;
         }
 
@@ -476,7 +476,7 @@ namespace ProjectSS.Db
             _db.Entry(laboratory).State = EntityState.Modified;
         }
         #endregion
-        
+
         #region Commission
         public async Task<List<ProposalCommission>> GetProposalCommissionsByProposalIdAsync(int proposalId)
         {
@@ -603,7 +603,7 @@ namespace ProjectSS.Db
 
         public async Task<List<BudgetRequest>> GetBudGetRequestsForOMAsync()
         {
-            return await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == false && p.StatusRecommendingApproval == false).ToListAsync();
+            return await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == false && p.StatusRelease == false).ToListAsync();
         }
 
         public async Task<List<BudgetRequest>> GetBudGetRequestsForTHAsync(string userId)
@@ -611,7 +611,7 @@ namespace ProjectSS.Db
             var result = (from pro in _db.Proposals.Where(p => p.THId == userId)
                           join prj in _db.Projects on pro.Id equals prj.ProposalId
                           join bud in _db.BudgetRequests on prj.Id equals bud.ProjectId
-                          where bud.StatusRecommendingApproval == false && bud.StatusApproval == false && bud.StatusRecommendingApproval == false
+                          where bud.StatusRecommendingApproval == false && bud.StatusApproval == false && bud.StatusRelease == false
                           select bud
                           ).ToListAsync();
 
@@ -620,23 +620,28 @@ namespace ProjectSS.Db
 
         public async Task<List<BudgetRequest>> GetBudGetRequestsForAHAsync()
         {
-            return await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == true && p.StatusRecommendingApproval == false).ToListAsync();
+            return await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == true && p.StatusRelease == false).ToListAsync();
+        }
+
+        public async Task<BudgetRequest> GetBudgetRequestByIdAsync(int id)
+        {
+            return await _db.BudgetRequests.Where(b => b.Id == id && b.IsDeleted == false).FirstOrDefaultAsync();
         }
 
         public async Task<int> GetToBeApprovedRequestsCountAsync(string role, string userId)
         {
             int count = 0;
-            if(role == "OM")
+            if (role == "OM")
             {
                 var om = await GetBudGetRequestsForOMAsync();
                 count = om.Count;
             }
-            else if(role == "TH")
+            else if (role == "TH")
             {
-               var th = await GetBudGetRequestsForTHAsync(userId);
+                var th = await GetBudGetRequestsForTHAsync(userId);
                 count = th.Count;
             }
-            else if(role == "AH")
+            else if (role == "AH")
             {
                 var ah = await GetBudGetRequestsForAHAsync();
                 count = ah.Count;
@@ -644,7 +649,23 @@ namespace ProjectSS.Db
             return count;
         }
 
-
+        public async Task ApprovedBudgetRequest(int id, string role)
+        {
+            var request = await GetBudgetRequestByIdAsync(id);
+            if(role == "OM")
+            {
+                request.StatusApproval = true;
+            }
+            else if(role == "TH")
+            {
+                request.StatusRecommendingApproval = true;
+            }
+            else if(role == "AH")
+            {
+                request.StatusRelease = true;
+            }
+            _db.Entry(request).State = EntityState.Modified;
+        }
         #endregion
 
         #region Private Class
