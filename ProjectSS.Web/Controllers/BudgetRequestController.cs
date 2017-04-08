@@ -187,6 +187,7 @@ namespace ProjectSS.Web.Controllers
             {
                 // Add Item Name
                 string name = "";
+                int itemId = 0;
                 var items = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                 if (model.CategoryDropdown == "CONTRACTORS/OUTSOURCE")
                 {
@@ -194,6 +195,7 @@ namespace ProjectSS.Web.Controllers
                     if (result != null)
                     {
                         name = result.Name;
+                        itemId = result.Id;
                         // Ammount Validation base on remaining budget
                         if (model.Item.Amount > result.RemainingBudget)
                         {
@@ -215,6 +217,7 @@ namespace ProjectSS.Web.Controllers
                     if (result != null)
                     {
                         name = result.Item;
+                        itemId = result.Id;
                         // Ammount Validation base on remaining budget
                         if (model.Item.Amount > result.RemainingBudget)
                         {
@@ -237,6 +240,7 @@ namespace ProjectSS.Web.Controllers
                     if (result != null)
                     {
                         name = result.Name;
+                        itemId = result.Id;
                         // Ammount Validation base on remaining budget
                         if (model.Item.Amount > pEquip.RemainingBudget)
                         {
@@ -259,6 +263,7 @@ namespace ProjectSS.Web.Controllers
                     {
                         // Ammount Validation base on remaining budget
                         name = result.Name;
+                        itemId = result.Id;
                         if (model.Item.Amount > result.RemainingBudget)
                         {
                             model.Error = "The only allowed budget request for this item is P " + result.RemainingBudget;
@@ -281,6 +286,7 @@ namespace ProjectSS.Web.Controllers
                     if(result != null)
                     {
                         name = result.Name;
+                        itemId = result.Id;
                         // Ammount Validation base on remaining budget
                         if (model.Item.Amount > result.RemainingBudget)
                         {
@@ -299,6 +305,7 @@ namespace ProjectSS.Web.Controllers
                 if (!name.IsEmpty())
                 { 
                     model.Item.ItemName = name;
+                    model.Item.ItemId = itemId;
                 }
                 if (model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId) && m.ItemName == name && m.Amount == model.Item.Amount).Any() && model.Error.IsEmpty())
                 {

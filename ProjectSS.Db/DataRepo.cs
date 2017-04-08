@@ -663,8 +663,72 @@ namespace ProjectSS.Db
             else if(role == "AH")
             {
                 request.StatusRelease = true;
+                await ProcessApprovedRequest(request);
             }
             _db.Entry(request).State = EntityState.Modified;
+        }
+
+        private async Task ProcessApprovedRequest(BudgetRequest request)
+        {
+
+            var project = await GetProjectByIdAsync(request.ProjectId);
+            project.RemainingBudget = project.RemainingBudget - request.TotalAmount;
+            if(request.BudgetRequestItems.Count > 0)
+            {
+                foreach(var item in request.BudgetRequestItems)
+                {
+                    if (item.Amount > 0)
+                    {
+                        if (item.Category == "CONTRACTORS/OUTSOURCE")
+                        {
+                            var result = await GetProposalContractorByIdAsync(item.ItemId);
+                            if (result != null)
+                            {
+                                result.RemainingBudget = result.RemainingBudget - item.Amount;
+                                _db.Entry(result).State = EntityState.Modified;
+                            }
+                        }
+                        else if (item.Category == "OPERATING EXPENSES")
+                        {
+                            var result = await GetProposalExpenseByIdAsync(item.ItemId);
+                            if (result != null)
+                            {
+                                result.RemainingBudget = result.RemainingBudget - item.Amount;
+                                _db.Entry(result).State = EntityState.Modified;
+                            }
+                        }
+                        else if (item.Category == "EQUIPMENT")
+                        {
+                            var pEquip = await GetProposalEquipmentByIdAsync(item.ItemId);
+                            var result = await GetInventoryByIdAsync(pEquip.InventoryId);
+                            if (result != null)
+                            {
+                                pEquip.RemainingBudget = pEquip.RemainingBudget - item.Amount;
+                                _db.Entry(result).State = EntityState.Modified;
+                            }
+                        }
+                        else if (item.Category == "LABORATORY ANALYSIS")
+                        {
+                            var result = await GetProposalLaboratoryByIdAync(item.ItemId);
+                            if (result != null)
+                            {
+                                result.RemainingBudget = result.RemainingBudget - item.Amount;
+                                _db.Entry(result).State = EntityState.Modified;
+                            }
+                        }
+                        else if (item.Category == "COMMISSIONS/REPRESENTATIONS")
+                        {
+                            var result = await GetProposalCommissionByIdAsync(item.ItemId);
+                            if (result != null)
+                            {
+                                result.RemainingBudget = result.RemainingBudget - item.Amount;
+                                _db.Entry(result).State = EntityState.Modified;
+                            }
+                        }
+                    }
+                }
+            }
+            _db.Entry(project).State = EntityState.Modified;
         }
         #endregion
 

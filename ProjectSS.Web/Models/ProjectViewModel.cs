@@ -37,7 +37,29 @@ namespace ProjectSS.Web.Models
             {
                 if( RemainingBudget > 0 && Budget > 0)
                 {
-                    return ((RemainingBudget / Budget * 100).ToString());
+                    return (string.Format("{0:0}", RemainingBudget / Budget * 100).ToString());
+                }
+                else
+                {
+                    return ("0");
+                }
+            }
+        }
+
+        public string ProgressRoundOf
+        {
+            get
+            {
+                if (RemainingBudget > 0 && Budget > 0)
+                {
+                    if (Progress != "100")
+                    {
+                        return ((10 - int.Parse(Progress) % 10) + int.Parse(Progress)).ToString();
+                    }
+                    else
+                    {
+                        return ("100");
+                    }
                 }
                 else
                 {

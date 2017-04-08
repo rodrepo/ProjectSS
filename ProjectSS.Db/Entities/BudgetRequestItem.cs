@@ -12,6 +12,7 @@ namespace ProjectSS.Db.Entities
         public string Item { get; set; }
         public string Description { get; set; }
         public decimal Amount { get; set; }
+        public int ItemId { get; set; }
 
         public int BudgetRequestId { get; set; }
         public virtual BudgetRequest BudgetRequest { get; set; }

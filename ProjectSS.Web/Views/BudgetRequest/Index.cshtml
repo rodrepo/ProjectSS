@@ -38,6 +38,7 @@
             @Html.HiddenFor(model => Model.Items[i].ItemName)
             @Html.HiddenFor(model => Model.Items[i].Description)
             @Html.HiddenFor(model => Model.Items[i].Amount)
+            @Html.HiddenFor(model => Model.Items[i].ItemId)
             @Html.HiddenFor(model => Model.Items[i].TempId)
         }
         for (int i = 0; i < Model.ListOfDeleted.Count; i++)

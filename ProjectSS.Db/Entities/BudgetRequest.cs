@@ -23,6 +23,7 @@ namespace ProjectSS.Db.Entities
         public string RequestorId { get; set; }
 
         public int ProjectId { get; set; }
+        public string ProjectNumber { get; set; }
         public virtual Project Project { get; set; }
 
         public virtual ICollection<BudgetRequestItem> BudgetRequestItems { get; set; }
