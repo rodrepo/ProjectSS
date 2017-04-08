@@ -47,6 +47,7 @@
                     LastName = "Romarate",
                     UserName = "om@demo.com",
                     Email = "om@demo.com",
+                    Rate = 2000,
                     IsActive = true,
                     EmailConfirmed = true
                 };
@@ -66,6 +67,7 @@
                     LastName = "Demo",
                     UserName = "bd@demo.com",
                     Email = "bd@demo.com",
+                    Rate = 1500,
                     IsActive = true,
                     EmailConfirmed = true
                 };
@@ -85,6 +87,7 @@
                     LastName = "Demo",
                     UserName = "th@demo.com",
                     Email = "th@demo.com",
+                    Rate = 1000,
                     IsActive = true,
                     EmailConfirmed = true
                 };
@@ -104,6 +107,7 @@
                     LastName = "Demo",
                     UserName = "ah@demo.com",
                     Email = "ah@demo.com",
+                    Rate = 800,
                     IsActive = true,
                     EmailConfirmed = true
                 };
@@ -123,6 +127,7 @@
                     LastName = "Demo",
                     UserName = "ts@demo.com",
                     Email = "ts@demo.com",
+                    Rate = 500,
                     IsActive = true,
                     EmailConfirmed = true
                 };

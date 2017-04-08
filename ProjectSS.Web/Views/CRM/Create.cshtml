@@ -26,7 +26,7 @@
                 <div class="panel-body">
                     <form role="form">
                         <div class="form-group col-sm-4">
-                            <label>Full Name</label>
+                            <label>Contact Person</label>
                             @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @type = "text", @required = "required", @placeholder = "Enter Full Name" })
                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                         </div>
