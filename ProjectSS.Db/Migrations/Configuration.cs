@@ -13,7 +13,7 @@
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(ProjectSS.Db.DataContext context)
+        protected override void Seed(DataContext context)
         {
             #region Seed Roles
             var om = new IdentityRole { Name = RoleType.OM.ToString() };
@@ -38,25 +38,102 @@
             userManager.UserValidator = new UserValidator<User>(userManager) { AllowOnlyAlphanumericUserNames = false };
             const string password = "P@ssw0rd";
 
-            var admin = userManager.FindByEmail("om@demo.com");
-            if (admin == null)
+            var demoOM = userManager.FindByEmail("om@demo.com");
+            if (demoOM == null)
             {
-                admin = new User
+                demoOM = new User
                 {
-                    FirstName = "OM",
-                    LastName = "Demo",
+                    FirstName = "Rodolfo",
+                    LastName = "Romarate",
                     UserName = "om@demo.com",
                     Email = "om@demo.com",
                     IsActive = true,
                     EmailConfirmed = true
                 };
 
-                var result = userManager.Create(admin, password);
+                var result = userManager.Create(demoOM, password);
                 if (result.Succeeded)
                 {
-                    userManager.AddToRole(admin.Id, RoleType.OM.ToString());
+                    userManager.AddToRole(demoOM.Id, RoleType.OM.ToString());
                 }
             }
+            var demoBD = userManager.FindByEmail("bd@demo.com");
+            if (demoBD == null)
+            {
+                demoBD = new User
+                {
+                    FirstName = "BD",
+                    LastName = "Demo",
+                    UserName = "bd@demo.com",
+                    Email = "bd@demo.com",
+                    IsActive = true,
+                    EmailConfirmed = true
+                };
+
+                var result = userManager.Create(demoBD, password);
+                if (result.Succeeded)
+                {
+                    userManager.AddToRole(demoBD.Id, RoleType.BD.ToString());
+                }
+            }
+            var demoTH = userManager.FindByEmail("th@demo.com");
+            if (demoTH == null)
+            {
+                demoTH = new User
+                {
+                    FirstName = "TH",
+                    LastName = "Demo",
+                    UserName = "th@demo.com",
+                    Email = "th@demo.com",
+                    IsActive = true,
+                    EmailConfirmed = true
+                };
+
+                var result = userManager.Create(demoTH, password);
+                if (result.Succeeded)
+                {
+                    userManager.AddToRole(demoTH.Id, RoleType.TH.ToString());
+                }
+            }
+            var demoAH = userManager.FindByEmail("ah@demo.com");
+            if (demoAH == null)
+            {
+                demoAH = new User
+                {
+                    FirstName = "AH",
+                    LastName = "Demo",
+                    UserName = "ah@demo.com",
+                    Email = "ah@demo.com",
+                    IsActive = true,
+                    EmailConfirmed = true
+                };
+
+                var result = userManager.Create(demoAH, password);
+                if (result.Succeeded)
+                {
+                    userManager.AddToRole(demoAH.Id, RoleType.AH.ToString());
+                }
+            }
+            var demoTS = userManager.FindByEmail("ts@demo.com");
+            if (demoTS == null)
+            {
+                demoTS = new User
+                {
+                    FirstName = "TS",
+                    LastName = "Demo",
+                    UserName = "ts@demo.com",
+                    Email = "ts@demo.com",
+                    IsActive = true,
+                    EmailConfirmed = true
+                };
+
+                var result = userManager.Create(demoTS, password);
+                if (result.Succeeded)
+                {
+                    userManager.AddToRole(demoTS.Id, RoleType.TS.ToString());
+                }
+            }
+            context.SaveChanges();
             #endregion
         }
     }
