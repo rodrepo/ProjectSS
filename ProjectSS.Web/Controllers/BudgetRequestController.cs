@@ -24,11 +24,16 @@ namespace ProjectSS.Web.Controllers
             _repo = repo;
         }
 
-        public async Task<ActionResult> Index(int id, string projectNo)
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public async Task<ActionResult> ProjectRequest(int projectId, string projectNo)
         {
             await RunNotifications();
-            BudgetRequestViewModel model = new BudgetRequestViewModel { ProjectId = id, ProjectNumber = projectNo };
-            var project = await _repo.GetProjectByIdAsync(id);
+            BudgetRequestViewModel model = new BudgetRequestViewModel { ProjectId = projectId, ProjectNumber = projectNo };
+            var project = await _repo.GetProjectByIdAsync(projectId);
             if(project.RemainingBudget <= 0)
             {
                 TempData["Error"] = "Insufficient funds";
@@ -39,7 +44,7 @@ namespace ProjectSS.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Index(BudgetRequestViewModel model)
+        public async Task<ActionResult> ProjectRequest(BudgetRequestViewModel model)
         {
             try
             {
