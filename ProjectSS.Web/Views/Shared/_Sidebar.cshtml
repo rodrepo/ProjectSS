@@ -68,13 +68,26 @@
                     </a>
                 </li>
             }
+            @if (Html.isActive(controller: "BudgetRequest", action: "ProjectRequest") == "active" || Html.isActive(controller: "BudgetRequest", action: "MyTransactions") == "active" || Html.isActive(controller: "BudgetRequest", action: "TransactionsSummary") == "active")
+            {
+                <li class="active">
+                    <a href="/Project">
+                        <em class="icon-chart"></em>
+                        <span>Projects</span>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="@Html.isActive(controller: "Project")">
+                    <a href="/Project">
+                        <em class="icon-chart"></em>
+                        <span>Projects</span>
+                    </a>
+                </li>
+            }
+          
 
-            <li class="@Html.isActive(controller: "Project")">
-                <a href="/Project">
-                    <em class="icon-chart"></em>
-                    <span>Projects</span>
-                </a>
-            </li>
             @if (canAccessOM || canAccessAH || canAccessTH)
             {
                 <li class="@Html.isActive(controller: "Approval")">
@@ -88,6 +101,12 @@
                     </a>
                 </li>
             }
+            <li class="@Html.isActive(controller: "BudgetRequest" , action: "Index")">
+                <a href="/BudgetRequest">
+                    <em class="icon-tag"></em>
+                    <span>Budget Request</span>
+                </a>
+            </li>
             <li class="@Html.isActive(controller: "Inventory")">
                 <a href="/Inventory">
                     <em class="icon-social-dropbox"></em>

@@ -56,6 +56,7 @@ namespace ProjectSS.Web.Models
         public int ItemId5 { get; set; }
 
         public bool ItemNameIsNull { get; set; }
+        public DateTime? CreatedDate { get; set; }
 
         // For Validation
         public string Error { get; set; }

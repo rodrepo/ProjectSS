@@ -24,9 +24,11 @@ namespace ProjectSS.Web.Controllers
             _repo = repo;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            await RunNotifications();
+            var requests = _mapper.Map<List<BudgetRequestViewModel>>(await _repo.GetBudGetRequestsByUserIdAsync(CurrentUser.Id));
+            return View(requests);
         }
 
         public async Task<ActionResult> ProjectRequest(int projectId, string projectNo)

@@ -596,6 +596,11 @@ namespace ProjectSS.Db
             return await _db.BudgetRequests.Where(p => p.ProjectId == projectid && p.CreatedBy == userId && p.IsDeleted == false).ToListAsync();
         }
 
+        public async Task<List<BudgetRequest>> GetBudGetRequestsByUserIdAsync(string userId)
+        {
+            return await _db.BudgetRequests.Where(p => p.CreatedBy == userId && p.IsDeleted == false).ToListAsync();
+        }
+
         public async Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAsync(int projectid)
         {
             return await _db.BudgetRequests.Where(p => p.ProjectId == projectid && p.IsDeleted == false).ToListAsync();
