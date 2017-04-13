@@ -112,6 +112,13 @@ namespace ProjectSS.Web.Controllers
             return RedirectToAction("ServerError", "Error");
         }
 
+        public async Task<string> GetCurrentUserRole()
+        {
+            var role = await _repo.GetRolesByUserId(CurrentUser.Id);
+            var roleName = role.Select(r => r.Name).FirstOrDefault();
+            return roleName;
+        }
+
         #region SetListItems
         protected async Task<List<SelectListItem>> GetRolesAsync(string id = null)
         {

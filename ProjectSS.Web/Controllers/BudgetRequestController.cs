@@ -181,6 +181,7 @@ namespace ProjectSS.Web.Controllers
             await RunNotifications();
             ViewBag.ProjectId = projectId;
             ViewBag.ProjectNo = projectNo;
+            ViewBag.Role = await GetCurrentUserRole();
             var requests = _mapper.Map<List<BudgetRequestViewModel>>(await _repo.GetBudGetRequestsByProjectIdAsync(projectId));
             return View(requests);
         }
