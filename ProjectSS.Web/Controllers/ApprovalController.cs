@@ -52,9 +52,11 @@ namespace ProjectSS.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> Disapproved(int id)
+        public async Task<ActionResult> Disapproved(DisapprovedViewModel model)
         {
-            await _repo.DisapprovedBudgetRequest(id);
+            var role = await _repo.GetRolesByUserId(CurrentUser.Id);
+            var roleName = GetProperRoleName(role.Select(r => r.Name).FirstOrDefault());
+            await _repo.DisapprovedBudgetRequest(model.BudgetRequestId , model.DisapprovedNote, CurrentUser.DisplayName, roleName);
             await _repo.SaveAllAsync();
             return RedirectToAction("Index");
         }

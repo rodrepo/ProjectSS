@@ -309,6 +309,27 @@ namespace ProjectSS.Web.Controllers
             return result;
         }
 
+        protected async Task<List<SelectListItem>> GetProjectsAsync()
+        {
+            var result = new List<SelectListItem>();
+            var projects = await _repo.GetProjectsAsync();
+            projects = projects.Where(p => p.RemainingBudget > 0).ToList();
+            if (projects != null)
+            {
+                foreach (var project in projects)
+                {
+                    var item = new SelectListItem
+                    {
+                        Value = project.Id.ToString(),
+                        Text = project.ProjectNo
+                    };
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
+
+
         protected async Task<List<SelectListItem>> GetContractors( int projectId, int id = 0)
         {
             var result = new List<SelectListItem>();

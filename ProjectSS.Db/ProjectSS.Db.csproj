@@ -159,6 +159,10 @@
     <Compile Include="Migrations\201704130024049_AddIsDisapprovedboolToBudgetRequest.Designer.cs">
       <DependentUpon>201704130024049_AddIsDisapprovedboolToBudgetRequest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704130429340_AddsDisapprovedInfo.cs" />
+    <Compile Include="Migrations\201704130429340_AddsDisapprovedInfo.Designer.cs">
+      <DependentUpon>201704130429340_AddsDisapprovedInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -229,6 +233,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704130024049_AddIsDisapprovedboolToBudgetRequest.resx">
       <DependentUpon>201704130024049_AddIsDisapprovedboolToBudgetRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704130429340_AddsDisapprovedInfo.resx">
+      <DependentUpon>201704130429340_AddsDisapprovedInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

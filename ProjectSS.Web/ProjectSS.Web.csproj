@@ -656,6 +656,8 @@
     <Content Include="Views\BudgetRequest\TransactionsSummary.cshtml" />
     <Content Include="Views\Approval\Index.cshtml" />
     <Content Include="Views\BudgetRequest\Index.cshtml" />
+    <Content Include="Views\Approval\_Disapproved.cshtml" />
+    <Content Include="Views\BudgetRequest\_NewBudgetRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

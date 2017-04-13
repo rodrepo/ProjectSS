@@ -28,7 +28,14 @@ namespace ProjectSS.Web.Controllers
         {
             await RunNotifications();
             var requests = _mapper.Map<List<BudgetRequestViewModel>>(await _repo.GetBudGetRequestsByUserIdAsync(CurrentUser.Id));
+            ViewBag.Projects = ViewBag.Projects ?? await GetProjectsAsync();
             return View(requests);
+        }
+
+        public async Task<ActionResult> Create(NewBudgetRequestModel model)
+        {
+            var project = await _repo.GetProjectByIdAsync(model.ProjectId);
+            return RedirectToAction("ProjectRequest", "BudgetRequest", new { projectId = model.ProjectId, projectNo = project.ProjectNo });
         }
 
         public async Task<ActionResult> ProjectRequest(int projectId, string projectNo)
@@ -311,10 +318,10 @@ namespace ProjectSS.Web.Controllers
                 }
                 if (!name.IsEmpty())
                 { 
-                    model.Item.ItemName = name;
+                    model.Item.Item = name;
                     model.Item.ItemId = itemId;
                 }
-                if (model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId) && m.ItemName == name && m.Amount == model.Item.Amount).Any() && model.Error.IsEmpty())
+                if (model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId) && m.Item == name && m.Amount == model.Item.Amount).Any() && model.Error.IsEmpty())
                 {
                     model.Error = "Request already exists";
                 }
@@ -335,6 +342,9 @@ namespace ProjectSS.Web.Controllers
             return model;
         }
         #endregion
+
+
+
         private async Task SetListItemsAsync(BudgetRequestViewModel model)
         {
             ViewBag.Contractors = ViewBag.Contractors ?? await GetContractors(model.ProjectId, model.ItemId);

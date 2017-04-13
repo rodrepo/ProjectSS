@@ -31,8 +31,12 @@ namespace ProjectSS.Web.Models
         public bool StatusRecommendingApproval { get; set; }
         public bool StatusApproval { get; set; }
         public bool StatusRelease { get; set; }
-        public bool IsDisapproved { get; set; }
 
+        //Disapproval
+        public bool IsDisapproved { get; set; }
+        public string DisapprovedBy { get; set; }
+        public string DisapproverRole { get; set; }
+        public string DisapprovedNote { get; set; }
 
         public string RequestorName { get; set; }
         public string RequestorId { get; set; }
@@ -45,6 +49,10 @@ namespace ProjectSS.Web.Models
         public BudgetRequestItemViewModel Item { get; set; }
         public List<BudgetRequestItemViewModel> Items { get; set; }
         public List<BudgetRequestItemViewModel> ShowItems { get; set; }
+
+        //Use in mapping do not use 
+        public List<BudgetRequestItemViewModel> BudgetRequestItems { get; set; }
+
         public List<int> ListOfDeleted { get; set; }
 
         public string CategoryDropdown { get; set; }
@@ -69,7 +77,7 @@ namespace ProjectSS.Web.Models
     public class BudgetRequestItemViewModel
     {
         public string Category { get; set; }
-        public string ItemName { get; set; }
+        public string Item { get; set; }
         public string Description { get; set; }
         public decimal Amount { get; set; }
         public int ItemId { get; set; }
@@ -77,6 +85,21 @@ namespace ProjectSS.Web.Models
         public int TempId { get; set; }
         public int Id { get; set; }
         public int BudgetRequestId { get; set; }
+    }
+
+    public class DisapprovedViewModel
+    {
+        public int BudgetRequestId { get; set; }
+        public bool IsDisapproved { get; set; }
+        public string DisapprovedBy { get; set; }
+        public string DisapproverRole { get; set; }
+        public string DisapprovedNote { get; set; }
+    }
+
+    public class NewBudgetRequestModel
+    {
+        public int ProjectId { get; set; }
+        public string ProjectNumber { get; set; }
     }
 
 }

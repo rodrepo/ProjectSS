@@ -28,14 +28,14 @@
 </h3>
 
 <div class="row">
-    @using (Html.BeginForm("Index", "BudgetRequest", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("ProjectRequest", "BudgetRequest", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
         for (int i = 0; i < Model.Items.Count; i++)
         {
             @Html.HiddenFor(model => Model.Items[i].Category)
-            @Html.HiddenFor(model => Model.Items[i].ItemName)
+            @Html.HiddenFor(model => Model.Items[i].Item)
             @Html.HiddenFor(model => Model.Items[i].Description)
             @Html.HiddenFor(model => Model.Items[i].Amount)
             @Html.HiddenFor(model => Model.Items[i].ItemId)
@@ -93,7 +93,7 @@
                                 {
                                     <tr>
                                         <td>@item.Category</td>
-                                        <td>@item.ItemName</td>
+                                        <td>@item.Item</td>
                                         <td>@item.Description</td>
                                         <td>@item.Amount.ToString("P" + " " + "#,0.00")</td>
                                         <td>

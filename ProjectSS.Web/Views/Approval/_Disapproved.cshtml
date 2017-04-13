@@ -1,0 +1,22 @@
+﻿@model ProjectSS.Web.Models.DisapprovedViewModel
+@{
+    ViewBag.Title = "_Create";
+}
+@Html.HiddenFor(m => m.BudgetRequestId)
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 id="myModalLabelSmall" class="modal-title">Disapproval</h4>
+    </div>
+    <div class="modal-body row" style="margin:10px">
+        <label>Reason</label>
+        @Html.TextAreaFor(model => model.DisapprovedNote, new { @class = "form-control", @row = "6", @type = "text", @placeholder = "Please enter reason for disapproval", @required = "required" })
+        <br />
+        <a style="color:red">Are you sure you want to disapprove this request?</a>
+        <br />
+        &nbsp;
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-danger">Yes</button>
+            <a href="" type="button" class="btn btn-info" data-dismiss="modal">No</a>
+        </div>
+    </div>
+</div>

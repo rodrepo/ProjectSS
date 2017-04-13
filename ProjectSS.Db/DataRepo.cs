@@ -784,10 +784,13 @@ namespace ProjectSS.Db
             return keys;
         }
 
-        public async Task DisapprovedBudgetRequest(int id)
+        public async Task DisapprovedBudgetRequest(int id, string note, string userName, string userRole)
         {
             var request = await GetBudgetRequestByIdAsync(id);
             request.IsDisapproved = true;
+            request.DisapprovedNote = note;
+            request.DisapprovedBy = userName;
+            request.DisapproverRole = userRole;
             _db.Entry(request).State = EntityState.Modified;
         }
         #endregion
