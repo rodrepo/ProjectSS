@@ -26,11 +26,11 @@ namespace ProjectSS.Web.Controllers
             var user = CurrentUser;
             var role = await _repo.GetRolesByUserId(user.Id);
             List<BudgetRequestViewModel> request = new List<BudgetRequestViewModel>();
-            if(role.Select(r => r.Name).FirstOrDefault() == "OM")
+            if (role.Select(r => r.Name).FirstOrDefault() == "OM")
             {
                 request = _mapper.Map<List<BudgetRequestViewModel>>(await _repo.GetBudGetRequestsForOMAsync());
             }
-            else if(role.Select(r => r.Name).FirstOrDefault() == "TH")
+            else if (role.Select(r => r.Name).FirstOrDefault() == "TH")
             {
                 request = _mapper.Map<List<BudgetRequestViewModel>>(await _repo.GetBudGetRequestsForTHAsync(user.Id));
 
@@ -48,6 +48,13 @@ namespace ProjectSS.Web.Controllers
             var role = await _repo.GetRolesByUserId(CurrentUser.Id);
             var roleName = role.Select(r => r.Name).FirstOrDefault();
             await _repo.ApprovedBudgetRequest(id, roleName);
+            await _repo.SaveAllAsync();
+            return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> Disapproved(int id)
+        {
+            await _repo.DisapprovedBudgetRequest(id);
             await _repo.SaveAllAsync();
             return RedirectToAction("Index");
         }

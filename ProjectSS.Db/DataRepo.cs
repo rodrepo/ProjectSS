@@ -603,7 +603,7 @@ namespace ProjectSS.Db
 
         public async Task<List<BudgetRequest>> GetBudGetRequestsForOMAsync()
         {
-            return await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == false && p.StatusRelease == false).ToListAsync();
+            return await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == false && p.StatusRelease == false && p.IsDisapproved == false).ToListAsync();
         }
 
         public async Task<List<BudgetRequest>> GetBudGetRequestsForTHAsync(string userId)
@@ -611,7 +611,7 @@ namespace ProjectSS.Db
             var result = (from pro in _db.Proposals.Where(p => p.THId == userId)
                           join prj in _db.Projects on pro.Id equals prj.ProposalId
                           join bud in _db.BudgetRequests on prj.Id equals bud.ProjectId
-                          where bud.StatusRecommendingApproval == false && bud.StatusApproval == false && bud.StatusRelease == false
+                          where bud.StatusRecommendingApproval == false && bud.StatusApproval == false && bud.StatusRelease == false && bud.IsDisapproved == false
                           select bud
                           ).ToListAsync();
 
@@ -620,7 +620,7 @@ namespace ProjectSS.Db
 
         public async Task<List<BudgetRequest>> GetBudGetRequestsForAHAsync()
         {
-            return await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == true && p.StatusRelease == false).ToListAsync();
+            return await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == true && p.StatusRelease == false && p.IsDisapproved == false).ToListAsync();
         }
 
         public async Task<BudgetRequest> GetBudgetRequestByIdAsync(int id)
@@ -777,6 +777,13 @@ namespace ProjectSS.Db
                 keys.Number = 1;
             }
             return keys;
+        }
+
+        public async Task DisapprovedBudgetRequest(int id)
+        {
+            var request = await GetBudgetRequestByIdAsync(id);
+            request.IsDisapproved = true;
+            _db.Entry(request).State = EntityState.Modified;
         }
         #endregion
     }

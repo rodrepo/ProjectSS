@@ -134,6 +134,8 @@ namespace ProjectSS.Db.Contracts
         Task<List<BudgetRequest>> GetBudGetRequestsForTHAsync(string userId);
         Task<int> GetToBeApprovedRequestsCountAsync(string role, string userId);
         Task ApprovedBudgetRequest(int id, string role);
+        Task DisapprovedBudgetRequest(int id);
+
         #endregion
     }
 }

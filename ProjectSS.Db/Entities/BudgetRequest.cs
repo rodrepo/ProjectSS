@@ -18,6 +18,7 @@ namespace ProjectSS.Db.Entities
         public bool StatusRecommendingApproval { get; set; }
         public bool StatusApproval { get; set; }
         public bool StatusRelease { get; set; }
+        public bool IsDisapproved { get; set; }
 
         public string RequestorName { get; set; }
         public string RequestorId { get; set; }
