@@ -31,6 +31,7 @@
                             <th>No.</th>
                             <th>Requestor</th>
                             <th>Date Needed</th>
+                            <th>Date Requested</th>
                             <th>Status</th>
                             @if (canAccess == "OM")
                             {
@@ -47,6 +48,7 @@
                                 <td>@item.RequestNumber</td>
                                 <td>@item.RequestorName</td>
                                 <td>@item.DateNeeded.Value.ToShortDateString()</td>
+                                <td>@item.CreatedDate.Value.ToShortDateString()</td>
                                 <td>
                                     @if (item.IsDisapproved == false)
                                     {

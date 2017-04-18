@@ -33,6 +33,8 @@ namespace ProjectSS.Web.Controllers.Admin
         public async Task<ActionResult> Show(int id)
         {
             await RunNotifications();
+            var role = await _repo.GetRolesByUserId(CurrentUser.Id);
+            ViewBag.Role = role.Select(r => r.Name).FirstOrDefault();
             var model = _mapper.Map<ProjectViewModel>(await _repo.GetProjectByIdAsync(id));
             var proposal = await _repo.GetProposalByIdAsync(model.ProposalId);
             model = MapProposal(proposal, model);

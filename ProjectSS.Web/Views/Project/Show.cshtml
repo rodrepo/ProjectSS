@@ -24,7 +24,7 @@
         <div class="panel b">
             <div class="panel-heading">
                 <div class="pull-right mt">
-                    <div class="label label-info">Status</div>
+                    <div class="label label-info">@*Status*@</div>
                 </div>
                 <h4 class="mv">
                     <span>Assigned</span>
@@ -98,7 +98,10 @@
         <div class="panel b">
             <div class="panel-heading">
                 <div class="pull-right mt">
-                    <div class="label label-info">Show value</div>
+                    @if (ViewBag.Role == "OM")
+                    {
+                        <a class="btn-sm btn-info" href="@Url.Action("Manage", "Proposal", new { id = Model.ProposalId })">Details</a>
+                    }
                 </div>
                 <h4 class="mv">
                     <span>Budget status</span>
