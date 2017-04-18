@@ -472,6 +472,27 @@ namespace ProjectSS.Web.Controllers
             {
                 ViewBag.Count = await _repo.GetToBeApprovedRequestsCountAsync(role, userId);
             }
+            var approvedNotification = await _repo.GetBudGetRequestsApprovedNotificationByUserIdAsync(userId);
+            if(approvedNotification.Count > 0)
+            {
+                foreach(var request in approvedNotification)
+                {
+                    if(request.StatusApproval == true && request.StatusRecommendingApproval == false && request.StatusRelease == false)
+                    {
+                        TempData["Success"] = "Your request is been approved by the Technicial Head, Request will be moved to recommending approval";
+                    }
+                    else if (request.StatusApproval == true && request.StatusRecommendingApproval == true && request.StatusRelease == false)
+                    {
+                        TempData["Success"] = "Your request is been approved by the Operations Manager, Request will be moved to release approval";
+                    }
+                    else if (request.StatusApproval == true && request.StatusRecommendingApproval == true && request.StatusRelease == true)
+                    {
+                        TempData["Success"] = "Your request is been approved by the Admin Head, Budget request is now release";
+                    }
+                    await _repo.RequestorNotified(request.Id);
+                }
+                await _repo.SaveAllAsync();
+            }
         }
 
         public string GetProperRoleName(string roleName)

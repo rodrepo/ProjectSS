@@ -502,5 +502,20 @@
     @Scripts.Render("~/bundles/jvectormap")
     @Scripts.Render("~/bundles/demoFlot")
     @Scripts.Render("~/bundles/demoVectormap")
-
+    <script type="text/javascript">
+            $(document).ready(function () {
+                if ('@TempData["Error"]' != "") {
+                    $.notify('@TempData["Error"]', "danger");
+                }
+                if ('@TempData["Success"]' != "") {
+                    $.notify('@TempData["Success"]', "success");
+                }
+                if ('@TempData["Info"]' != "") {
+                    $.notify('@TempData["Info"]', "info");
+                }
+                if ('@TempData["Warning"]' != "") {
+                    $.notify('@TempData["Warning"]', "warning");
+                }
+            });
+    </script>
 }

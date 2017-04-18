@@ -28,6 +28,9 @@ namespace ProjectSS.Db.Entities
         public string RequestorName { get; set; }
         public string RequestorId { get; set; }
 
+        //Notification
+        public bool NotifyRequestor { get; set; }
+
         public int ProjectId { get; set; }
         public string ProjectNumber { get; set; }
         public virtual Project Project { get; set; }

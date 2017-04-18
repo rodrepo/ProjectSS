@@ -129,6 +129,7 @@ namespace ProjectSS.Db.Contracts
         Task<BudgetRequest> AddBudGetRequest(BudgetRequest budgetRequest, string userId);
         Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAndUserIdAsync(int projectId, string userId);
         Task<List<BudgetRequest>>GetBudGetRequestsByUserIdAsync(string id);
+        Task<List<BudgetRequest>> GetBudGetRequestsApprovedNotificationByUserIdAsync(string id);
         Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAsync(int projectId);
         Task<List<BudgetRequest>> GetBudGetRequestsForOMAsync();
         Task<List<BudgetRequest>> GetBudGetRequestsForAHAsync();
@@ -136,7 +137,8 @@ namespace ProjectSS.Db.Contracts
         Task<int> GetToBeApprovedRequestsCountAsync(string role, string userId);
         Task ApprovedBudgetRequest(int id, string role);
         Task DisapprovedBudgetRequest(int id, string note, string userName , string userRole);
-
+        //Notification
+        Task RequestorNotified(int id);
         #endregion
     }
 }

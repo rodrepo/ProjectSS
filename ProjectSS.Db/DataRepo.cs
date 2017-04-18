@@ -600,6 +600,11 @@ namespace ProjectSS.Db
         {
             return await _db.BudgetRequests.Where(p => p.CreatedBy == userId && p.IsDeleted == false).ToListAsync();
         }
+        
+        public async Task<List<BudgetRequest>> GetBudGetRequestsApprovedNotificationByUserIdAsync(string userId)
+        {
+            return await _db.BudgetRequests.Where(p => p.CreatedBy == userId && p.IsDeleted == false && p.NotifyRequestor == true).ToListAsync();
+        }
 
         public async Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAsync(int projectid)
         {
@@ -660,16 +665,26 @@ namespace ProjectSS.Db
             if(role == "OM")
             {
                 request.StatusApproval = true;
+                request.NotifyRequestor = true;
             }
             else if(role == "TH")
             {
                 request.StatusRecommendingApproval = true;
+                request.NotifyRequestor = true;
             }
             else if(role == "AH")
             {
                 request.StatusRelease = true;
+                request.NotifyRequestor = true;
                 await ProcessApprovedRequest(request);
             }
+            _db.Entry(request).State = EntityState.Modified;
+        }
+        
+        public async Task RequestorNotified(int id)
+        {
+            var request = await GetBudgetRequestByIdAsync(id);
+            request.NotifyRequestor = false;
             _db.Entry(request).State = EntityState.Modified;
         }
 
