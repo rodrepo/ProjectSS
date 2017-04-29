@@ -192,6 +192,72 @@ namespace ProjectSS.Web.Controllers.Admin
             }
         }
 
+        [HttpPost]
+        public async Task<ActionResult> ActivateAndDeactivate(string id, bool isActivated)
+        {
+            try
+            {
+                await RunNotifications();
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                //Get User
+                var user = await _repo.GetUserByIdAsync(id);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+                else
+                {
+                    //Map user to model
+                    var model = _mapper.Map<UserViewModel>(user);
+                    var roles = _mapper.Map<List<RoleViewModel>>(await _repo.GetRolesByUserId(user.Id));
+                    model.RoleId = roles.FirstOrDefault().Id;
+                    if (model.Id == CurrentUser.Id)
+                    {
+                        model.IsCurrentUser = true;
+                    }
+                    //Set if its for Deactivation or Activation
+                    if (isActivated == true)
+                    {
+                        model.IsActive = true;
+                    }
+                    else
+                    {
+                        model.IsActive = false;
+                    }
+
+                    if (roles != null)
+                    {
+                        //Remove all roles in user
+                        foreach (var ro in roles)
+                        {
+                            await UserManager.RemoveFromRolesAsync(model.Id, ro.Name);
+                        }
+                    }
+                    var role = _repo.GetRoleById(model.RoleId);
+                    var resultUser = await _repo.UpdateUserAsync(_mapper.Map<User>(model), UserManager, role.Name.ToString(), GetUserId());
+                    await _repo.SaveAllAsync();
+                    if (isActivated == true)
+                    {
+                        TempData["Success"] = string.Format("User successfully Activated");
+                    }
+                    else
+                    {
+                        TempData["Success"] = string.Format("User successfully Deactivated");
+                    }
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
+
         [HttpGet]
         public async Task<ActionResult> Delete(string id)
         {
