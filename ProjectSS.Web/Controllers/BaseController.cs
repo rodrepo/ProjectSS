@@ -516,7 +516,7 @@ namespace ProjectSS.Web.Controllers
             }
             else if (roleName == "TS")
             {
-                name = "Technical Sepecialist";
+                name = "Technical Specialist";
             }
             return name;
         }
