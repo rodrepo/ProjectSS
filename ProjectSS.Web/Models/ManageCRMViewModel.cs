@@ -23,6 +23,7 @@ namespace ProjectSS.Web.Models
 
     public class CRMCallHistoryModel
     {
+        public DateTime? CreatedDateConverted { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string Remarks { get; set; }
         public string Caller { get; set; }
@@ -32,16 +33,17 @@ namespace ProjectSS.Web.Models
 
         public string Date
         {
-            get { return CreatedDate.Value.ToShortDateString(); }
+            get { return CreatedDateConverted.Value.ToShortDateString(); }
         }
         public string Time
         {
-            get { return CreatedDate.Value.ToShortTimeString(); }
+            get { return CreatedDateConverted.Value.ToShortTimeString(); }
         }
     }
 
     public class CRMRevisionHistoryModel
     {
+        public DateTime? CreatedDateConverted { get; set; }
         public DateTime? CreatedDate { get; set; }
 
         public string Remarks { get; set; }
@@ -52,16 +54,17 @@ namespace ProjectSS.Web.Models
 
         public string Date
         {
-            get { return CreatedDate.Value.ToShortDateString(); }
+            get { return CreatedDateConverted.Value.ToShortDateString(); }
         }
         public string Time
         {
-            get { return CreatedDate.Value.ToShortTimeString(); }
+            get { return CreatedDateConverted.Value.ToShortTimeString(); }
         }
     }
 
     public class CRMEmailHistoryModel
     {
+        public DateTime? CreatedDateConverted { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string Remarks { get; set; }
         public string Sender { get; set; }
@@ -71,11 +74,11 @@ namespace ProjectSS.Web.Models
 
         public string Date
         {
-            get { return CreatedDate.Value.ToShortDateString(); }
+            get { return CreatedDateConverted.Value.ToShortDateString(); }
         }
         public string Time
         {
-            get { return CreatedDate.Value.ToShortTimeString(); }
+            get { return CreatedDateConverted.Value.ToShortTimeString(); }
         }
     }
 

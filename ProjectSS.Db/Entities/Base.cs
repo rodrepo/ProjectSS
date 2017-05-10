@@ -21,6 +21,31 @@ namespace ProjectSS.Db.Entities
         public string ModifiedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
+
+        public DateTime? CreatedDateConverted
+        {
+            get
+            {
+                return ConvertUTC(CreatedDate);
+            }
+        }
+        public DateTime? ModifiedDateConverted
+        {
+            get
+            {
+                return ConvertUTC(ModifiedDate);
+            }
+        }
+
+        private DateTime? ConvertUTC(DateTime? date)
+        {
+            if (date != null)
+            {
+                TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById("China Standard Time");
+                date = TimeZoneInfo.ConvertTimeFromUtc(date.Value, timeZone);
+            }
+            return date;
+        }
         #endregion
     }
 }
