@@ -106,10 +106,9 @@
                         <button type="button" data-dismiss="modal" aria-label="Close" class="close">
                             <span aria-hidden="true"> </span>
                         </button>
-                        <h4 id="myModalLabelSmall" class="modal-title">Remark</h4>
+                        <h4 id="myModalLabelSmall" class="modal-title">Email</h4>
                     </div>
                     <div class="modal-body">
-                        <h5 style="color:red">Warning : The time and date will be base on your computer time date please confirm time and date before submitting entry</h5>
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true)
                         @Html.Partial("_EmailEntry", new CRMEmailHistoryModel { CRMId = Model.CRM.Id })
@@ -132,10 +131,9 @@
                         <button type="button" data-dismiss="modal" aria-label="Close" class="close">
                             <span aria-hidden="true"> </span>
                         </button>
-                        <h4 id="myModalLabelSmall" class="modal-title">Remark</h4>
+                        <h4 id="myModalLabelSmall" class="modal-title">Call</h4>
                     </div>
                     <div class="modal-body">
-                        <h5 style="color:red">Warning : The time and date will be base on your computer time date please confirm time and date before submitting entry</h5>
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true)
                         @Html.Partial("_CallEntry", new CRMCallHistoryModel { CRMId = Model.CRM.Id })
