@@ -130,15 +130,15 @@
                 </div>
                 <div class="form-group col-sm-4">
                     <label>Business Developement</label>
-                    @Html.DropDownListFor(model => model.BDId, (List<SelectListItem>)ViewBag.BDs, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.BDId, (List<SelectListItem>)ViewBag.BDs, new { @class = "form-control", @disabled = "disabled" })
                 </div>
                 <div class="form-group col-sm-4">
                     <label>Technical Head</label>
-                    @Html.DropDownListFor(model => model.THId, (List<SelectListItem>)ViewBag.THs, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.THId, (List<SelectListItem>)ViewBag.THs, new { @class = "form-control", @disabled = "disabled" })
                 </div>
                 <div class="form-group col-sm-4" id="staff">
                     <label>Technical Specialist</label>
-                    @Html.DropDownListFor(model => model.TSId, (List<SelectListItem>)ViewBag.TSs, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.TSId, (List<SelectListItem>)ViewBag.TSs, new { @class = "form-control", @disabled = "disabled" })
                 </div>
             </form>
         </div>
