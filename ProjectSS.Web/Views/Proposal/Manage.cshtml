@@ -104,9 +104,19 @@
                     @Html.ValidationMessageFor(model => model.ContactPersonPosition, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-sm-3">
-                    <label>Industry</label>
-                    @Html.TextBoxFor(model => model.Industry, new { @class = "form-control", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.Industry, "", new { @class = "text-danger" })
+                    <label>Project Type</label>
+                    <select class="form-control" id="ProjectType" name="ProjectType" required="required">
+                        <option value="">Select Factor</option>
+                        <option @(Model.ProjectType == "Air/Water Assessment and Monitoring" ? "selected" : " ") value="Air/Water Assessment and Monitoring">Air/Water Assessment and Monitoring</option>
+                        <option @(Model.ProjectType == "Ecological Assessment and Due Diligence" ? "selected" : " ") value="Ecological Assessment and Due Diligence">Ecological Assessment and Due Diligence</option>
+                        <option @(Model.ProjectType == "Impact Assessment and Due Diligence" ? "selected" : " ") value="Impact Assessment and Due Diligence">Impact Assessment and Due Diligence</option>
+                        <option @(Model.ProjectType == "Compliance Management" ? "selected" : " ") value="Compliance Management">Compliance Management</option>
+                        <option @(Model.ProjectType == "ESG Management" ? "selected" : " ") value="ESG Management">ESG Management</option>
+                        <option @(Model.ProjectType == "Pollution Abatement" ? "selected" : " ") value="Pollution Abatement">Pollution Abatement</option>
+                        <option @(Model.ProjectType == "Special Studies" ? "selected" : " ") value="Special Studies">Special Studies</option>
+                        <option @(Model.ProjectType == "Land Surveys and Mapping" ? "selected" : " ") value="Land Surveys and Mapping">Land Surveys and Mapping</option>
+                        <option @(Model.ProjectType == "Other Services" ? "selected" : " ") value="Other Services">Other Services</option>
+                    </select>
                 </div>
                 <div class="form-group col-sm-3">
                     <label>Location</label>

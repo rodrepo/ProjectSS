@@ -303,6 +303,7 @@ namespace ProjectSS.Db
                 latestProposal.RevisionNumber = "REV-1";
                 latestProposal.RVNumber = 1;
             }
+            latestProposal.ProjectType = proposal.ProjectType;
             latestProposal.Title = proposal.Title;
             latestProposal.Cost = proposal.Cost;
             latestProposal.Description = proposal.Description;

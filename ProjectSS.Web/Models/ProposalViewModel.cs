@@ -29,6 +29,7 @@ namespace ProjectSS.Web.Models
         public decimal Amount { get; set; }
         public decimal Cost { get; set; }
         public string SCost { get; set; }
+        public string ProjectType { get; set; }
 
         public decimal MangementFeeBilledToClient { get; set; }
         public string BDId { get; set; }
