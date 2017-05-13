@@ -325,12 +325,12 @@ namespace ProjectSS.Db
             {
                 int multi = 1;
                 multi += latestProposal.PPNumber;
-                keys.Reference = "PRP-" + multi.ToString();
+                keys.Reference = "PROPOSAL No. " + multi.ToString();
                 keys.Number = multi;
             }
             else
             {
-                keys.Reference = "PRP-1";
+                keys.Reference = "PROPOSAL No. 1";
                 keys.Number = 1;
             }
             return keys;

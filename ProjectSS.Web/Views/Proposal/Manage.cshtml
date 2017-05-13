@@ -8,10 +8,10 @@
 }
 <h3>
     @Model.ProposalNumber
-    @if (!Model.RevisionNumber.IsEmpty())
+    @*@if (!Model.RevisionNumber.IsEmpty())
     {
         @Model.RevisionNumber
-    }
+    }*@
     @if (Model.Status != "Approved")
     {
         <div class="pull-right">
