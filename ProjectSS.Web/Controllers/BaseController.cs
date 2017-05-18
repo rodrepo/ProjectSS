@@ -320,7 +320,7 @@ namespace ProjectSS.Web.Controllers
         {
             var result = new List<SelectListItem>();
             var projects = await _repo.GetProjectsAsync();
-            projects = projects.Where(p => p.RemainingBudget > 0).ToList();
+            projects = projects.Where(p => p.RemainingBudget > 0 && p.IsClosed == false).ToList();
             if (projects != null)
             {
                 foreach (var project in projects)

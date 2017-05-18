@@ -22,11 +22,10 @@
                     <thead>
                         <tr>
                             <th class="col-sm-2">No.</th>
-                            <th class="col-sm-3">Title</th>
-                            <th class="col-sm-4">Contact Person</th>
-                            <th class="col-sm-2">Budget status</th>
-                            @*<th>Company</th>
-                            <th>Location</th>*@
+                            <th class="col-sm-2">Title</th>
+                            <th class="col-sm-2">Contact Person</th>
+                            <th class="col-sm-2">Project status</th>
+                            <th class="col-sm-3">Budget status</th>
                             <th class="col-sm-1">Action</th>
                         </tr>
                     </thead>
@@ -39,8 +38,15 @@
                                     <td>@u.ProjectNo</td>
                                     <td>@u.ProposalTitle</td>
                                     <td>@u.CRMName</td>
-                                    @*<td>@u.ProposalModel.CompanyName</td>
-                                    <td>@u.ProposalModel.Location</td>*@
+                                    @if (u.IsClosed)
+                                    {
+                                        <td style="color:red">Closed</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="color:green">Active</td>
+
+                                    }
                                     <td>
                                         <div class="progress progress-striped progress-xs" style="width:60%">
                                             <div role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-@u.Color progress-@u.ProgressRoundOf">

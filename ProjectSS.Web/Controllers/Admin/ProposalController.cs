@@ -83,7 +83,7 @@ namespace ProjectSS.Web.Controllers.Admin
                 proposal.RevisionNumber = result.RevisionNumber;
                 proposal.RVNumber = result.RVNumber;
             }
-            if(User.IsInRole(RoleType.OM.ToString()) || User.IsInRole(RoleType.BD.ToString()) && CurrentUser.Id == proposal.CreatedBy || CurrentUser.Id == proposal.BDId)
+            if (User.IsInRole(RoleType.OM.ToString()) || User.IsInRole(RoleType.BD.ToString()) && CurrentUser.Id == proposal.CreatedBy || CurrentUser.Id == proposal.BDId)
             {
                 proposal.CanModify = true;
             }
@@ -403,7 +403,7 @@ namespace ProjectSS.Web.Controllers.Admin
             if (ModelState.IsValid)
             {
                 model.TotalHours = model.Hours * model.Months;
-                model.Budget = model.Rate *  model.TotalHours;
+                model.Budget = model.Rate * model.TotalHours;
                 model.RemainingBudget = model.Rate * model.TotalHours;
 
                 _repo.AddProposalEquipment(_mapper.Map<ProposalEquipment>(model), CurrentUser.Id);
@@ -753,7 +753,6 @@ namespace ProjectSS.Web.Controllers.Admin
                         return RedirectToAction("Manage", new { @id = id });
                     }
                 }
-
                 else
                 {
                     TempData["Error"] = "Access denied";

@@ -44,6 +44,21 @@ namespace ProjectSS.Web.Controllers.Admin
             return View(model);
         }
 
+        public async Task<ActionResult>CloseProject(int id)
+        {
+            await _repo.CloseProject(id);
+            if(await _repo.SaveAllAsync())
+            {
+                TempData["Success"] = string.Format("Project has been successfully closed");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["Error"] = "Unable to update due to some internal issues.";
+                return RedirectToAction("Show", new { @id = id });
+            }
+        }
+
         #region Helper
         private ProjectViewModel MapProposal(Proposal proposal, ProjectViewModel model)
         {

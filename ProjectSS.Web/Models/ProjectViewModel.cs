@@ -20,6 +20,8 @@ namespace ProjectSS.Web.Models
         public string ProjectNo { get; set; }
         public int PJNumber { get; set; }
 
+        public bool IsClosed { get; set; }
+
         public int ProposalId { get; set; }
         public int CRMId { get; set; }
 

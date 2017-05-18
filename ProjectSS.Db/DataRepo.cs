@@ -561,6 +561,13 @@ namespace ProjectSS.Db
             return await _db.Projects.Where(p => p.Id == id).FirstOrDefaultAsync();
         }
 
+        public async Task CloseProject(int id)
+        {
+            var project = await GetProjectByIdAsync(id);
+            project.IsClosed = true;
+            _db.Entry(project).State = EntityState.Modified;
+        }
+
         public async Task<Project> AddProjectAsync(Project project, string userId)
         {
             var key = await GenerateProjectNumber();

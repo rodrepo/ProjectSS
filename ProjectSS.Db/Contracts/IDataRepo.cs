@@ -111,6 +111,8 @@ namespace ProjectSS.Db.Contracts
         Task<Project> AddProjectAsync(Project project, string userId);
         Task<List<Project>> GetProjectsAsync();
         Task<Project> GetProjectByIdAsync(int id);
+        Task CloseProject(int id);
+
 
         #endregion
 

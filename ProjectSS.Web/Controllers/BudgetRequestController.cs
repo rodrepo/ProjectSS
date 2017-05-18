@@ -48,6 +48,11 @@ namespace ProjectSS.Web.Controllers
                 TempData["Error"] = "Insufficient funds";
                 return RedirectToAction("Show", "Project", new { id = model.ProjectId });
             }
+            if (project.IsClosed == true)
+            {
+                TempData["Error"] = "Project already closed";
+                return RedirectToAction("Show", "Project", new { id = model.ProjectId });
+            }
             await SetListItemsAsync(model);
             return View(model);
         }
