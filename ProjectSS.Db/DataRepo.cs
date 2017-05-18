@@ -581,12 +581,12 @@ namespace ProjectSS.Db
             {
                 int multi = 1;
                 multi += latestProject.PJNumber;
-                keys.Reference = "PJ-" + multi.ToString();
+                keys.Reference = "PROJECT No. " + multi.ToString();
                 keys.Number = multi;
             }
             else
             {
-                keys.Reference = "PJ-1";
+                keys.Reference = "PROJECT No. 1";
                 keys.Number = 1;
             }
             return keys;
