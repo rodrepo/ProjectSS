@@ -621,7 +621,9 @@ namespace ProjectSS.Db
 
         public async Task<List<BudgetRequest>> GetBudGetRequestsForOMAsync()
         {
-            return await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == false && p.StatusRelease == false && p.IsDisapproved == false).ToListAsync();
+            var project = await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == false && p.StatusRelease == false && p.IsDisapproved == false).ToListAsync();
+            project.AddRange(await GetAdminBudgetRequestByIdAsync());
+            return project;
         }
 
         public async Task<List<BudgetRequest>> GetBudGetRequestsForTHAsync(string userId)
@@ -644,6 +646,11 @@ namespace ProjectSS.Db
         public async Task<BudgetRequest> GetBudgetRequestByIdAsync(int id)
         {
             return await _db.BudgetRequests.Where(b => b.Id == id && b.IsDeleted == false).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<BudgetRequest>> GetAdminBudgetRequestByIdAsync()
+        {
+            return await _db.BudgetRequests.Where(b => b.ProjectNumber == "ADMIN" && b.IsDeleted == false && b.StatusRecommendingApproval == false && b.StatusApproval == false && b.StatusRelease == false && b.IsDisapproved == false).ToListAsync();
         }
 
         public async Task<int> GetToBeApprovedRequestsCountAsync(string role, string userId)
@@ -672,6 +679,14 @@ namespace ProjectSS.Db
             var request = await GetBudgetRequestByIdAsync(id);
             if(role == "OM")
             {
+                if(request.ProjectNumber == "ADMIN")
+                {
+                    request.StatusRecommendingApproval = true;
+                    request.StatusApproval = true;
+                    request.StatusRelease = true;
+                    request.NotifyRequestor = true;
+                }
+
                 request.StatusApproval = true;
                 request.NotifyRequestor = true;
             }

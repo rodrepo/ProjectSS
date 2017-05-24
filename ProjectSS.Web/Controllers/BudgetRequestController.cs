@@ -57,6 +57,7 @@ namespace ProjectSS.Web.Controllers
             try
             {
                 // Admin Request
+                model.RequestorName = CurrentUser.DisplayName;
                 await _repo.AddBudGetRequest(_mapper.Map<BudgetRequest>(model), CurrentUser.Id);
                 if (await _repo.SaveAllAsync())
                 {
