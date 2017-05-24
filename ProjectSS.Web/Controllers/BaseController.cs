@@ -316,6 +316,7 @@ namespace ProjectSS.Web.Controllers
             return result;
         }
 
+        //Use for Budget Request
         protected async Task<List<SelectListItem>> GetProjectsAsync()
         {
             var result = new List<SelectListItem>();
@@ -323,6 +324,7 @@ namespace ProjectSS.Web.Controllers
             projects = projects.Where(p => p.RemainingBudget > 0 && p.IsClosed == false).ToList();
             if (projects != null)
             {
+                result.Add(new SelectListItem { Value = "0", Text = "ADMIN" });
                 foreach (var project in projects)
                 {
                     var item = new SelectListItem

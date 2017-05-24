@@ -175,6 +175,10 @@
     <Compile Include="Migrations\201705181044043_AddsIsClosedToProject.Designer.cs">
       <DependentUpon>201705181044043_AddsIsClosedToProject.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705241152392_MakeProjectIDNullableOnBudgetRequest.cs" />
+    <Compile Include="Migrations\201705241152392_MakeProjectIDNullableOnBudgetRequest.Designer.cs">
+      <DependentUpon>201705241152392_MakeProjectIDNullableOnBudgetRequest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -257,6 +261,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705181044043_AddsIsClosedToProject.resx">
       <DependentUpon>201705181044043_AddsIsClosedToProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705241152392_MakeProjectIDNullableOnBudgetRequest.resx">
+      <DependentUpon>201705241152392_MakeProjectIDNullableOnBudgetRequest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

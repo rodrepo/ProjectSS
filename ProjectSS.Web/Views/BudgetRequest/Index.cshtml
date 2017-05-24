@@ -74,18 +74,30 @@
                                     <div class="btn-group">
                                         <button type="button" data-toggle="dropdown" class="btn btn-primary btn-xs"><i class="icon-menu"></i></button>
                                         <ul role="menu" class="dropdown-menu">
-                                            <li>
-                                                <a href="@Url.Action("Show", "Project", new { id = item.ProjectId })">Go to project</a>
-                                            </li>
+                                            @if (item.ProjectNumber != "ADMIN")
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Show", "Project", new { id = item.ProjectId })">Go to project</a>
+                                                </li>
+                                            }
                                             @if (item.IsDisapproved == true)
                                             {
                                                 <li>
                                                     <a href="#" data-toggle="modal" data-target="#disapprovedinfo-@item.Id">Disapproval details</a>
                                                 </li>
                                             }
-                                            <li>
-                                                <a href="#" data-toggle="modal" data-target="#details-@item.Id">Details</a>
-                                            </li>
+                                            @if (item.ProjectNumber == "ADMIN")
+                                            {
+                                                <li>
+                                                    <a href="#" data-toggle="modal" data-target="#admindetails-@item.Id">Details</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a href="#" data-toggle="modal" data-target="#details-@item.Id">Details</a>
+                                                </li>
+                                            }
                                         </ul>
                                     </div>
                                 </td>
@@ -161,6 +173,40 @@
                                 <p><b>Total: <i>@i.BudgetRequestItems.Sum(s => s.Amount).ToString("P" + " " + "#,0.00")</i></b></p>
                             </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="" type="button" class="btn btn-info" data-dismiss="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="admindetails-@i.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 id="myModalLabelSmall" class="modal-title">Request details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Pupose</th>
+                                    <th>Needed Date</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@i.Purpose</td>
+                                    <td>@i.DateNeeded</td>
+                                    <td>@i.TotalAmount.ToString("P" + " " + "#,0.00")</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                     </div>
                     <div class="modal-footer">
                         <a href="" type="button" class="btn btn-info" data-dismiss="modal">Close</a>

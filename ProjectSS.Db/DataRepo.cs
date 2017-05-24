@@ -699,7 +699,7 @@ namespace ProjectSS.Db
         private async Task ProcessApprovedRequest(BudgetRequest request)
         {
 
-            var project = await GetProjectByIdAsync(request.ProjectId);
+            var project = await GetProjectByIdAsync(request.ProjectId.Value);
             project.RemainingBudget = project.RemainingBudget - request.TotalAmount;
             if(request.BudgetRequestItems.Count > 0)
             {
@@ -778,6 +778,10 @@ namespace ProjectSS.Db
 
         public async Task<BudgetRequest> AddBudGetRequest(BudgetRequest budgetRequest, string userId)
         {
+            if(budgetRequest.ProjectNumber == "ADMIN")
+            {
+                budgetRequest.ProjectId = null;
+            }
             var key = await GenerateBudgetRequestNumber();
             budgetRequest.RequestNumber = key.Reference;
             budgetRequest.RNumber = key.Number;

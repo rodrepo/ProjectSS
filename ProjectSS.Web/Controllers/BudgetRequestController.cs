@@ -35,7 +35,47 @@ namespace ProjectSS.Web.Controllers
         public async Task<ActionResult> Create(NewBudgetRequestModel model)
         {
             var project = await _repo.GetProjectByIdAsync(model.ProjectId);
-            return RedirectToAction("ProjectRequest", "BudgetRequest", new { projectId = model.ProjectId, projectNo = project.ProjectNo });
+            if (model.ProjectId > 0)
+            {
+                return RedirectToAction("ProjectRequest", "BudgetRequest", new { projectId = model.ProjectId, projectNo = project.ProjectNo });
+            }
+            else
+            {
+                return RedirectToAction("OtherRequest");
+            }
+        }
+
+        public ActionResult OtherRequest()
+        {
+            BudgetRequestViewModel model = new BudgetRequestViewModel { ProjectNumber = "ADMIN" };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> OtherRequest(BudgetRequestViewModel model)
+        {
+            try
+            {
+                // Admin Request
+                await _repo.AddBudGetRequest(_mapper.Map<BudgetRequest>(model), CurrentUser.Id);
+                if (await _repo.SaveAllAsync())
+                {
+                    TempData["Success"] = string.Format("BudgetRequest has been successfully Sent");
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+
+                    await SetListItemsAsync(model);
+                    TempData["Error"] = "Unable to send BudgetRequest due to some internal issues.";
+                    return View(model);
+                }
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return View(model);
+            }
         }
 
         public async Task<ActionResult> ProjectRequest(int projectId, string projectNo)
@@ -43,7 +83,7 @@ namespace ProjectSS.Web.Controllers
             await RunNotifications();
             BudgetRequestViewModel model = new BudgetRequestViewModel { ProjectId = projectId, ProjectNumber = projectNo };
             var project = await _repo.GetProjectByIdAsync(projectId);
-            if(project.RemainingBudget <= 0)
+            if (project.RemainingBudget <= 0)
             {
                 TempData["Error"] = "Insufficient funds";
                 return RedirectToAction("Show", "Project", new { id = model.ProjectId });
@@ -88,7 +128,7 @@ namespace ProjectSS.Web.Controllers
 
                     // Add item to item list
                     model = await ManageDropDownValuesAndValidition(model);
-                    if(!model.Error.IsEmpty())
+                    if (!model.Error.IsEmpty())
                     {
                         model.ShowItems = model.Items.Where(m => !model.ListOfDeleted.Any(xx => xx == m.TempId)).ToList();
                         TempData["Error"] = model.Error;
@@ -129,11 +169,11 @@ namespace ProjectSS.Web.Controllers
                 {
                     model.Error = "Please enter Date Needed";
                 }
-                else if(model.Items.Count <= 0)
+                else if (model.Items.Count <= 0)
                 {
                     model.Error = "Please add request item";
                 }
-                if(!model.Error.IsEmpty())
+                if (!model.Error.IsEmpty())
                 {
                     TempData["Error"] = model.Error;
                     return View(model);
@@ -297,13 +337,11 @@ namespace ProjectSS.Web.Controllers
                     {
                         model.Error = "Please select a item";
                     }
-
-
                 }
                 else if (model.CategoryDropdown == "COMMISSIONS/REPRESENTATIONS")
                 {
                     var result = await _repo.GetProposalCommissionByIdAsync(model.ItemId5);
-                    if(result != null)
+                    if (result != null)
                     {
                         name = result.Name;
                         itemId = result.Id;
@@ -323,7 +361,7 @@ namespace ProjectSS.Web.Controllers
                     }
                 }
                 if (!name.IsEmpty())
-                { 
+                {
                     model.Item.Item = name;
                     model.Item.ItemId = itemId;
                 }

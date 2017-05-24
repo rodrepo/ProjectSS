@@ -31,7 +31,7 @@ namespace ProjectSS.Db.Entities
         //Notification
         public bool NotifyRequestor { get; set; }
 
-        public int ProjectId { get; set; }
+        public int? ProjectId { get; set; }
         public string ProjectNumber { get; set; }
         public virtual Project Project { get; set; }
 
