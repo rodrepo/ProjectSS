@@ -121,11 +121,26 @@
                         <label>Category</label>
                         <select id="mainDropdown" class="form-control" name="CategoryDropdown">
                             <option @(Model.CategoryDropdown == "" ? "selected" : " ") value="">--Select One--</option>
-                            <option @(Model.CategoryDropdown == "CONTRACTORS/OUTSOURCE" ? "selected" : " ") value="CONTRACTORS/OUTSOURCE">CONTRACTORS/OUTSOURCE</option>
-                            <option @(Model.CategoryDropdown == "OPERATING EXPENSES" ? "selected" : " ") value="OPERATING EXPENSES">OPERATING EXPENSES</option>
-                            <option @(Model.CategoryDropdown == "EQUIPMENT" ? "selected" : " ") value="EQUIPMENT">EQUIPMENT</option>
-                            <option @(Model.CategoryDropdown == "LABORATORY ANALYSIS" ? "selected" : " ") value="LABORATORY ANALYSIS">LABORATORY ANALYSIS</option>
-                            <option @(Model.CategoryDropdown == "COMMISSIONS/REPRESENTATIONS" ? "selected" : " ") value="COMMISSIONS/REPRESENTATIONS">COMMISSIONS/REPRESENTATIONS</option>
+                            @if (ViewBag.Contractors != null && ViewBag.Contractors.Count > 0)
+                            {
+                                <option @(Model.CategoryDropdown == "CONTRACTORS/OUTSOURCE" ? "selected" : " ") value="CONTRACTORS/OUTSOURCE">CONTRACTORS/OUTSOURCE</option>
+                            }
+                            @if (ViewBag.Expense != null && ViewBag.Expense.Count > 0)
+                            {
+                                <option @(Model.CategoryDropdown == "OPERATING EXPENSES" ? "selected" : " ") value="OPERATING EXPENSES">OPERATING EXPENSES</option>
+                            }
+                            @if (ViewBag.Equipments != null && ViewBag.Equipments.Count > 0)
+                            {
+                                <option @(Model.CategoryDropdown == "EQUIPMENT" ? "selected" : " ") value="EQUIPMENT">EQUIPMENT</option>
+                            }
+                            @if (ViewBag.Labarotories != null && ViewBag.Labarotories.Count > 0 )
+                            {
+                                <option @(Model.CategoryDropdown == "LABORATORY ANALYSIS" ? "selected" : " ") value="LABORATORY ANALYSIS">LABORATORY ANALYSIS</option>
+                            }
+                            @if (ViewBag.Commissions != null && ViewBag.Commissions.Count > 0)
+                            {
+                                <option @(Model.CategoryDropdown == "COMMISSIONS/REPRESENTATIONS" ? "selected" : " ") value="COMMISSIONS/REPRESENTATIONS">COMMISSIONS/REPRESENTATIONS</option>
+                            }
                         </select>
                     </div>
                     <div id="contractor" class="hidden">
@@ -166,7 +181,7 @@
 </div>
 @section Styles {
     @Styles.Render("~/bundles/datatablesCss")
-    @Styles.Render("~/bundles/datetimePickerCss")       
+    @Styles.Render("~/bundles/datetimePickerCss")
 }
 @section Scripts {
     @Scripts.Render("~/bundles/datatables")
@@ -191,14 +206,14 @@
             });
     </script>
     <script type="text/javascript">
-                $(function () {
-                    $('.datepicker').datetimepicker({
-                        format: 'MM/DD/YYYY'
-                    });
-                    $('.timepicker').datetimepicker({
-                        format: 'HH:mm'
-                    });
-                });
+        $(function () {
+            $('.datepicker').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+            $('.timepicker').datetimepicker({
+                format: 'HH:mm'
+            });
+        });
     </script>
     <script type="text/javascript">
         $('#button1').click(function () {
