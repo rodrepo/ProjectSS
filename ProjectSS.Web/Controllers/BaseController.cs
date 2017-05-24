@@ -489,7 +489,14 @@ namespace ProjectSS.Web.Controllers
                     }
                     else if (request.StatusApproval == true && request.StatusRecommendingApproval == true && request.StatusRelease == true)
                     {
-                        TempData["Success"] = "Your request is been approved by the Admin Head, Budget request is now release";
+                        if(request.ProjectNumber == "ADMIN")
+                        {
+                            TempData["Success"] = "Your request is been approved by the Operations Manager, Budget request is now release";
+                        }
+                        else
+                        {
+                            TempData["Success"] = "Your request is been approved by the Admin Head, Budget request is now release";
+                        }
                     }
                     await _repo.RequestorNotified(request.Id);
                 }

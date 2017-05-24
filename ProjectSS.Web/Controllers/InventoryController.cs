@@ -25,6 +25,7 @@ namespace ProjectSS.Web.Controllers
         public async Task<ActionResult> Index()
         {
             await RunNotifications();
+            ViewBag.Role = await GetCurrentUserRole();
             var model = MapNeededValue(await _repo.GetInventoriesAsync());
             return View(model);
         }

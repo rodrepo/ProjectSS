@@ -3,20 +3,36 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h3>
-    List of Items
-    <a class="btn btn-labeled btn-success btn-sm pull-right" href="@Url.Action("Create", "Inventory")">
-        <span class="btn-label"><i class="fa fa-plus"></i></span>
-        ADD ITEM
-    </a>
-    <ol class="breadcrumb">
-        <li>
-            <a href="/Home">Home</a>
+@if (ViewBag.Role == "OM" || ViewBag.Role == "AH")
+{
+    <h3>
+        List of Items
+        <a class="btn btn-labeled btn-success btn-sm pull-right" href="@Url.Action("Create", "Inventory")">
+            <span class="btn-label"><i class="fa fa-plus"></i></span>
+            ADD ITEM
+        </a>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/Home">Home</a>
 
-        </li>
-        <li class="active">Inventory</li>
-    </ol>
-</h3>
+            </li>
+            <li class="active">Inventory</li>
+        </ol>
+    </h3>
+}
+else
+{
+    <h3>
+        List of Items
+        <ol class="breadcrumb">
+            <li>
+                <a href="/Home">Home</a>
+
+            </li>
+            <li class="active">Inventory</li>
+        </ol>
+    </h3>
+}
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -26,12 +42,8 @@
                         <tr>
                             <th>Name</th>
                             <th>Brand</th>
-                            <th>Model</th>
-                            <th>Serial Number</th>
-                            <th>Location</th>
-                            <th>Costodian</th>
-                            <th>Quantity</th>
-                            <th>Modified Date</th>
+                            <th>Current borrower</th>
+                            <th>Date borrowed</th>
                             <th>ModifiedBy</th>
                             <th>Action</th>
                         </tr>
@@ -46,11 +58,7 @@
                                     <tr>
                                         <td>@item.Name</td>
                                         <td>@item.Brand</td>
-                                        <td>@item.ItemModel</td>
-                                        <td>@item.SerialNo</td>
-                                        <td>@item.Location</td>
                                         <td>@item.Costodian</td>
-                                        <td>@item.Quantity</td>
                                         @if (item.ModifiedBy != null)
                                         {
                                             <td>@item.ModifiedDate</td>
@@ -61,7 +69,7 @@
                                         }
                                         @if (!item.ModifiedBy.IsEmpty())
                                         {
-                                          <td>@item.ModifiedBy</td>
+                                            <td>@item.ModifiedBy</td>
                                         }
                                         else
                                         {
@@ -74,7 +82,7 @@
                                                     <li>
                                                         <a href="@Url.Action("Edit", "Inventory", new { id = item.Id })">Manage</a>
                                                     </li>
-                                         
+
                                                 </ul>
                                             </div>
                                         </td>
@@ -89,31 +97,31 @@
     </div>
 </div>
 @section BodyArea {
-@foreach(var i in Model)
-{ 
-    <div id="deletemodal-@i.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
-        <div class="modal-dialog modal-sm">
-            @using (Html.BeginForm("Delete", "Inventory", new { @id = i.Id }, FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 id="myModalLabelSmall" class="modal-title">Delete</h4>
+    @foreach (var i in Model)
+    {
+        <div id="deletemodal-@i.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
+            <div class="modal-dialog modal-sm">
+                @using (Html.BeginForm("Delete", "Inventory", new { @id = i.Id }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 id="myModalLabelSmall" class="modal-title">Delete</h4>
+                        </div>
+                        <div class="modal-body"><span>Are you sure you want to delete this item?</span></div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Yes</button>
+                            <a href="" type="button" class="btn btn-info" data-dismiss="modal">No</a>
+                        </div>
                     </div>
-                    <div class="modal-body"><span>Are you sure you want to delete this item?</span></div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Yes</button>
-                        <a href="" type="button" class="btn btn-info" data-dismiss="modal">No</a>
-                    </div>
-                </div>
-            }
+                }
+            </div>
         </div>
-    </div>
-}
     }
+}
 @section Styles {
     @Styles.Render("~/bundles/datatablesCss")
 }
