@@ -290,17 +290,28 @@ namespace ProjectSS.Web.Controllers.Admin
         {
             try
             {
-                var model = await _repo.GetUserByIdAsync(umodel.Id);
-                _repo.DeleteUser(model, GetUserId());
-                if (await _repo.SaveAllAsync())
+                var roles = _mapper.Map<List<RoleViewModel>>(await _repo.GetRolesByUserId(umodel.Id));
+                string role = roles.FirstOrDefault().Name;
+                if (await _repo.CanUserBeDeleted(umodel.Id, role))
                 {
-                    TempData["Success"] = $"Successfully deleted user";
+
+                    var model = await _repo.GetUserByIdAsync(umodel.Id);
+                    _repo.DeleteUser(model, GetUserId());
+                    if (await _repo.SaveAllAsync())
+                    {
+                        TempData["Success"] = $"Successfully deleted user";
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Unable to delete user due to some internal issues.";
+                    }
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    TempData["Error"] = "Unable to delete user due to some internal issues.";
+                    TempData["Error"] = "Unable to delete user, User is involved in an ongoing project";
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction("Index");
             }
             catch (Exception e)
             {

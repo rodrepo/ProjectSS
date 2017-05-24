@@ -95,6 +95,36 @@ namespace ProjectSS.Db
             return null;
         }
 
+        public async Task<bool> CanUserBeDeleted(string userId, string role)
+        {
+            bool result = true;
+            if (role == "TH")
+            {
+                var th = await _db.Projects.Where(p => p.Proposal.THId == userId && p.IsClosed == false && p.RemainingBudget > 0).ToListAsync();
+                if (th.Count > 0)
+                {
+                    result = false;
+                }
+            }
+            else if (role == "BD")
+            {
+                var bd = await _db.Projects.Where(p => p.Proposal.BDId == userId && p.IsClosed == false && p.RemainingBudget > 0).ToListAsync();
+                if (bd.Count > 0)
+                {
+                    result = false;
+                }
+            }
+            else if (role == "TS")
+            {
+                var ts = await _db.Projects.Where(p => p.Proposal.TSId == userId && p.IsClosed == false && p.RemainingBudget > 0).ToListAsync();
+                if(ts.Count > 0)
+                {
+                    result = false;
+                }
+            }
+            return result;
+        }
+
         public void DeleteUser(User user, string userId)
         {
             user.IsDeleted = true;
@@ -608,7 +638,7 @@ namespace ProjectSS.Db
         {
             return await _db.BudgetRequests.Where(p => p.CreatedBy == userId && p.IsDeleted == false).ToListAsync();
         }
-        
+
         public async Task<List<BudgetRequest>> GetBudGetRequestsApprovedNotificationByUserIdAsync(string userId)
         {
             return await _db.BudgetRequests.Where(p => p.CreatedBy == userId && p.IsDeleted == false && p.NotifyRequestor == true).ToListAsync();
@@ -677,9 +707,9 @@ namespace ProjectSS.Db
         public async Task ApprovedBudgetRequest(int id, string role)
         {
             var request = await GetBudgetRequestByIdAsync(id);
-            if(role == "OM")
+            if (role == "OM")
             {
-                if(request.ProjectNumber == "ADMIN")
+                if (request.ProjectNumber == "ADMIN")
                 {
                     request.StatusRecommendingApproval = true;
                     request.StatusApproval = true;
@@ -690,12 +720,12 @@ namespace ProjectSS.Db
                 request.StatusApproval = true;
                 request.NotifyRequestor = true;
             }
-            else if(role == "TH")
+            else if (role == "TH")
             {
                 request.StatusRecommendingApproval = true;
                 request.NotifyRequestor = true;
             }
-            else if(role == "AH")
+            else if (role == "AH")
             {
                 request.StatusRelease = true;
                 request.NotifyRequestor = true;
@@ -703,7 +733,7 @@ namespace ProjectSS.Db
             }
             _db.Entry(request).State = EntityState.Modified;
         }
-        
+
         public async Task RequestorNotified(int id)
         {
             var request = await GetBudgetRequestByIdAsync(id);
@@ -716,9 +746,9 @@ namespace ProjectSS.Db
 
             var project = await GetProjectByIdAsync(request.ProjectId.Value);
             project.RemainingBudget = project.RemainingBudget - request.TotalAmount;
-            if(request.BudgetRequestItems.Count > 0)
+            if (request.BudgetRequestItems.Count > 0)
             {
-                foreach(var item in request.BudgetRequestItems)
+                foreach (var item in request.BudgetRequestItems)
                 {
                     if (item.Amount > 0)
                     {
@@ -793,7 +823,7 @@ namespace ProjectSS.Db
 
         public async Task<BudgetRequest> AddBudGetRequest(BudgetRequest budgetRequest, string userId)
         {
-            if(budgetRequest.ProjectNumber == "ADMIN")
+            if (budgetRequest.ProjectNumber == "ADMIN")
             {
                 budgetRequest.ProjectId = null;
             }

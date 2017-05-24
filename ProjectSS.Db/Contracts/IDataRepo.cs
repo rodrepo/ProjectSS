@@ -22,6 +22,7 @@ namespace ProjectSS.Db.Contracts
         Task<User> GetUserByIdAsync(string id);
         Task<User> UpdateUserAsync(User user, UserManager<User> userManager, string role, string userId);
         void DeleteUser(User user, string userId);
+        Task<bool> CanUserBeDeleted(string userId, string role);
         Task<string> GetUserNameByIdAsync(string id);
         string GetUserName(string userId);
         #endregion
