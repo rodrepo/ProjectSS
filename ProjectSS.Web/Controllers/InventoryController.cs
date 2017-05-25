@@ -36,7 +36,7 @@ namespace ProjectSS.Web.Controllers
             await RunNotifications();
             var model = new InventoryViewModel();
             await SetListItemsAsync(model);
-             return View(model);
+            return View(model);
         }
 
         [HttpPost]
@@ -46,7 +46,7 @@ namespace ProjectSS.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _repo.AddInventory(_mapper.Map<Inventory>(model), CurrentUser.Id);
+                    await _repo.AddInventory(_mapper.Map<Inventory>(model), CurrentUser.Id);
                     if (await _repo.SaveAllAsync())
                     {
                         TempData["Success"] = string.Format("Item has been successfully Created");
@@ -154,6 +154,8 @@ namespace ProjectSS.Web.Controllers
                     invt.Quantity = inv.Quantity;
                     invt.CreatedBy = inv.CreatedBy;
                     invt.IsDeleted = inv.IsDeleted;
+                    invt.InventoryNumber = inv.InventoryNumber;
+                    invt.InvNumber = inv.InvNumber;
                     if (!inv.ModifiedBy.IsEmpty())
                     {
                         var user = _repo.GetUser(inv.ModifiedBy);

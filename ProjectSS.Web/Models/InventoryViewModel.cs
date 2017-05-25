@@ -22,5 +22,8 @@ namespace ProjectSS.Web.Models
         public DateTime? ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
         public string Costodian { get; set; }
+
+        public int InvNumber { get; set; }
+        public string InventoryNumber { get; set; }
     }
 }

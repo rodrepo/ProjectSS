@@ -179,6 +179,10 @@
     <Compile Include="Migrations\201705241152392_MakeProjectIDNullableOnBudgetRequest.Designer.cs">
       <DependentUpon>201705241152392_MakeProjectIDNullableOnBudgetRequest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705251120259_AddsInventoryNumber.cs" />
+    <Compile Include="Migrations\201705251120259_AddsInventoryNumber.Designer.cs">
+      <DependentUpon>201705251120259_AddsInventoryNumber.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -264,6 +268,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705241152392_MakeProjectIDNullableOnBudgetRequest.resx">
       <DependentUpon>201705241152392_MakeProjectIDNullableOnBudgetRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705251120259_AddsInventoryNumber.resx">
+      <DependentUpon>201705251120259_AddsInventoryNumber.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

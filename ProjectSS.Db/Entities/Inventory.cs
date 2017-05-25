@@ -16,5 +16,8 @@ namespace ProjectSS.Db.Entities
         public string UserId { get; set; }
         public virtual User User { get; set; }
         public int Quantity { get; set; }
+
+        public int InvNumber { get; set; }
+        public string InventoryNumber { get; set; }
     }
 }

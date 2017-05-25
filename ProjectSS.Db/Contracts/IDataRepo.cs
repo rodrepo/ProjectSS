@@ -120,7 +120,7 @@ namespace ProjectSS.Db.Contracts
         #region Inventory
         Task<List<Inventory>> GetInventoriesAsync();
         Task<Inventory> GetInventoryByIdAsync(int id);
-        void AddInventory(Inventory inventory, string userId);
+        Task AddInventory(Inventory inventory, string userId);
         Task UpdateInventory(Inventory inventory, string userId);
         Task DeleteInventory(int id);
 

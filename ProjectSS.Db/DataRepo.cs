@@ -545,8 +545,11 @@ namespace ProjectSS.Db
             return await _db.Inventories.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
         }
 
-        public void AddInventory(Inventory inventory, string userId)
+        public async Task AddInventory(Inventory inventory, string userId)
         {
+            var key = await GenerateInventoryNumber();
+            inventory.InventoryNumber = key.Reference;
+            inventory.InvNumber = key.Number;
             _db.UserId = userId;
             _db.Inventories.Add(inventory);
         }
@@ -563,6 +566,26 @@ namespace ProjectSS.Db
             var inventory = await GetInventoryByIdAsync(id);
             inventory.IsDeleted = true;
             _db.Entry(inventory).State = EntityState.Modified;
+        }
+
+        private async Task<ReferenceModel> GenerateInventoryNumber()
+        {
+            var keys = new ReferenceModel();
+
+            var latestProposal = await _db.Inventories.Where(m => !m.IsDeleted).OrderByDescending(d => d.CreatedDate).FirstOrDefaultAsync();
+            if (latestProposal != null && latestProposal.InvNumber > 0)
+            {
+                int multi = 1;
+                multi += latestProposal.InvNumber;
+                keys.Reference = "PROPERTY No. " + multi.ToString();
+                keys.Number = multi;
+            }
+            else
+            {
+                keys.Reference = "PROPERTY No. 1";
+                keys.Number = 1;
+            }
+            return keys;
         }
 
         private async Task<Inventory> MapInventory(Inventory inventory)

@@ -40,6 +40,7 @@ else
                 <table id="datatable1" class="table table-striped table-hover">
                     <thead>
                         <tr>
+                            <th>No.</th>
                             <th>Name</th>
                             <th>Brand</th>
                             <th>Current borrower</th>
@@ -56,6 +57,7 @@ else
                                 if (item.IsDeleted != true)
                                 {
                                     <tr>
+                                        <td>@item.InventoryNumber</td>
                                         <td>@item.Name</td>
                                         <td>@item.Brand</td>
                                         <td>@item.Costodian</td>
