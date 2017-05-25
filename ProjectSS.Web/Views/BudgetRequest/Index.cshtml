@@ -228,13 +228,24 @@
     </div>
 
 }
+
 @section Styles {
     @Styles.Render("~/bundles/datatablesCss")
+    @Styles.Render("~/bundles/sliderCtrlCss")
+    @Styles.Render("~/bundles/chosenCss")
+    @Styles.Render("~/bundles/datetimePickerCss")
 }
+
 @section Scripts {
     @Scripts.Render("~/bundles/datatables")
     @Scripts.Render("~/bundles/demoDatatable")
-    <script type="text/javascript">
+    @Scripts.Render("~/bundles/sliderCtrl")
+    @Scripts.Render("~/bundles/chosen")
+    @Scripts.Render("~/bundles/demoSearch")
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/datetimePicker")
+
+<script type="text/javascript">
         $(document).ready(function () {
             if ('@TempData["Error"]' != "") {
                 $.notify('@TempData["Error"]', "danger");
@@ -249,6 +260,7 @@
                 $.notify('@TempData["Warning"]', "warning");
             }
         });
-    </script>
+</script>
 }
+
 

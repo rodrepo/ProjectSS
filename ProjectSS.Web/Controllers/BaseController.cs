@@ -330,7 +330,7 @@ namespace ProjectSS.Web.Controllers
                     var item = new SelectListItem
                     {
                         Value = project.Id.ToString(),
-                        Text = project.ProjectNo
+                        Text = $"PRN-{project.Id}  {project.Proposal.Title}"
                     };
                     result.Add(item);
                 }

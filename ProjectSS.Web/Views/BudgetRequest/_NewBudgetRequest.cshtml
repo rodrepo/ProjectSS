@@ -12,7 +12,7 @@
     </div>
     <div class="modal-body row" style="margin:10px">
         <label>Charge to</label>
-        @Html.DropDownListFor(model => model.ProjectId, (List<SelectListItem>)ViewBag.Projects, "Select", new { @class = "form-control", @required = "required", })
+        @Html.DropDownListFor(model => model.ProjectId, (List<SelectListItem>)ViewBag.Projects, "Select", new { @class = "chosen-select input-md form-control", @required = "required", })
     </div>
     <div class="modal-footer">
         <button type="submit" class="btn btn-success">Request</button>
