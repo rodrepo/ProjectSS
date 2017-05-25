@@ -36,8 +36,8 @@
             <li class="nav-heading">
                 @*<span>Main Navigation</span>*@
             </li>
-            <li class="@Html.isActive(controller: "Home")">
-                <a href="/Home">
+            <li class="@Html.isActive(controller: "Home")" id="home">
+                <a href="/Home" data-animate="" data-target="#home" data-play="pulse">
                     <em class="icon-home"></em>
                     <span>Home</span>
                 </a>
@@ -45,24 +45,24 @@
             @if (canAccessOM)
             {
 
-                <li class="@Html.isActive(controller: "User")">
-                    <a href="/User">
+                <li class="@Html.isActive(controller: "User")" id="user">
+                    <a href="/User" data-animate="" data-target="#user" data-play="pulse">
                         <em class="icon-user"></em>
                         <span>Users</span>
                     </a>
                 </li>
 
             }
-            <li class="@Html.isActive(controller: "CRM")">
-                <a href="/CRM">
+            <li class="@Html.isActive(controller: "CRM")" id="crm">
+                <a href="/CRM" data-animate="" data-target="#crm" data-play="pulse">
                     <em class="icon-briefcase"></em>
                     <span>CRM</span>
                 </a>
             </li>
             @if (canAccessOM || canAccessBD || canAccessAH || canAccessTH)
             {
-                <li class="@Html.isActive(controller: "Proposal")">
-                    <a href="/Proposal">
+                <li class="@Html.isActive(controller: "Proposal")" id="proposal">
+                    <a href="/Proposal" data-animate="" data-target="#proposal" data-play="pulse">
                         <em class="icon-book-open"></em>
                         <span>Proposal</span>
                     </a>
@@ -70,8 +70,8 @@
             }
             @if (Html.isActive(controller: "BudgetRequest", action: "ProjectRequest") == "active" || Html.isActive(controller: "BudgetRequest", action: "MyTransactions") == "active" || Html.isActive(controller: "BudgetRequest", action: "TransactionsSummary") == "active")
             {
-                <li class="active">
-                    <a href="/Project">
+                <li class="active" id="project">
+                    <a href="/Project" data-animate="" data-target="#project" data-play="pulse">
                         <em class="icon-chart"></em>
                         <span>Projects</span>
                     </a>
@@ -79,8 +79,8 @@
             }
             else
             {
-                <li class="@Html.isActive(controller: "Project")">
-                    <a href="/Project">
+                <li class="@Html.isActive(controller: "Project")" id="project">
+                    <a href="/Project" data-animate="" data-target="#project" data-play="pulse">
                         <em class="icon-chart"></em>
                         <span>Projects</span>
                     </a>
@@ -90,8 +90,8 @@
 
             @if (canAccessOM || canAccessAH || canAccessTH)
             {
-                <li class="@Html.isActive(controller: "Approval")">
-                    <a href="/Approval">
+                <li class="@Html.isActive(controller: "Approval")" id="approval">
+                    <a href="/Approval" data-animate="" data-target="#approval" data-play="pulse">
                         @if (count > 0)
                         {
                         <div class="label label-success pull-right">@count</div>
@@ -101,14 +101,14 @@
                     </a>
                 </li>
             }
-            <li class="@Html.isActive(controller: "BudgetRequest" , action: "Index")">
-                <a href="/BudgetRequest">
+            <li class="@Html.isActive(controller: "BudgetRequest" , action: "Index")" id="budgetRequest">
+                <a href="/BudgetRequest" data-animate="" data-target="#budgetRequest" data-play="pulse">
                     <em class="icon-tag"></em>
                     <span>Budget Request</span>
                 </a>
             </li>
-            <li class="@Html.isActive(controller: "Inventory")">
-                <a href="/Inventory">
+            <li class="@Html.isActive(controller: "Inventory")" id="inventory">
+                <a href="/Inventory" data-animate="" data-target="#inventory" data-play="pulse">
                     <em class="icon-social-dropbox"></em>
                     <span>Inventory</span>
                 </a>
