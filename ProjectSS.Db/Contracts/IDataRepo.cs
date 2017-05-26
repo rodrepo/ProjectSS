@@ -111,6 +111,8 @@ namespace ProjectSS.Db.Contracts
         #region Project
         Task<Project> AddProjectAsync(Project project, string userId);
         Task<List<Project>> GetProjectsAsync();
+        Task<int> GetProjectsCountAsync();
+
         Task<Project> GetProjectByIdAsync(int id);
         Task CloseProject(int id);
 
@@ -119,6 +121,7 @@ namespace ProjectSS.Db.Contracts
 
         #region Inventory
         Task<List<Inventory>> GetInventoriesAsync();
+        Task<int> GetInventoriesAssignedCountAsync(string userId);
         Task<Inventory> GetInventoryByIdAsync(int id);
         Task AddInventory(Inventory inventory, string userId);
         Task UpdateInventory(Inventory inventory, string userId);
@@ -132,6 +135,7 @@ namespace ProjectSS.Db.Contracts
         Task<BudgetRequest> AddBudGetRequest(BudgetRequest budgetRequest, string userId);
         Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAndUserIdAsync(int projectId, string userId);
         Task<List<BudgetRequest>>GetBudGetRequestsByUserIdAsync(string id);
+        Task<int> GetBudGetPeddingRequestsCountByUserIdAsync(string id);
         Task<List<BudgetRequest>> GetBudGetRequestsApprovedNotificationByUserIdAsync(string id);
         Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAsync(int projectId);
         Task<List<BudgetRequest>> GetBudGetRequestsForOMAsync();

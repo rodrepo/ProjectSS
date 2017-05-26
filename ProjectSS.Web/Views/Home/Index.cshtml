@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ProjectSS.Web.Models.HomeViewModel
+@{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -28,9 +29,9 @@
         <!-- START widget-->
         <div class="panel bg-info-light pt b0 widget">
             <div class="ph">
-                <em class="icon-cloud-upload fa-lg pull-right"></em>
-                <div class="h2 mt0">1700</div>
-                <div class="text-uppercase">Uploads</div>
+                <em class="icon-user fa-lg pull-right"></em>
+                <div class="h2 mt0">@Model.TotalOnlineUsers</div>
+                <div class="text-uppercase">Online Users</div>
             </div>
             <div data-sparkline="" data-type="line" data-width="100%" data-height="75px" data-line-color="#23b7e5" data-chart-range-min="0" data-fill-color="#23b7e5" data-spot-color="#23b7e5" data-min-spot-color="#23b7e5" data-max-spot-color="#23b7e5"
                  data-highlight-spot-color="#23b7e5" data-highlight-line-color="#23b7e5" values="2,5,3,7,4,5" style="margin-bottom: -2px" data-resize="true"></div>
@@ -40,12 +41,11 @@
         <!-- START widget-->
         <div class="panel widget bg-purple-light pt b0 widget">
             <div class="ph">
-                <em class="icon-globe fa-lg pull-right"></em>
+                <em class="icon-chart fa-lg pull-right"></em>
                 <div class="h2 mt0">
-                    700
-                    <span class="text-sm text-white">GB</span>
+                    @Model.TotalProjects
                 </div>
-                <div class="text-uppercase">Quota</div>
+                <div class="text-uppercase">Projects</div>
             </div>
             <div data-sparkline="" data-type="line" data-width="100%" data-height="75px" data-line-color="#7266ba" data-chart-range-min="0" data-fill-color="#7266ba" data-spot-color="#7266ba" data-min-spot-color="#7266ba" data-max-spot-color="#7266ba"
                  data-highlight-spot-color="#7266ba" data-highlight-line-color="#7266ba" values="1,4,5,4,8,7,10" style="margin-bottom: -2px" data-resize="true"></div>
@@ -55,9 +55,9 @@
         <!-- START widget-->
         <div class="panel widget bg-info-light pt b0 widget">
             <div class="ph">
-                <em class="icon-bubbles fa-lg pull-right"></em>
-                <div class="h2 mt0">500</div>
-                <div class="text-uppercase">Reviews</div>
+                <em class="icon-social-dropbox fa-lg pull-right"></em>
+                <div class="h2 mt0">@Model.TotalNumberOfItemsAssigned</div>
+                <div class="text-uppercase">Borrowed Item</div>
             </div>
             <div data-sparkline="" data-type="line" data-width="100%" data-height="75px" data-line-color="#23b7e5" data-chart-range-min="0" data-fill-color="#23b7e5" data-spot-color="#23b7e5" data-min-spot-color="#23b7e5" data-max-spot-color="#23b7e5"
                  data-highlight-spot-color="#23b7e5" data-highlight-line-color="#23b7e5" values="4,5,3,10,7,15" style="margin-bottom: -2px" data-resize="true"></div>
@@ -68,14 +68,15 @@
         <div class="panel widget bg-purple-light pt b0 widget">
             <div class="ph">
                 <em class="icon-pencil fa-lg pull-right"></em>
-                <div class="h2 mt0">35</div>
-                <div class="text-uppercase">Annotations</div>
+                <div class="h2 mt0">@Model.TotalPeddingRequst</div>
+                <div class="text-uppercase">Pedding Request</div>
             </div>
             <div data-sparkline="" data-type="line" data-width="100%" data-height="75px" data-line-color="#7266ba" data-chart-range-min="0" data-fill-color="#7266ba" data-spot-color="#7266ba" data-min-spot-color="#7266ba" data-max-spot-color="#7266ba"
                  data-highlight-spot-color="#7266ba" data-highlight-line-color="#7266ba" values="1,3,4,5,7,8" style="margin-bottom: -2px" data-resize="true"></div>
         </div>
     </div>
 </div>
+
 <!-- END widgets box-->
 <div class="row-masonry row-masonry-lg-2">
     <div class="col-masonry">

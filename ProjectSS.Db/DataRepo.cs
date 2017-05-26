@@ -85,6 +85,8 @@ namespace ProjectSS.Db
                 usr.Mobile = user.Mobile;
                 usr.IsActive = user.IsActive;
                 usr.Rate = user.Rate;
+                usr.Email = user.Email;
+                usr.UserName = user.Email;
                 var result = await userManager.UpdateAsync(usr);
                 if (result.Succeeded)
                 {
@@ -539,7 +541,10 @@ namespace ProjectSS.Db
         {
             return await _db.Inventories.Where(p => !p.IsDeleted).ToListAsync();
         }
-
+        public async Task<int> GetInventoriesAssignedCountAsync(string userId)
+        {
+            return await _db.Inventories.Where(p => p.UserId == userId).CountAsync();
+        }
         public async Task<Inventory> GetInventoryByIdAsync(int id)
         {
             return await _db.Inventories.Where(p => !p.IsDeleted && p.Id == id).FirstOrDefaultAsync();
@@ -608,7 +613,11 @@ namespace ProjectSS.Db
         {
             return await _db.Projects.Where(p => !p.IsDeleted).ToListAsync();
         }
-
+        public async Task<int> GetProjectsCountAsync()
+        {
+            return await _db.Projects.Where(p => !p.IsDeleted).CountAsync();
+        }
+        
         public async Task<Project> GetProjectByIdAsync(int id)
         {
             return await _db.Projects.Where(p => p.Id == id).FirstOrDefaultAsync();
@@ -661,7 +670,11 @@ namespace ProjectSS.Db
         {
             return await _db.BudgetRequests.Where(p => p.CreatedBy == userId && p.IsDeleted == false).ToListAsync();
         }
-
+        
+        public async Task<int> GetBudGetPeddingRequestsCountByUserIdAsync(string userId)
+        {
+            return await _db.BudgetRequests.Where(p => p.CreatedBy == userId && p.IsDeleted == false && (p.StatusRecommendingApproval == false || p.StatusApproval == false || p.StatusRelease == false) && p.IsDisapproved == false).CountAsync();
+        }
         public async Task<List<BudgetRequest>> GetBudGetRequestsApprovedNotificationByUserIdAsync(string userId)
         {
             return await _db.BudgetRequests.Where(p => p.CreatedBy == userId && p.IsDeleted == false && p.NotifyRequestor == true).ToListAsync();
