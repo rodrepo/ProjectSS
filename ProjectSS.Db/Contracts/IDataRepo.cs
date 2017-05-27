@@ -134,7 +134,7 @@ namespace ProjectSS.Db.Contracts
         void AddBudGetRequestItem(BudgetRequestItem budgetRequestItem, string userId);
         Task<BudgetRequest> AddBudGetRequest(BudgetRequest budgetRequest, string userId);
         Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAndUserIdAsync(int projectId, string userId);
-        Task<List<BudgetRequest>>GetBudGetRequestsByUserIdAsync(string id);
+        Task<List<BudgetRequest>> GetBudGetRequestsByUserIdAsync(string id);
         Task<int> GetBudGetPeddingRequestsCountByUserIdAsync(string id);
         Task<List<BudgetRequest>> GetBudGetRequestsApprovedNotificationByUserIdAsync(string id);
         Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAsync(int projectId);
@@ -143,9 +143,21 @@ namespace ProjectSS.Db.Contracts
         Task<List<BudgetRequest>> GetBudGetRequestsForTHAsync(string userId);
         Task<int> GetToBeApprovedRequestsCountAsync(string role, string userId);
         Task ApprovedBudgetRequest(int id, string role);
-        Task DisapprovedBudgetRequest(int id, string note, string userName , string userRole);
+        Task DisapprovedBudgetRequest(int id, string note, string userName, string userRole);
         //Notification
         Task RequestorNotified(int id);
         #endregion
+
+        #region Comment
+        Task<List<Comment>> GetAllCommentsAsync();
+        Task<List<SubComment>> GetAllSubCommentsByCommentIdAsync(int commentId);
+        void AddComments(Comment comment,string userId);
+        void AddSubComments(SubComment comment, string userId);
+        void DeleteComments(List<Comment> comments, string userId);
+        void DeleteSubComments(List<SubComment> comments, string userId);
+        void DeleteComment(Comment comment, string userId);
+        void DeleteSubComment(SubComment comment, string userId);
+        #endregion
+
     }
 }

@@ -59,7 +59,7 @@ namespace ProjectSS.Db
 
         public async Task<List<User>> GetUsersAsync()
         {
-            return await _db.Users.Where(u => !u.IsDeleted && u.IsMaster == false ).ToListAsync();
+            return await _db.Users.Where(u => !u.IsDeleted && u.IsMaster == false).ToListAsync();
         }
         public async Task<User> GetUserByIdAsync(string id)
         {
@@ -119,7 +119,7 @@ namespace ProjectSS.Db
             else if (role == "TS")
             {
                 var ts = await _db.Projects.Where(p => p.Proposal.TSId == userId && p.IsClosed == false && p.RemainingBudget > 0).ToListAsync();
-                if(ts.Count > 0)
+                if (ts.Count > 0)
                 {
                     result = false;
                 }
@@ -617,7 +617,7 @@ namespace ProjectSS.Db
         {
             return await _db.Projects.Where(p => !p.IsDeleted).CountAsync();
         }
-        
+
         public async Task<Project> GetProjectByIdAsync(int id)
         {
             return await _db.Projects.Where(p => p.Id == id).FirstOrDefaultAsync();
@@ -670,7 +670,7 @@ namespace ProjectSS.Db
         {
             return await _db.BudgetRequests.Where(p => p.CreatedBy == userId && p.IsDeleted == false).ToListAsync();
         }
-        
+
         public async Task<int> GetBudGetPeddingRequestsCountByUserIdAsync(string userId)
         {
             return await _db.BudgetRequests.Where(p => p.CreatedBy == userId && p.IsDeleted == false && (p.StatusRecommendingApproval == false || p.StatusApproval == false || p.StatusRelease == false) && p.IsDisapproved == false).CountAsync();
@@ -900,6 +900,53 @@ namespace ProjectSS.Db
             request.DisapprovedBy = userName;
             request.DisapproverRole = userRole;
             _db.Entry(request).State = EntityState.Modified;
+        }
+        #endregion
+
+        #region Comment
+        public async Task<List<Comment>> GetAllCommentsAsync()
+        {
+            return await _db.Comments.Where(x => x.IsDeleted == false).ToListAsync();
+        }
+        public async Task<List<SubComment>> GetAllSubCommentsByCommentIdAsync(int commentId)
+        {
+            return await _db.SubComments.Where(x => x.IsDeleted == false).ToListAsync();
+        }
+        public void AddComments(Comment comment, string userId)
+        {
+            _db.UserId = userId;
+            var result = _db.Comments.Add(comment);
+        }
+        public void AddSubComments(SubComment comment, string userId)
+        {
+            _db.UserId = userId;
+            var result = _db.SubComments.Add(comment);
+        }
+        public void DeleteComments(List<Comment> comments, string userId)
+        {
+            foreach(var comment in comments)
+            {
+                _db.UserId = userId;
+                _db.Comments.Remove(comment);
+            }
+        }
+        public void DeleteSubComments(List<SubComment> comments, string userId)
+        {
+            foreach (var comment in comments)
+            {
+                _db.UserId = userId;
+                _db.SubComments.Remove(comment);
+            }
+        }
+        public void DeleteComment(Comment comment, string userId)
+        {
+            _db.UserId = userId;
+            _db.Comments.Remove(comment);
+        }
+        public void DeleteSubComment(SubComment comment, string userId)
+        {
+            _db.UserId = userId;
+            _db.SubComments.Remove(comment);
         }
         #endregion
     }
