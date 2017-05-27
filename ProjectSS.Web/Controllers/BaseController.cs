@@ -468,7 +468,9 @@ namespace ProjectSS.Web.Controllers
 
         protected async Task RunNotifications()
         {
-            string userId = User.Identity.GetUserId();
+            var user = CurrentUser;
+            string userId = user.Id;
+            ViewBag.CurrentUser = user;
             var role = await _repo.GetRoleNameByUserId(userId);
             if (role != null && role == "OM" || role == "TH" || role == "AH")
             {

@@ -6,7 +6,16 @@
     var canAccessBD = User.IsInRole(RoleType.BD.ToString());
     var canAccessTH = User.IsInRole(RoleType.TH.ToString());
     var canAccessAH = User.IsInRole(RoleType.AH.ToString());
-    var currentUserName = User.Identity.Name;
+    var currentUserName = "";
+    if (ViewBag.CurrentUser != null)
+    {
+        currentUserName = ViewBag.CurrentUser.DisplayName;
+
+    }
+    else
+    {
+        currentUserName = "";
+    };
 }
 <!-- START Sidebar (left)-->
 <div class="aside-inner">
