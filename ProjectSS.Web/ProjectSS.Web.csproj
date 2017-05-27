@@ -444,6 +444,7 @@
     <Content Include="Vendor\Flot\jquery.flot.pie.js" />
     <Content Include="Vendor\Flot\jquery.flot.resize.js" />
     <Content Include="Vendor\Flot\jquery.flot.time.js" />
+    <Content Include="Vendor\fontawesome\css\font-awesome.css" />
     <Content Include="Vendor\fontawesome\css\font-awesome.min.css" />
     <Content Include="Vendor\fontawesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Vendor\fullcalendar\dist\fullcalendar.css" />
@@ -539,6 +540,7 @@
     <Content Include="Vendor\morris.js\morris.js" />
     <Content Include="Vendor\nestable\jquery.nestable.js" />
     <Content Include="Vendor\parsleyjs\dist\parsley.min.js" />
+    <Content Include="Vendor\pictures\login.png" />
     <Content Include="Vendor\raphael\raphael.js" />
     <Content Include="Vendor\rickshaw\rickshaw.js" />
     <Content Include="Vendor\rickshaw\rickshaw.min.css" />
