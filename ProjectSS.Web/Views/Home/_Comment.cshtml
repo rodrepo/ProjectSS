@@ -1,0 +1,11 @@
+﻿@model ProjectSS.Web.Models.CommentViewModel
+<form method="post" action="" class="mb mt">
+    @Html.TextAreaFor(model => model.Massage, new { @placeholder = "Post a new comment..", @rows = "4", @class = "form-control no-resize" })
+    <div class="clearfix" style="padding-top:10px">
+        <div class="pull-right">
+            <button type="submit" class="btn btn-success">Post</button>
+        </div>
+    </div>
+</form>
+
+

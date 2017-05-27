@@ -117,5 +117,11 @@
                 $.notify('@TempData["Warning"]', "warning");
             }
         });
+        $('#textArea1').keypress(function (e) {
+            console.log("boom");
+             document.getElementById('form1').submit();
+                return false; //prevent duplicate submission
+        });
     </script>
+
 }

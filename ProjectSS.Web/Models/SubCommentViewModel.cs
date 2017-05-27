@@ -10,6 +10,8 @@ namespace ProjectSS.Web.Models
         public int Id { get; set; }
         public string Massage { get; set; }
         public string CommentBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
+        public DateTime? CreatedDateConverted { get; set; }
+
+        public int CommentId { get; set; }
     }
 }

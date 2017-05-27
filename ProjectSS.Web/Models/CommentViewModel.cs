@@ -9,14 +9,14 @@ namespace ProjectSS.Web.Models
     {
         public CommentViewModel()
         {
-            SubCommentViewModels = new List<SubCommentViewModel>();
+            SubComments = new List<SubCommentViewModel>();
         }
 
         public int Id { get; set; }
         public string Massage { get; set; }
         public string CommentBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
+        public DateTime? CreatedDateConverted { get; set; }
 
-        public List<SubCommentViewModel> SubCommentViewModels { get; set; }
+        public List<SubCommentViewModel> SubComments { get; set; }
     }
 }

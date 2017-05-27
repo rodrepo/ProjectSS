@@ -906,11 +906,11 @@ namespace ProjectSS.Db
         #region Comment
         public async Task<List<Comment>> GetAllCommentsAsync()
         {
-            return await _db.Comments.Where(x => x.IsDeleted == false).ToListAsync();
+            return await _db.Comments.Where(x => x.IsDeleted == false).OrderByDescending(c => c.CreatedDate).ToListAsync();
         }
         public async Task<List<SubComment>> GetAllSubCommentsByCommentIdAsync(int commentId)
         {
-            return await _db.SubComments.Where(x => x.IsDeleted == false).ToListAsync();
+            return await _db.SubComments.Where(x => x.IsDeleted == false).OrderByDescending(c => c.CreatedDate).ToListAsync();
         }
         public void AddComments(Comment comment, string userId)
         {
@@ -922,12 +922,13 @@ namespace ProjectSS.Db
             _db.UserId = userId;
             var result = _db.SubComments.Add(comment);
         }
-        public void DeleteComments(List<Comment> comments, string userId)
+        public async Task DeleteComments(List<Comment> comments, string userId)
         {
             foreach(var comment in comments)
             {
+                var result = await _db.Comments.Where(c => c.Id == comment.Id).FirstOrDefaultAsync();
                 _db.UserId = userId;
-                _db.Comments.Remove(comment);
+                _db.Comments.Remove(result);
             }
         }
         public void DeleteSubComments(List<SubComment> comments, string userId)

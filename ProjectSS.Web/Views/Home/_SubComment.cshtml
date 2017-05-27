@@ -1,0 +1,10 @@
+﻿@model ProjectSS.Web.Models.SubCommentViewModel
+@Html.HiddenFor(x => x.CommentId)
+<div class="panel-body">
+    <form method="post" action="" class="mt">
+        <div>
+            @Html.TextBoxFor(model => model.Massage, new { @placeholder = "Comment...", @class = "form-control", @id = "textArea1" })
+            <button type="submit" class="hidden" id="subButton"></button>
+        </div>
+    </form>
+</div>

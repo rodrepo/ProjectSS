@@ -1,4 +1,6 @@
-﻿@model ProjectSS.Web.Models.HomeViewModel
+﻿@using ProjectSS.Common
+@using ProjectSS.Web.Models
+@model ProjectSS.Web.Models.HomeViewModel
 @{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -79,103 +81,63 @@
 
 <!-- END widgets box-->
 <div class="row-masonry row-masonry-lg-2">
-    <div class="col-masonry">
-        <div class="panel b m0">
-            <div class="panel-heading">
-                <div class="media mt0">
-                    <div class="media-left">
-                    </div>
-                    <div class="media-body media-middle">
-                        <h5 class="media-heading m0 text-bold">Rodolfo Romarate</h5>
-                        <small class="text-muted">3 minutes</small>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-body">
-                <blockquote>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu odio vitae augue elementum molestie sed quis turpis.</p>
-                </blockquote>
-                <footer>
-                    <div class="media-body">
-                        <span class="media-heading">
-                            <p class="m0">
-                                <a href="#">
-                                    <strong>Rod Romarate</strong>
-                                </a>
-                            </p>
-                            <p class="m0 text-muted">&nbsp;- ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </span>
-                        <br />
-                        <span class="media-heading">
-                            <p class="m0">
-                                <a href="#">
-                                    <strong>Jhen Romarate</strong>
-                                </a>
-                            </p>
-                            <p class="m0 text-muted">&nbsp;- ipsum dolor sit amet, consectetur adipiscing elit. ipsum dolor sit amet, consectetur adipiscing elit. ipsum dolor sit amet, consectetur adipiscing elit. ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </span>
-                    </div>
-                </footer>
-            </div>
-            <div class="panel-body">
-                <form method="post" action="" class="mt">
-                    <textarea placeholder="Comment..." rows="1" class="form-control no-resize"></textarea>
-                </form>
-            </div>
-            <p>@*Lorem ipsum dolor sit amet, consectetur adipiscing elit.*@</p>
-        </div>
-    </div>
-    <div class="col-masonry">
-        <div class="panel b m0">
-            <div class="panel-heading">
-                <div class="media mt0">
-                    <div class="media-left">
-                    </div>
-                    <div class="media-body media-middle">
-                        <h5 class="media-heading m0 text-bold">Rod Romarate</h5>
-                        <small class="text-muted">3 minutes</small>
+    @foreach (var comment in Model.Comments)
+    {
+        <div class="col-masonry">
+            <div class="panel b m0">
+                <div class="panel-heading">
+                    <div class="media mt0">
+                        <div class="media-left">
+                        </div>
+                        <div class="media-body media-middle">
+                            <h5 class="media-heading m0 text-bold">@comment.CommentBy</h5>
+                            <small class="text-muted">@comment.CreatedDateConverted</small>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel-body">
-                <blockquote>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </blockquote>
+                <div class="panel-body">
+                    <blockquote>
+                        <p>@comment.Massage</p>
+                    </blockquote>
+                    <footer>
+                        <div class="media-body">
+                            @foreach (var subComment in comment.SubComments)
+                            {
+                                <span class="media-heading">
+                                    <p class="m0">
+                                        <a href="#">
+                                            <h5 style="margin:0">@subComment.CommentBy</h5>
+                                            <small class="text-muted">@comment.CreatedDateConverted</small>
+                                        </a>
+                                    </p>
+                                    @if (!string.IsNullOrWhiteSpace(subComment.Massage))
+                                    {
+                                        <p class="m0 text-muted">&nbsp;- @subComment.Massage</p>
+                                    }
+                                </span>
+                                <br />
+                            }
+                        </div>
+                    </footer>
+                </div>
+                @using (Html.BeginForm("CreateSubComment", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Partial("_SubComment", new SubCommentViewModel { CommentId = comment.Id })
+                }
                 <p>@*Lorem ipsum dolor sit amet, consectetur adipiscing elit.*@</p>
             </div>
         </div>
-    </div>
-    <div class="col-masonry">
-        <div class="panel b m0">
-            <div class="panel-heading">
-                <div class="media mt0">
-                    <div class="media-left">
-                    </div>
-                    <div class="media-body media-middle">
-                        <h5 class="media-heading m0 text-bold">Jhen Romarate</h5>
-                        <small class="text-muted">3 minutes</small>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-body">
-                <blockquote>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </blockquote>
-                <p>@*Lorem ipsum dolor sit amet, consectetur adipiscing elit.*@</p>
-            </div>
-        </div>
-    </div>
+    }
     <div class="col-masonry">
         <div class="panel b m0">
             <div class="panel-body">
-                <form method="post" action="" class="mb mt">
-                    <textarea rows="4" placeholder="Post a new comment.." class="form-control"></textarea>
-                </form>
-                <div class="clearfix">
-                    <div class="pull-right">
-                        <button type="button" class="btn btn-success">Post</button>
-                    </div>
-                </div>
+                @using (Html.BeginForm("CreateComment", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.Partial("_Comment", new CommentViewModel())
+                }
             </div>
         </div>
     </div>

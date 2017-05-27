@@ -153,7 +153,7 @@ namespace ProjectSS.Db.Contracts
         Task<List<SubComment>> GetAllSubCommentsByCommentIdAsync(int commentId);
         void AddComments(Comment comment,string userId);
         void AddSubComments(SubComment comment, string userId);
-        void DeleteComments(List<Comment> comments, string userId);
+        Task DeleteComments(List<Comment> comments, string userId);
         void DeleteSubComments(List<SubComment> comments, string userId);
         void DeleteComment(Comment comment, string userId);
         void DeleteSubComment(SubComment comment, string userId);
