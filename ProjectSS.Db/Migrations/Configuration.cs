@@ -45,7 +45,7 @@
                 {
                     FirstName = "Rod lauro",
                     LastName = "Romarate",
-                    UserName = "master",
+                    UserName = "master@user.com",
                     Email = "master@user.com",
                     Rate = 2000,
                     IsActive = true,
