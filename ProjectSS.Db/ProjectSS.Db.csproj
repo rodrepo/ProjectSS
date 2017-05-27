@@ -82,6 +82,8 @@
     <Compile Include="Entities\ProposalExpense.cs" />
     <Compile Include="Entities\ProposalLaboratory.cs" />
     <Compile Include="Entities\ProposalStaff.cs" />
+    <Compile Include="Entities\Comment.cs" />
+    <Compile Include="Entities\SubComment.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Migrations\201701171120473_AddsUserTable.cs" />
     <Compile Include="Migrations\201701171120473_AddsUserTable.Designer.cs">
@@ -183,6 +185,10 @@
     <Compile Include="Migrations\201705251120259_AddsInventoryNumber.Designer.cs">
       <DependentUpon>201705251120259_AddsInventoryNumber.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705270706109_AddsCommentTable.cs" />
+    <Compile Include="Migrations\201705270706109_AddsCommentTable.Designer.cs">
+      <DependentUpon>201705270706109_AddsCommentTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -271,6 +277,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705251120259_AddsInventoryNumber.resx">
       <DependentUpon>201705251120259_AddsInventoryNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705270706109_AddsCommentTable.resx">
+      <DependentUpon>201705270706109_AddsCommentTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

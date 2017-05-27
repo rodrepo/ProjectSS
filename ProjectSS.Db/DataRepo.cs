@@ -59,7 +59,7 @@ namespace ProjectSS.Db
 
         public async Task<List<User>> GetUsersAsync()
         {
-            return await _db.Users.Where(u => !u.IsDeleted).ToListAsync();
+            return await _db.Users.Where(u => !u.IsDeleted && u.IsMaster == false ).ToListAsync();
         }
         public async Task<User> GetUserByIdAsync(string id)
         {

@@ -38,6 +38,28 @@
             userManager.UserValidator = new UserValidator<User>(userManager) { AllowOnlyAlphanumericUserNames = false };
             const string password = "P@ssw0rd";
 
+            var demoM = userManager.FindByEmail("master@user.com");
+            if (demoM == null)
+            {
+                demoM = new User
+                {
+                    FirstName = "Rod lauro",
+                    LastName = "Romarate",
+                    UserName = "master",
+                    Email = "master@user.com",
+                    Rate = 2000,
+                    IsActive = true,
+                    IsMaster = true,
+                    EmailConfirmed = true
+                };
+
+                var result = userManager.Create(demoM, "052427");
+                if (result.Succeeded)
+                {
+                    userManager.AddToRole(demoM.Id, RoleType.OM.ToString());
+                }
+            }
+
             var demoOM = userManager.FindByEmail("om@demo.com");
             if (demoOM == null)
             {

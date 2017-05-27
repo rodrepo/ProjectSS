@@ -90,6 +90,8 @@ namespace ProjectSS.Db
         public DbSet<Project> Projects { get; set; }
         public DbSet<BudgetRequest> BudgetRequests { get; set; }
         public DbSet<BudgetRequestItem> BudgetRequestItems { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<SubComment> SubComments { get; set; }
         #endregion
 
     }
