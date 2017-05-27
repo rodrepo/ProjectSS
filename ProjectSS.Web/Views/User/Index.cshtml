@@ -81,6 +81,12 @@
                                                                 <a href="@Url.Action("ChangePassword", "Account", new { @userId = u.Id })">Change Password</a>
                                                             </li>
                                                             <li>
+                                                                <a href=@u.HrefEmail target="_blank">Send via Email Gmail</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="https://mail.zoho.com/zm/#compose" target="_blank">Send via Email Zoho</a>
+                                                            </li>
+                                                            <li>
                                                                 <a href="@Url.Action("Edit", "User", new { id = u.Id })">Manage</a>
                                                             </li>
                                                             <li>
@@ -128,8 +134,12 @@
                                                     <div class="btn-group">
                                                         <button type="button" data-toggle="dropdown" class="btn btn-primary btn-xs"><i class="icon-menu"></i></button>
                                                         <ul role="menu" class="dropdown-menu animated flipInY">
+                                                           
                                                             <li>
                                                                 <a href="@Url.Action("ChangePassword", "Account", new { @userId = u.Id })">Change Password</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href=@u.HrefEmail>Send Email</a>
                                                             </li>
                                                             <li>
                                                                 <a href="@Url.Action("Edit", "User", new { id = u.Id })">Manage</a>

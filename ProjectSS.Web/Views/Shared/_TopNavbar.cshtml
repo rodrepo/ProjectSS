@@ -1,146 +1,179 @@
 <!-- START Top Navbar-->
 <nav class="navbar topnavbar">
-   <!-- START navbar header-->
-   <div class="navbar-header">
-      <a href="#/" class="navbar-brand">
-         @*<div class="brand-logo">
-            <img src="~/Content/Images/logo.png" alt="App Logo" class="img-responsive" />
-         </div>
-         <div class="brand-logo-collapsed">
-             <img src="~/Content/Images/logo-single.png" alt="App Logo" class="img-responsive" />
-         </div>*@
-      </a>
-   </div>
-   <!-- END navbar header-->
-   <!-- START Nav wrapper-->
-   <div class="nav-wrapper">
-      <!-- START Left navbar-->
-      <ul class="nav navbar-nav">
-         <li>
-            <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
-             <a href="#" data-trigger-resize="" data-toggle-state="aside-collapsed" class="hidden-xs">
-                 <em class="fa fa-navicon"></em>
-             </a>
-            <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
-            <a href="#" data-toggle-state="aside-toggled" data-no-persist="true" class="visible-xs sidebar-toggle">
-               <em class="fa fa-navicon"></em>
-            </a>
-         </li>
-         <!-- START User avatar toggle-->
-         <li>
-            <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
-             <a id="user-block-toggle" href="#user-block" data-toggle="collapse">
-                 <em class="icon-user"></em>
-             </a>
-         </li>
-         <!-- END User avatar toggle-->
-         <!-- START lock screen-->
-         @*<li>
-             <a href="@Url.Action("Lock", "Pages")" title="Lock screen">
-                 <em class="icon-lock"></em>
-             </a>
-         </li>*@
-         <!-- END lock screen-->
-      </ul>
-      <!-- END Left navbar-->
-      <!-- START Right Navbar-->
-      <ul class="nav navbar-nav navbar-right">
-         <!-- Search icon-->
-         @*<li>
-            <a href="#" data-search-open="">
-               <em class="icon-magnifier"></em>
-            </a>
-         </li>
-          Fullscreen (only desktops)
-         <li class="visible-lg">
-            <a href="#" data-toggle-fullscreen="">
-               <em class="fa fa-expand"></em>
-            </a>
-         </li>*@
-         <!-- START Alert menu-->
-         <li class="dropdown dropdown-list">
-            <a href="#" data-toggle="dropdown">
-               <em class="icon-settings"></em>
-               @*<div class="label label-danger">11</div>*@
-            </a>
-            <!-- START Dropdown menu-->
-            <ul class="dropdown-menu animated flipInX">
-               <li>
-                  <!-- START list group-->
-                  <div class="list-group">
-                     @*<!-- list item-->
-                     <a href="#" class="list-group-item">
-                        <div class="media-box">
-                           <div class="pull-left">
-                              <em class="fa fa-twitter fa-2x text-info"></em>
-                           </div>
-                           <div class="media-box-body clearfix">
-                              <p class="m0">New followers</p>
-                              <p class="m0 text-muted">
-                                 <small>1 new follower</small>
-                              </p>
-                           </div>
+    <!-- START navbar header-->
+    <div class="navbar-header">
+        <a href="#/" class="navbar-brand">
+            @*<div class="brand-logo">
+                   <img src="~/Content/Images/logo.png" alt="App Logo" class="img-responsive" />
+                </div>
+                <div class="brand-logo-collapsed">
+                    <img src="~/Content/Images/logo-single.png" alt="App Logo" class="img-responsive" />
+                </div>*@
+            <div class="brand-logo">
+                <h4 style="color:white; margin:0;font-size:22px">Simmons</h4>
+                <h5 style="color:white; margin:0;font-size:10px">consult international</h5>
+            </div>
+        </a>
+    </div>
+    <!-- END navbar header-->
+    <!-- START Nav wrapper-->
+    <div class="nav-wrapper">
+        <!-- START Left navbar-->
+        <ul class="nav navbar-nav">
+            <li>
+                <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+                <a href="#" data-trigger-resize="" data-toggle-state="aside-collapsed" class="hidden-xs">
+                    <em class="fa fa-navicon"></em>
+                </a>
+                <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
+                <a href="#" data-toggle-state="aside-toggled" data-no-persist="true" class="visible-xs sidebar-toggle">
+                    <em class="fa fa-navicon"></em>
+                </a>
+            </li>
+            <!-- START User avatar toggle-->
+            <li>
+                <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+                <a id="user-block-toggle" href="#user-block" data-toggle="collapse">
+                    <em class="icon-user"></em>
+                </a>
+            </li>
+            <!-- END User avatar toggle-->
+            <!-- START lock screen-->
+            @*<li>
+                    <a href="@Url.Action("Lock", "Pages")" title="Lock screen">
+                        <em class="icon-lock"></em>
+                    </a>
+                </li>*@
+            <!-- END lock screen-->
+        </ul>
+        <!-- END Left navbar-->
+        <!-- START Right Navbar-->
+        <ul class="nav navbar-nav navbar-right">
+            <!-- Search icon-->
+            @*<li>
+                   <a href="#" data-search-open="">
+                      <em class="icon-magnifier"></em>
+                   </a>
+                </li>
+                 Fullscreen (only desktops)
+                <li class="visible-lg">
+                   <a href="#" data-toggle-fullscreen="">
+                      <em class="fa fa-expand"></em>
+                   </a>
+                </li>*@
+            <!-- START Alert menu-->
+            <li class="dropdown dropdown-list">
+                <a href="#" data-toggle="dropdown">
+                    <em class="icon-envelope"></em>
+                    @*<div class="label label-danger">11</div>*@
+                </a>
+                <ul class="dropdown-menu animated flipInX">
+                    <li>
+                        <div class="list-group">
+                            <a href="https://mail.zoho.com/zm/#compose" target="_blank" class="list-group-item"><small>Compose via Zoho</small></a>
+                            <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=&su=SUBJECT&body=BODY&bcc&tf=1" target="_blank" class="list-group-item"><small>Compose vai Gmail</small></a>
                         </div>
-                     </a>
-                     <!-- list item-->
-                     <a href="#" class="list-group-item">
-                        <div class="media-box">
-                           <div class="pull-left">
-                              <em class="fa fa-envelope fa-2x text-warning"></em>
-                           </div>
-                           <div class="media-box-body clearfix">
-                              <p class="m0">New e-mails</p>
-                              <p class="m0 text-muted">
-                                 <small>You have 10 new emails</small>
-                              </p>
-                           </div>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown dropdown-list">
+                <a href="#" data-toggle="dropdown">
+                    <em class="icon-link"></em>
+                    @*<div class="label label-danger">11</div>*@
+                </a>
+                <ul class="dropdown-menu animated flipInX">
+                    <li>
+                        <div class="list-group">
+                            <a href="https://app.asana.com/" target="_blank" class="list-group-item"><small>Asana</small></a>
+                            <a href="https://www.zoho.com/login.html" target="_blank" class="list-group-item"><small>Zoho</small></a>
+                            <a href="https://accounts.google.com/AccountChooser?service=mail&continue=https://mail.google.com/mail/" target="_blank" class="list-group-item"><small>Gmail</small></a>
                         </div>
-                     </a>*@
-                     <!-- list item-->
-                     <a href="@Url.Action("ChangePassword", "Account")" class="list-group-item">
-                        <div class="media-box">
-                           <div class="pull-left">
-                              @*<em class="fa fa-tasks fa-2x text-success"></em>*@
-                           </div>
-                           <div class="media-box-body clearfix">
-                              <p class="m0">Change Password</p>
-                              <p class="m0 text-muted">
-                              </p>
-                           </div>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown dropdown-list">
+                <a href="#" data-toggle="dropdown">
+                    <em class="icon-settings"></em>
+                    @*<div class="label label-danger">11</div>*@
+                </a>
+                <!-- START Dropdown menu-->
+                <ul class="dropdown-menu animated flipInX">
+                    <li>
+                        <!-- START list group-->
+                        <div class="list-group">
+                            @*<!-- list item-->
+                                <a href="#" class="list-group-item">
+                                   <div class="media-box">
+                                      <div class="pull-left">
+                                         <em class="fa fa-twitter fa-2x text-info"></em>
+                                      </div>
+                                      <div class="media-box-body clearfix">
+                                         <p class="m0">New followers</p>
+                                         <p class="m0 text-muted">
+                                            <small>1 new follower</small>
+                                         </p>
+                                      </div>
+                                   </div>
+                                </a>
+                                <!-- list item-->
+                                <a href="#" class="list-group-item">
+                                   <div class="media-box">
+                                      <div class="pull-left">
+                                         <em class="fa fa-envelope fa-2x text-warning"></em>
+                                      </div>
+                                      <div class="media-box-body clearfix">
+                                         <p class="m0">New e-mails</p>
+                                         <p class="m0 text-muted">
+                                            <small>You have 10 new emails</small>
+                                         </p>
+                                      </div>
+                                   </div>
+                                </a>*@
+                            <!-- list item-->
+                            <a href="@Url.Action("ChangePassword", "Account")" class="list-group-item">
+                                <div class="media-box">
+                                    <div class="pull-left">
+                                        @*<em class="fa fa-tasks fa-2x text-success"></em>*@
+                                    </div>
+                                    <div class="media-box-body clearfix">
+                                        <p class="m0">Change Password</p>
+                                        <p class="m0 text-muted">
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- last list item -->
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @class = "", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button type="Submit" class="list-group-item"><small>Logout</small></button>
+                            }
                         </div>
-                     </a>
-                     <!-- last list item -->
-                      @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @class = "", role = "form" }))
-                      {
-                          @Html.AntiForgeryToken()
-                          <button type="Submit" class="list-group-item"><small>Logout</small></button>
-                      }
-                  </div>
-                  <!-- END list group-->
-               </li>
-            </ul>
-            <!-- END Dropdown menu-->
-         </li>
-         <!-- END Alert menu-->
-         <!-- START Contacts button-->
-         @*<li>
-            <a href="#" data-toggle-state="offsidebar-open" data-no-persist="true">
-               <em class="icon-notebook"></em>
-            </a>
-         </li>*@
-         <!-- END Contacts menu-->
-      </ul>
-      <!-- END Right Navbar-->
-   </div>
-   <!-- END Nav wrapper-->
-   <!-- START Search form-->
-   <form role="search" action="search.html" class="navbar-form">
-      <div class="form-group has-feedback">
-         <input type="text" placeholder="Type and hit enter ..." class="form-control" />
-         <div data-search-dismiss="" class="fa fa-times form-control-feedback"></div>
-      </div>
-      <button type="submit" class="hidden btn btn-default">Submit</button>
-   </form>
-   <!-- END Search form-->
+                        <!-- END list group-->
+                    </li>
+                </ul>
+                <!-- END Dropdown menu-->
+            </li>
+            <!-- END Alert menu-->
+            <!-- START Contacts button-->
+            @*<li>
+                   <a href="#" data-toggle-state="offsidebar-open" data-no-persist="true">
+                      <em class="icon-notebook"></em>
+                   </a>
+                </li>*@
+            <!-- END Contacts menu-->
+        </ul>
+        <!-- END Right Navbar-->
+    </div>
+    <!-- END Nav wrapper-->
+    <!-- START Search form-->
+    <form role="search" action="search.html" class="navbar-form">
+        <div class="form-group has-feedback">
+            <input type="text" placeholder="Type and hit enter ..." class="form-control" />
+            <div data-search-dismiss="" class="fa fa-times form-control-feedback"></div>
+        </div>
+        <button type="submit" class="hidden btn btn-default">Submit</button>
+    </form>
+    <!-- END Search form-->
 </nav>
 <!-- END Top Navbar-->

@@ -49,6 +49,14 @@ namespace ProjectSS.Web.Models.admin
             }
         }
         public bool IsCurrentUser { get; set; }
+
+        public string HrefEmail
+        {
+            get
+            {
+                return ($"https://mail.google.com/mail/u/0/?view=cm&fs=1&to="+Email+"&su=SUBJECT&body=BODY&bcc&tf=1");
+            }
+        }
     }
 
     public class ActivateViewModel
