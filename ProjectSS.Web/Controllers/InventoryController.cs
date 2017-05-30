@@ -25,6 +25,7 @@ namespace ProjectSS.Web.Controllers
         public async Task<ActionResult> Index()
         {
             await RunNotifications();
+            ViewBag.Users = ViewBag.Users ?? await GetUsersAsync();
             ViewBag.Role = await GetCurrentUserRole();
             var model = MapNeededValue(await _repo.GetInventoriesAsync());
             return View(model);
@@ -79,6 +80,38 @@ namespace ProjectSS.Web.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> ChangeBorrower(InventoryViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var invt = await _repo.GetInventoryByIdAsync(model.Id);
+                    invt.UserId = model.Costodian;
+                    await _repo.UpdateInventory(invt, CurrentUser.Id);
+                    if (await _repo.SaveAllAsync())
+                    {
+                        TempData["Success"] = string.Format("Item has been successfully updated");
+                        return RedirectToAction("Index");
+                    }
+                }
+                foreach (var value in ModelState.Values)
+                {
+                    foreach (var error in value.Errors)
+                    {
+                        TempData["Error"] = error.ErrorMessage;
+                    }
+                }
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                _telemetryClient.TrackException(e);
+                ModelState.AddModelError("error", e.Message);
+                return ServerError();
+            }
+        }
         [HttpPost]
         public async Task<ActionResult> Edit(InventoryViewModel model)
         {

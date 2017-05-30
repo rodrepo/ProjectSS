@@ -1,0 +1,8 @@
+﻿@model ProjectSS.Web.Models.InventoryViewModel
+@Html.HiddenFor(i => i.Id)
+<div class="modal-body row">
+    <div class="form-group col-sm-12">
+        <label>Borrower</label>
+        @Html.DropDownListFor(model => model.Costodian, (List<SelectListItem>)ViewBag.Users, "Select borrower", new { @class = "form-control", @required = "required", })
+    </div>
+</div>

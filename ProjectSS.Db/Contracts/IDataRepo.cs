@@ -130,7 +130,7 @@ namespace ProjectSS.Db.Contracts
         #endregion
 
         #region BugetRequest
-
+        Task<List<BudgetRequest>> GetBudGetRequests();
         void AddBudGetRequestItem(BudgetRequestItem budgetRequestItem, string userId);
         Task<BudgetRequest> AddBudGetRequest(BudgetRequest budgetRequest, string userId);
         Task<List<BudgetRequest>> GetBudGetRequestsByProjectIdAndUserIdAsync(int projectId, string userId);

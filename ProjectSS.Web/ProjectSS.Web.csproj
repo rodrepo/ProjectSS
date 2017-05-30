@@ -220,6 +220,7 @@
     <Compile Include="Controllers\BudgetRequestController.cs" />
     <Compile Include="Controllers\CRMController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\RequestSummaryController.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Helpers\WebsiteVisitor.cs" />
     <Compile Include="Models\BudgetRequestViewModel.cs" />
@@ -667,6 +668,8 @@
     <Content Include="Views\BudgetRequest\OtherRequest.cshtml" />
     <Content Include="Views\Home\_SubComment.cshtml" />
     <Content Include="Views\Home\_Comment.cshtml" />
+    <Content Include="Views\RequestSummary\Index.cshtml" />
+    <Content Include="Views\Inventory\_ChangeBorrower.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

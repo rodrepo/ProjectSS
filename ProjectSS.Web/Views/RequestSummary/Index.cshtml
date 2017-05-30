@@ -1,20 +1,17 @@
-﻿@model List<ProjectSS.Web.Models.BudgetRequestViewModel>
+﻿
+@model List<ProjectSS.Web.Models.BudgetRequestViewModel>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h3>
-    List of Requests
-    <a class="btn btn-labeled btn-success pull-right" data-toggle="modal" data-target="#request">
-        <span class="btn-label"><i class="fa fa-plus"></i></span>
-        NEW REQUEST
-    </a>
+    Budget Requests Summary
     <ol class="breadcrumb">
         <li>
             <a href="/Home">Home</a>
         </li>
-        <li class="active">Budget Request</li>
+        <li class="active">Requests Summary</li>
     </ol>
 </h3>
 <div class="row">
@@ -26,7 +23,7 @@
                         <tr>
                             <th>No.</th>
                             <th>Charge to</th>
-                            <th>Purpose</th>
+                            <th>Requestor</th>
                             <th>Date Requested</th>
                             <th>Date Needed</th>
                             <th>Total Amount</th>
@@ -40,7 +37,7 @@
                             <tr>
                                 <td>@item.RequestNumber</td>
                                 <td>@item.ProjectNumber</td>
-                                <td>@item.Purpose</td>
+                                <td>@item.RequestorName</td>
                                 <td>@item.CreatedDate.Value.ToShortDateString()</td>
                                 <td>@item.DateNeeded.Value.ToShortDateString()</td>
                                 <td>@item.TotalAmount.ToString("P" + " " + "#,0.00")</td>
@@ -216,17 +213,6 @@
         </div>
     }
 
-    @*<--NEW REQUEST-->*@
-    <div id="request" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
-        <div class="modal-dialog modal-sm">
-            @using (Html.BeginForm("Create", "BudgetRequest", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                @Html.AntiForgeryToken()
-                @Html.Partial("_NewBudgetRequest", new ProjectSS.Web.Models.NewBudgetRequestModel())
-            }
-        </div>
-    </div>
-
 }
 
 @section Styles {
@@ -245,7 +231,7 @@
     @Scripts.Render("~/bundles/moment")
     @Scripts.Render("~/bundles/datetimePicker")
 
-<script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
             if ('@TempData["Error"]' != "") {
                 $.notify('@TempData["Error"]', "danger");
@@ -260,7 +246,7 @@
                 $.notify('@TempData["Warning"]', "warning");
             }
         });
-</script>
+    </script>
 }
 
 

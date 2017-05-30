@@ -851,7 +851,10 @@ namespace ProjectSS.Db
         #endregion
 
         #region BudgetRequest
-
+        public async Task<List<BudgetRequest>> GetBudGetRequests()
+        {
+            return await _db.BudgetRequests.Where(x => x.IsDeleted == false).OrderByDescending(c => c.CreatedDate).ToListAsync();
+        }
         public void AddBudGetRequestItem(BudgetRequestItem budgetRequestItem, string userId)
         {
             _db.UserId = userId;

@@ -27,11 +27,11 @@
                     <div class="item user-block">
                         <!-- User picture-->
                         @*<div class="user-block-picture">
-                            <div class="user-block-status">
-                                <img src="~/Content/Images/user/02.jpg" alt="Avatar" width="60" height="60" class="img-thumbnail img-circle" />
-                                <div class="circle circle-success circle-lg"></div>
-                            </div>
-                        </div>*@
+                                <div class="user-block-status">
+                                    <img src="~/Content/Images/user/02.jpg" alt="Avatar" width="60" height="60" class="img-thumbnail img-circle" />
+                                    <div class="circle circle-success circle-lg"></div>
+                                </div>
+                            </div>*@
                         <!-- Name and Job-->
                         <div class="user-block-info">
                             <span class="user-block-name">Hello, @currentUserName</span>
@@ -94,7 +94,7 @@
                     </a>
                 </li>
             }
-          
+
 
             @if (canAccessOM || canAccessAH || canAccessTH)
             {
@@ -102,7 +102,7 @@
                     <a href="/Approval" data-animate="" data-target="#approval" data-play="pulse">
                         @if (count > 0)
                         {
-                        <div class="label label-success pull-right">@count</div>
+                            <div class="label label-success pull-right">@count</div>
                         }
                         <em class="icon-check"></em>
                         <span>Approval</span>
@@ -115,6 +115,16 @@
                     <span>Budget Request</span>
                 </a>
             </li>
+            @if (canAccessOM || canAccessAH )
+            {
+
+                <li class="@Html.isActive(controller: "RequestSummary", action: "Index")" id="bequestSummary">
+                    <a href="/RequestSummary" data-animate="" data-target="#budgetRequest" data-play="pulse">
+                        <em class="icon-calculator"></em>
+                        <span>Requests Summary</span>
+                    </a>
+                </li>
+            }
             <li class="@Html.isActive(controller: "Inventory")" id="inventory">
                 <a href="/Inventory" data-animate="" data-target="#inventory" data-play="pulse">
                     <em class="icon-social-dropbox"></em>

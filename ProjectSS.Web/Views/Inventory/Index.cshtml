@@ -1,4 +1,5 @@
-﻿@model List<ProjectSS.Web.Models.InventoryViewModel>
+﻿@using ProjectSS.Web.Models
+@model List<ProjectSS.Web.Models.InventoryViewModel>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -84,7 +85,9 @@ else
                                                     <li>
                                                         <a href="@Url.Action("Edit", "Inventory", new { id = item.Id })">Manage</a>
                                                     </li>
-
+                                                    <li>
+                                                        <a href="#" data-toggle="modal" data-target="#change-@item.Id">Change Borrower</a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -114,6 +117,29 @@ else
                             <h4 id="myModalLabelSmall" class="modal-title">Delete</h4>
                         </div>
                         <div class="modal-body"><span>Are you sure you want to delete this item?</span></div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Yes</button>
+                            <a href="" type="button" class="btn btn-info" data-dismiss="modal">No</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div id="change-@i.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSmall" aria-hidden="true" class="modal fade">
+            <div class="modal-dialog modal-sm">
+                @using (Html.BeginForm("ChangeBorrower", "Inventory", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 id="myModalLabelSmall" class="modal-title">Change current borrower</h4>
+                        </div>
+                        <div class="modal-body">
+                            @Html.AntiForgeryToken()
+                            @Html.Partial("_ChangeBorrower", new InventoryViewModel { Id = i.Id })
+                        </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Yes</button>
                             <a href="" type="button" class="btn btn-info" data-dismiss="modal">No</a>
