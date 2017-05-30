@@ -487,13 +487,13 @@ namespace ProjectSS.Web.Controllers
                     }
                     else if (request.StatusApproval == true && request.StatusRecommendingApproval == true && request.StatusRelease == false)
                     {
-                        TempData["Success"] = "Your request is been approved by the Operations Manager, Request will be moved to release approval";
+                        TempData["Success"] = "Your request is been approved by the Operations Manager, Request is approved for release";
                     }
                     else if (request.StatusApproval == true && request.StatusRecommendingApproval == true && request.StatusRelease == true)
                     {
                         if(request.ProjectNumber == "ADMIN")
                         {
-                            TempData["Success"] = "Your request is been approved by the Operations Manager, Budget request is now release";
+                            TempData["Success"] = "Your request has been approved by the Operations Manager, Request is approved for release";
                         }
                         else
                         {

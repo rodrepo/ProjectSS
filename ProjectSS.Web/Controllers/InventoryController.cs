@@ -168,11 +168,11 @@ namespace ProjectSS.Web.Controllers
                     }
                     if (inv.ModifiedDate != null)
                     {
-                        invt.ModifiedDate = inv.ModifiedDate;
+                        invt.ModifiedDate = inv.ModifiedDateConverted;
                     }
                     else
                     {
-                        inv.ModifiedDate = inv.CreatedDate;
+                        inv.ModifiedDate = inv.CreatedDateConverted;
                     }
                     if (inv.User != null)
                     {

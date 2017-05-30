@@ -749,7 +749,6 @@ namespace ProjectSS.Db
                 {
                     request.StatusRecommendingApproval = true;
                     request.StatusApproval = true;
-                    request.StatusRelease = true;
                     request.NotifyRequestor = true;
                 }
 
@@ -765,7 +764,10 @@ namespace ProjectSS.Db
             {
                 request.StatusRelease = true;
                 request.NotifyRequestor = true;
-                await ProcessApprovedRequest(request);
+                if (request.ProjectNumber != "ADMIN")
+                {
+                    await ProcessApprovedRequest(request);
+                }
             }
             _db.Entry(request).State = EntityState.Modified;
         }
@@ -779,7 +781,6 @@ namespace ProjectSS.Db
 
         private async Task ProcessApprovedRequest(BudgetRequest request)
         {
-
             var project = await GetProjectByIdAsync(request.ProjectId.Value);
             project.RemainingBudget = project.RemainingBudget - request.TotalAmount;
             if (request.BudgetRequestItems.Count > 0)
