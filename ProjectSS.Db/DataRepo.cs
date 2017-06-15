@@ -187,7 +187,7 @@ namespace ProjectSS.Db
 
         public async Task<List<CRM>> GetCRM()
         {
-            var crm = await _db.CRMs.Where(m => !m.IsDeleted).ToListAsync();
+            var crm = await _db.CRMs.Where(m => !m.IsDeleted).OrderByDescending(m => m.CreatedDate).ToListAsync();
             return crm;
         }
 
@@ -285,9 +285,18 @@ namespace ProjectSS.Db
         #endregion
 
         #region Proposal
-        public async Task<List<Proposal>> GetProposalAsync()
+        public async Task<List<Proposal>> GetProposalAsync(string userRole,string userId)
         {
-            return await _db.Proposals.Where(p => !p.IsDeleted).ToListAsync();
+            if (userRole == "TH")
+            {
+                return await _db.Proposals.Where(p => !p.IsDeleted && p.THId == userId).OrderByDescending(p => p.CreatedDate).ToListAsync();
+            }
+            else
+            {
+                return await _db.Proposals.Where(p => !p.IsDeleted).OrderByDescending(p => p.CreatedDate).ToListAsync();
+
+            }
+
         }
 
         public async Task<Proposal> AddPorposalAsync(Proposal proposal, string userId)
@@ -539,7 +548,7 @@ namespace ProjectSS.Db
 
         public async Task<List<Inventory>> GetInventoriesAsync()
         {
-            return await _db.Inventories.Where(p => !p.IsDeleted).ToListAsync();
+            return await _db.Inventories.Where(p => !p.IsDeleted).OrderByDescending(p => p.CreatedDate).ToListAsync();
         }
         public async Task<int> GetInventoriesAssignedCountAsync(string userId)
         {
@@ -611,7 +620,7 @@ namespace ProjectSS.Db
 
         public async Task<List<Project>> GetProjectsAsync()
         {
-            return await _db.Projects.Where(p => !p.IsDeleted).ToListAsync();
+            return await _db.Projects.Where(p => !p.IsDeleted).OrderByDescending(p => p.CreatedDate).ToListAsync();
         }
         public async Task<int> GetProjectsCountAsync()
         {
@@ -668,7 +677,7 @@ namespace ProjectSS.Db
 
         public async Task<List<BudgetRequest>> GetBudGetRequestsByUserIdAsync(string userId)
         {
-            return await _db.BudgetRequests.Where(p => p.CreatedBy == userId && p.IsDeleted == false).ToListAsync();
+            return await _db.BudgetRequests.Where(p => p.CreatedBy == userId && p.IsDeleted == false).OrderByDescending(p => p.CreatedDate).ToListAsync();
         }
 
         public async Task<int> GetBudGetPeddingRequestsCountByUserIdAsync(string userId)
@@ -687,8 +696,9 @@ namespace ProjectSS.Db
 
         public async Task<List<BudgetRequest>> GetBudGetRequestsForOMAsync()
         {
-            var project = await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == false && p.StatusRelease == false && p.IsDisapproved == false).ToListAsync();
+            var project = await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == false && p.StatusRelease == false && p.IsDisapproved == false).OrderByDescending(p => p.CreatedDate).ToListAsync();
             project.AddRange(await GetAdminBudgetRequestByIdAsync());
+            project = project.OrderByDescending(p => p.CreatedDate).ToList();
             return project;
         }
 
@@ -699,14 +709,14 @@ namespace ProjectSS.Db
                           join bud in _db.BudgetRequests on prj.Id equals bud.ProjectId
                           where bud.StatusRecommendingApproval == false && bud.StatusApproval == false && bud.StatusRelease == false && bud.IsDisapproved == false
                           select bud
-                          ).ToListAsync();
+                          ).OrderByDescending(p => p.CreatedDate).ToListAsync();
 
             return await result;
         }
 
         public async Task<List<BudgetRequest>> GetBudGetRequestsForAHAsync()
         {
-            return await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == true && p.StatusRelease == false && p.IsDisapproved == false).ToListAsync();
+            return await _db.BudgetRequests.Where(p => p.IsDeleted == false && p.StatusRecommendingApproval == true && p.StatusApproval == true && p.StatusRelease == false && p.IsDisapproved == false).OrderByDescending(p => p.CreatedDate).ToListAsync();
         }
 
         public async Task<BudgetRequest> GetBudgetRequestByIdAsync(int id)
@@ -716,7 +726,7 @@ namespace ProjectSS.Db
 
         public async Task<List<BudgetRequest>> GetAdminBudgetRequestByIdAsync()
         {
-            return await _db.BudgetRequests.Where(b => b.ProjectNumber == "ADMIN" && b.IsDeleted == false && b.StatusRecommendingApproval == false && b.StatusApproval == false && b.StatusRelease == false && b.IsDisapproved == false).ToListAsync();
+            return await _db.BudgetRequests.Where(b => b.ProjectNumber == "ADMIN" && b.IsDeleted == false && b.StatusRecommendingApproval == false && b.StatusApproval == false && b.StatusRelease == false && b.IsDisapproved == false).OrderByDescending(b => b.CreatedDate).ToListAsync();
         }
 
         public async Task<int> GetToBeApprovedRequestsCountAsync(string role, string userId)

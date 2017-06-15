@@ -12,7 +12,7 @@ namespace ProjectSS.Web.Models
         {
             ProposalModel = new ProposalViewModel();
         }
-
+        public int TableNumber { get; set; }
         public int Id { get; set; }
         public string CRMName { get; set; }
         public string ProposalTitle { get; set; }
@@ -31,6 +31,7 @@ namespace ProjectSS.Web.Models
 
         public decimal Budget { get; set; }
         public decimal RemainingBudget { get; set; }
+        public string CreatedBy { get; set; }
 
         // For Progress bar
         public string Progress

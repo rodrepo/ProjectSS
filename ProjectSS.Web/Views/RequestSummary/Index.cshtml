@@ -21,6 +21,7 @@
                 <table id="datatable1" class="table table-striped table-hover">
                     <thead>
                         <tr>
+                            <th class="hidden"></th>
                             <th>No.</th>
                             <th>Charge to</th>
                             <th>Requestor</th>
@@ -35,6 +36,7 @@
                         @foreach (var item in Model)
                         {
                             <tr>
+                                <td class="hidden">@item.TableNumber</td>
                                 <td>@item.RequestNumber</td>
                                 <td>@item.ProjectNumber</td>
                                 <td>@item.RequestorName</td>

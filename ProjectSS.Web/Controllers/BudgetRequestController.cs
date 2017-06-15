@@ -29,6 +29,12 @@ namespace ProjectSS.Web.Controllers
             await RunNotifications();
             var requests = _mapper.Map<List<BudgetRequestViewModel>>(await _repo.GetBudGetRequestsByUserIdAsync(CurrentUser.Id));
             ViewBag.Projects = ViewBag.Projects ?? await GetProjectsAsync();
+            var number = 1;
+            foreach (var val in requests)
+            {
+                val.TableNumber = number;
+                number += 1;
+            }
             return View(requests);
         }
 

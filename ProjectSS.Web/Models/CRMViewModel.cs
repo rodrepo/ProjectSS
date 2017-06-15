@@ -7,6 +7,7 @@ namespace ProjectSS.Web.Models
 {
     public class CRMViewModel
     {
+        public int TableNumber { get; set; }
         public int Id { get; set; }
         public string Reference { get; set; }
         public string Number { get; set; }
@@ -22,5 +23,7 @@ namespace ProjectSS.Web.Models
         public string OfficeNo { get; set; }
         public string FaxNo { get; set; }
         public string MobileNo { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }

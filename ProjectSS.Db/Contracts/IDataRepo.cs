@@ -54,7 +54,7 @@ namespace ProjectSS.Db.Contracts
         #endregion
 
         #region Proposal
-        Task<List<Proposal>> GetProposalAsync();
+        Task<List<Proposal>> GetProposalAsync(string userRole, string userId);
         Task<Proposal> AddPorposalAsync(Proposal proposal, string UserId);
         Task<Proposal> GetProposalByIdAsync(int id);
         Task UpdateProposal(Proposal proposal, string userId);

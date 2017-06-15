@@ -28,6 +28,12 @@ namespace ProjectSS.Web.Controllers
         {
             await RunNotifications();
             var model = _mapper.Map<List<CRMViewModel>>(await _repo.GetCRM());
+            var number = 1;
+            foreach(var val in model)
+            {
+                val.TableNumber = number;
+                number += 1;
+            }
             return View(model);
         }
 
@@ -47,11 +53,11 @@ namespace ProjectSS.Web.Controllers
                 if (ModelState.IsValid)
                 {
                     _repo.AddCRM(_mapper.Map<CRM>(model), CurrentUser.Id);
-                }
-                if (await _repo.SaveAllAsync())
-                {
-                    TempData["Success"] = string.Format("CRM has been successfully Created");
-                    return RedirectToAction("Index");
+                    if (await _repo.SaveAllAsync())
+                    {
+                        TempData["Success"] = string.Format("CRM has been successfully Created");
+                        return RedirectToAction("Index");
+                    }
                 }
                 TempData["Error"] = "Unable to create CRM due to some internal issues.";
                 return RedirectToAction("Index");
@@ -136,7 +142,7 @@ namespace ProjectSS.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Manage(CRMViewModel model , string from)
+        public async Task<ActionResult> Manage(CRMViewModel model, string from)
         {
             try
             {
@@ -149,16 +155,35 @@ namespace ProjectSS.Web.Controllers
                         CRMId = model.Id
                     };
                     _repo.AddCRMRevisionHistory(revision, CurrentUser.Id);
-                }
-                if (await _repo.SaveAllAsync())
-                {
-                    TempData["Success"] = string.Format("CRM has been successfully Updated");
-                    if(from == "Email")
+                    if (await _repo.SaveAllAsync())
+                    {
+                        TempData["Success"] = string.Format("CRM has been successfully Updated");
+                        if (from == "Email")
+                        {
+                            return RedirectToAction("ManageWithEmail", new { id = model.Id });
+
+                        }
+                        else if (from == "Call")
+                        {
+                            return RedirectToAction("ManageWithCall", new { id = model.Id });
+                        }
+                        else if (from == "Revision")
+                        {
+                            return RedirectToAction("ManageWithRevision", new { id = model.Id });
+                        }
+                        else
+                        {
+                            return RedirectToAction("Manage", new { id = model.Id });
+                        }
+
+                    }
+                    TempData["Error"] = "Unable to updated CRM due to some internal issues.";
+                    if (from == "Email")
                     {
                         return RedirectToAction("ManageWithEmail", new { id = model.Id });
 
                     }
-                    else if(from == "Call")
+                    else if (from == "Call")
                     {
                         return RedirectToAction("ManageWithCall", new { id = model.Id });
                     }
@@ -170,26 +195,9 @@ namespace ProjectSS.Web.Controllers
                     {
                         return RedirectToAction("Manage", new { id = model.Id });
                     }
-
                 }
-                TempData["Error"] = "Unable to updated CRM due to some internal issues.";
-                if (from == "Email")
-                {
-                    return RedirectToAction("ManageWithEmail", new { id = model.Id });
-
-                }
-                else if (from == "Call")
-                {
-                    return RedirectToAction("ManageWithCall", new { id = model.Id });
-                }
-                else if (from == "Revision")
-                {
-                    return RedirectToAction("ManageWithRevision", new { id = model.Id });
-                }
-                else
-                {
-                    return RedirectToAction("Manage", new { id = model.Id });
-                }
+                TempData["Error"] = "Unable to create CRM due to some internal issues.";
+                return RedirectToAction("Index");
             }
             catch (Exception e)
             {
@@ -234,11 +242,11 @@ namespace ProjectSS.Web.Controllers
                 {
                     model.Sender = CurrentUser.FirstName + " " + CurrentUser.MiddleName + " " + CurrentUser.LastName;
                     _repo.AddCRMEmailHistory(_mapper.Map<CRMEmailHistory>(model), CurrentUser.Id);
-                }
-                if (await _repo.SaveAllAsync())
-                {
-                    TempData["Success"] = string.Format("History has been successfully Created");
-                    return RedirectToAction("ManageWithEmail", new { id = model.CRMId });
+                    if (await _repo.SaveAllAsync())
+                    {
+                        TempData["Success"] = string.Format("History has been successfully Created");
+                        return RedirectToAction("ManageWithEmail", new { id = model.CRMId });
+                    }
                 }
                 TempData["Error"] = "Unable to updated history due to some internal issues.";
                 return RedirectToAction("ManageWithEmail", new { id = model.CRMId });
@@ -260,11 +268,11 @@ namespace ProjectSS.Web.Controllers
                 {
                     model.Caller = CurrentUser.FirstName + " " + CurrentUser.MiddleName + " " + CurrentUser.LastName;
                     _repo.AddCRMCallHistory(_mapper.Map<CRMCallHistory>(model), CurrentUser.Id);
-                }
-                if (await _repo.SaveAllAsync())
-                {
-                    TempData["Success"] = string.Format("History has been successfully Created");
-                    return RedirectToAction("ManageWithCall", new { id = model.CRMId });
+                    if (await _repo.SaveAllAsync())
+                    {
+                        TempData["Success"] = string.Format("History has been successfully Created");
+                        return RedirectToAction("ManageWithCall", new { id = model.CRMId });
+                    }
                 }
                 TempData["Error"] = "Unable to updated history due to some internal issues.";
                 return RedirectToAction("ManageWithCall", new { id = model.CRMId });

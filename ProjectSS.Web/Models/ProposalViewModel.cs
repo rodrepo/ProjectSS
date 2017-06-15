@@ -17,7 +17,7 @@ namespace ProjectSS.Web.Models
            Laboratories = new List<ProposalLaboratoryModel>();
            Commissions = new List<ProposalCommissionModel>();
         }
-
+        public int TableNumber { get; set; }
         public string From { get; set; }
         public string ContactPerson { get; set; }
         public string CompanyName { get; set; }

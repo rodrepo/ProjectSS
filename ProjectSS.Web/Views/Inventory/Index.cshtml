@@ -41,6 +41,7 @@ else
                 <table id="datatable1" class="table table-striped table-hover">
                     <thead>
                         <tr>
+                            <th class="hidden"></th>
                             <th>No.</th>
                             <th>Name</th>
                             <th>Brand</th>
@@ -58,6 +59,7 @@ else
                                 if (item.IsDeleted != true)
                                 {
                                     <tr>
+                                        <td class="hidden">@item.TableNumber</td>
                                         <td>@item.InventoryNumber</td>
                                         <td>@item.Name</td>
                                         <td>@item.Brand</td>

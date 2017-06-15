@@ -28,6 +28,12 @@ namespace ProjectSS.Web.Controllers
             ViewBag.Users = ViewBag.Users ?? await GetUsersAsync();
             ViewBag.Role = await GetCurrentUserRole();
             var model = MapNeededValue(await _repo.GetInventoriesAsync());
+            var number = 1;
+            foreach (var val in model)
+            {
+                val.TableNumber = number;
+                number += 1;
+            }
             return View(model);
         }
 

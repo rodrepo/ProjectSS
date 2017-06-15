@@ -27,6 +27,12 @@ namespace ProjectSS.Web.Controllers.Admin
         {
             await RunNotifications();
             var model = _mapper.Map<List<ProjectViewModel>>(await _repo.GetProjectsAsync());
+            var number = 1;
+            foreach (var val in model)
+            {
+                val.TableNumber = number;
+                number += 1;
+            }
             return View(model);
         }
 

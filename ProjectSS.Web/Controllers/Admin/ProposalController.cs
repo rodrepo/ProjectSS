@@ -30,8 +30,14 @@ namespace ProjectSS.Web.Controllers.Admin
         public async Task<ActionResult> Index()
         {
             await RunNotifications();
-            var model = _mapper.Map<List<ProposalViewModel>>(await _repo.GetProposalAsync());
+            var model = _mapper.Map<List<ProposalViewModel>>(await _repo.GetProposalAsync(await GetCurrentUserRole(), CurrentUser.Id));
             await SetListItemsAsync(new ProposalViewModel());
+            var number = 1;
+            foreach (var val in model)
+            {
+                val.TableNumber = number;
+                number += 1;
+            }
             return View(model);
         }
 
@@ -574,6 +580,8 @@ namespace ProjectSS.Web.Controllers.Admin
                 model.DirectCost = model.NegotiationAllowance + model.TotalLaboratoryDirectCost + model.TotalExpenseDirectCost + model.TotalContractorDirectCost + model.TotalStaffDirectCost + model.TotalCommissionDirectCost + model.TotalEquipmentDirectCost;
                 model.CostWithFactor = model.TotalLaboratoryBilledToClient + model.TotalExpenseBilledToClient + model.TotalContractorBilledToClient + model.MangementFeeBilledToClient + model.TotalStaffBilledToClient + model.TotalCommissionBilledToClient + model.TotalEquipmentBilledToClient;
                 model.OtherRevenues = model.Cost - model.CostWithFactor - model.MangementFeeBilledToClient;
+
+                //Removed NegotiationAllowane as of mike 
                 model.TotalBilledToClient = model.CostWithFactor + /*model.NegotiationAllowance + */model.OtherRevenues + model.MangementFeeBilledToClient;
                 model.Vat = model.Cost * decimal.Parse("0.12");
                 model.TotalRevenue = model.TotalBilledToClient - model.DirectCost;
@@ -732,6 +740,8 @@ namespace ProjectSS.Web.Controllers.Admin
                 if (User.IsInRole(RoleType.OM.ToString()))
                 {
                     model.Status = "Approved";
+                     
+                    // Create new Project added need values
                     var project = new Project
                     {
                         Budget = budget,

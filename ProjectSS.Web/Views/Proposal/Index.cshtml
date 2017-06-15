@@ -31,6 +31,7 @@
                 <table id="datatable1" class="table table-striped table-hover">
                     <thead>
                         <tr>
+                            <th class="hidden"></th>
                             <th>No.</th>
                             <th>Title</th>
                             <th>Company</th>
@@ -46,6 +47,7 @@
                             foreach (var u in Model)
                             {
                                 <tr>
+                                    <td class="hidden">@u.TableNumber</td>
                                     <td>@u.ProposalNumber</td>
                                     <td>@u.Title</td>
                                     <td>@u.CompanyName</td>

@@ -40,6 +40,12 @@ namespace ProjectSS.Web.Controllers
                 request = _mapper.Map<List<BudgetRequestViewModel>>(await _repo.GetBudGetRequestsForAHAsync());
 
             }
+            var number = 1;
+            foreach (var val in request)
+            {
+                val.TableNumber = number;
+                number += 1;
+            }
             return View(request);
         }
 

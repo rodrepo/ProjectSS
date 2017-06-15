@@ -14,6 +14,7 @@ namespace ProjectSS.Web.Models
             ShowItems = new List<BudgetRequestItemViewModel>();
             ListOfDeleted = new List<int>();
         }
+        public int TableNumber { get; set; }
         public string RequestNumber { get; set; }
         public int RNumber { get; set; }
 
