@@ -7,21 +7,6 @@
 }
 
 <div class="content-heading">
-    <!-- START Language list-->
-    <div class="pull-right">
-        <div class="btn-group">
-            <button type="button" data-toggle="dropdown" class="btn btn-default">English</button>
-            <ul role="menu" class="dropdown-menu dropdown-menu-right animated fadeInUpShort">
-                <li>
-                    <a href="#" data-set-lang="en">English</a>
-                </li>
-                <li>
-                    <a href="#" data-set-lang="es">Spanish</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- END Language list    -->
     Dashboard
 </div>
 <!-- START widgets box-->
@@ -80,6 +65,18 @@
 
 <!-- END widgets box-->
 <div class="row-masonry row-masonry-lg-2">
+    <div class="col-masonry">
+        <div class="panel b m0">
+            <div class="panel-body">
+                @using (Html.BeginForm("CreateComment", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.Partial("_Comment", new CommentViewModel())
+                }
+            </div>
+        </div>
+    </div>
     @foreach (var comment in Model.Comments)
     {
         <div class="col-masonry">
@@ -124,22 +121,9 @@
                     @Html.AntiForgeryToken()
                     @Html.Partial("_SubComment", new SubCommentViewModel { CommentId = comment.Id })
                 }
-                <p>@*Lorem ipsum dolor sit amet, consectetur adipiscing elit.*@</p>
             </div>
         </div>
     }
-    <div class="col-masonry">
-        <div class="panel b m0">
-            <div class="panel-body">
-                @using (Html.BeginForm("CreateComment", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true)
-                    @Html.Partial("_Comment", new CommentViewModel())
-                }
-            </div>
-        </div>
-    </div>
 </div>
 @section Styles {
     @Styles.Render("~/bundles/jvectormapCss")
