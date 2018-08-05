@@ -69,7 +69,7 @@
         color: '#7266ba'
       }, {
         data: [ { x: 0, y: 20 }, { x: 1, y: 24 }, { x: 2, y: 19 }, { x: 3, y: 15 }, { x: 4, y: 16 } ],
-        color: '#23b7e5'
+        color: '#40bf80'
       }]
     });
     graph3.render();

@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -543,7 +544,8 @@
     <Content Include="Vendor\morris.js\morris.js" />
     <Content Include="Vendor\nestable\jquery.nestable.js" />
     <Content Include="Vendor\parsleyjs\dist\parsley.min.js" />
-    <Content Include="Vendor\pictures\login.png" />
+    <Content Include="Vendor\pictures\login.jpeg" />
+    <Content Include="Vendor\pictures\NewHeaderLogo.jpg" />
     <Content Include="Vendor\raphael\raphael.js" />
     <Content Include="Vendor\rickshaw\rickshaw.js" />
     <Content Include="Vendor\rickshaw\rickshaw.min.css" />

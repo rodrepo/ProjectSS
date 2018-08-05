@@ -3,14 +3,20 @@
 @{
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
+<style>
+    .panel-dark > .panel-heading {
+        background-color: white;
+    }
+    .btn-success {
+        background-color: #40bf80;
+    }
+</style>
 
 <div class="block-center mt-xl wd-xl" style="padding-top:12%">
     <!-- START panel-->
     <div class="panel panel-dark panel-flat">
-        <div class="panel-heading text-center">
-            <a href="#">
-                <h4>Simmons Consult Portal</h4>
-            </a>
+        <div class="panel-heading">
+            <img src="~/Vendor/pictures/NewHeaderLogo.jpg" style="width: 289px;" />
         </div>
         <div class="panel-body">
             @*<p class="text-center pv">SIGN IN TO CONTINUE</p>*@
@@ -40,7 +46,7 @@
                             </label>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-block btn-primary mt-lg">Login</button>
+                    <button type="submit" class="btn btn-block btn-success mt-lg">Login</button>
                 </form>
             }
         </div>

@@ -920,11 +920,11 @@ namespace ProjectSS.Db
         #region Comment
         public async Task<List<Comment>> GetAllCommentsAsync()
         {
-            return await _db.Comments.Where(x => x.IsDeleted == false).OrderByDescending(c => c.CreatedDate).ToListAsync();
+            return await _db.Comments.Where(x => x.IsDeleted == false).OrderByDescending(c => c.CreatedDate).Take(100).ToListAsync();
         }
         public async Task<List<SubComment>> GetAllSubCommentsByCommentIdAsync(int commentId)
         {
-            return await _db.SubComments.Where(x => x.IsDeleted == false).OrderByDescending(c => c.CreatedDate).ToListAsync();
+            return await _db.SubComments.Where(x => x.IsDeleted == false).OrderByDescending(c => c.CreatedDate).Take(100).ToListAsync();
         }
         public void AddComments(Comment comment, string userId)
         {

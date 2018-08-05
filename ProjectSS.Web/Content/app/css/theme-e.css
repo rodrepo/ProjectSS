@@ -16,9 +16,9 @@ body,
 }
 .topnavbar .navbar-header {
   background-color: transparent;
-  background-image: -webkit-linear-gradient(left, #1797be 0%, #23b7e5 100%);
-  background-image: -o-linear-gradient(left, #1797be 0%, #23b7e5 100%);
-  background-image: linear-gradient(to right, #1797be 0%, #23b7e5 100%);
+  background-image: -webkit-linear-gradient(left, #1797be 0%, #40bf80 100%);
+  background-image: -o-linear-gradient(left, #1797be 0%, #40bf80 100%);
+  background-image: linear-gradient(to right, #1797be 0%, #40bf80 100%);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1797be', endColorstr='#ff23b7e5', GradientType=1);
 }
@@ -53,18 +53,18 @@ body,
 }
 .topnavbar .nav-wrapper {
   background-color: #1797be;
-  background-image: -webkit-linear-gradient(left, #1797be 0%, #23b7e5 100%);
-  background-image: -o-linear-gradient(left, #1797be 0%, #23b7e5 100%);
-  background-image: linear-gradient(to right, #1797be 0%, #23b7e5 100%);
+  background-image: -webkit-linear-gradient(left, #1797be 0%, #40bf80 100%);
+  background-image: -o-linear-gradient(left, #1797be 0%, #40bf80 100%);
+  background-image: linear-gradient(to right, #1797be 0%, #40bf80 100%);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1797be', endColorstr='#ff23b7e5', GradientType=1);
 }
 @media only screen and (min-width: 768px) {
   .topnavbar {
     background-color: #1797be;
-    background-image: -webkit-linear-gradient(left, #1797be 0%, #23b7e5 100%);
-    background-image: -o-linear-gradient(left, #1797be 0%, #23b7e5 100%);
-    background-image: linear-gradient(to right, #1797be 0%, #23b7e5 100%);
+    background-image: -webkit-linear-gradient(left, #1797be 0%, #40bf80 100%);
+    background-image: -o-linear-gradient(left, #1797be 0%, #40bf80 100%);
+    background-image: linear-gradient(to right, #1797be 0%, #40bf80 100%);
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1797be', endColorstr='#ff23b7e5', GradientType=1);
   }

@@ -67,10 +67,10 @@
         labels : ['January','February','March','April','May','June','July'],
         datasets : [
           {
-            fillColor : '#23b7e5',
-            strokeColor : '#23b7e5',
-            highlightFill: '#23b7e5',
-            highlightStroke: '#23b7e5',
+            fillColor : '#40bf80',
+            strokeColor : '#40bf80',
+            highlightFill: '#40bf80',
+            highlightStroke: '#40bf80',
             data : [rFactor(),rFactor(),rFactor(),rFactor(),rFactor(),rFactor(),rFactor()]
           },
           {
@@ -110,8 +110,8 @@
           },
           {
             value: 50,
-            color: '#23b7e5',
-            highlight: '#23b7e5',
+            color: '#40bf80',
+            highlight: '#40bf80',
             label: 'Info'
           },
           {
@@ -155,8 +155,8 @@
           },
           {
             value: 120,
-            color: '#23b7e5',
-            highlight: '#23b7e5',
+            color: '#40bf80',
+            highlight: '#40bf80',
             label: 'Info'
           }
         ];

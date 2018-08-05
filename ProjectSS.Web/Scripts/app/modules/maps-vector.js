@@ -4,7 +4,7 @@
 (function(window, document, $, undefined){
 
   window.defaultColors = {
-      markerColor:  '#23b7e5',      // the marker points
+      markerColor:  '#40bf80',      // the marker points
       bgColor:      'transparent',      // the background
       scaleColors:  ['#878c9a'],    // the color of the region in the serie
       regionFill:   '#bbbec6'       // the base region color

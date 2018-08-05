@@ -60,15 +60,15 @@
                 }
             }
 
-            var demoOM = userManager.FindByEmail("om@demo.com");
+            var demoOM = userManager.FindByEmail("mec@simmonsconsult.com");
             if (demoOM == null)
             {
                 demoOM = new User
                 {
-                    FirstName = "Rodolfo",
-                    LastName = "Romarate",
-                    UserName = "om@demo.com",
-                    Email = "om@demo.com",
+                    FirstName = "MEC",
+                    LastName = "MEC",
+                    UserName = "mec@simmonsconsult.com",
+                    Email = "mec@simmonsconsult.com",
                     Rate = 2000,
                     IsActive = true,
                     EmailConfirmed = true
