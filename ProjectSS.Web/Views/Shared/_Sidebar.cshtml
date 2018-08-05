@@ -115,7 +115,7 @@
                     <span>Budget Request</span>
                 </a>
             </li>
-            @if (canAccessOM || canAccessAH )
+            @if (canAccessOM || canAccessAH)
             {
 
                 <li class="@Html.isActive(controller: "RequestSummary", action: "Index")" id="bequestSummary">
@@ -136,3 +136,12 @@
     </nav>
 </div>
 <!-- END Sidebar (left)-->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123343957-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-123343957-1');
+</script>

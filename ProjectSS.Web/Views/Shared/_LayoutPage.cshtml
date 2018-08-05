@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -18,11 +17,10 @@
     <!-- =============== APP STYLES ===============-->
     <link href="@Styles.Url("~/Content/app/css/app.css")" rel="stylesheet" type="text/css" id="maincss" />
 </head>
-
 <body background="~/Vendor/pictures/login.jpeg" style="background-position:center;background-size:cover; background-attachment :fixed;background-repeat:no-repeat">
-   <div class="wrapper">
-       @RenderBody()
-   </div>
+    <div class="wrapper">
+        @RenderBody()
+    </div>
 
     <!-- =============== VENDOR SCRIPTS ===============-->
     @Scripts.Render("~/bundles/modernizr")
@@ -34,7 +32,14 @@
     @RenderSection("scripts", required: false)
     <!-- =============== APP SCRIPTS ===============-->
     @Scripts.Render("~/bundles/Angle")
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123343957-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
+        gtag('config', 'UA-123343957-1');
+    </script>
 </body>
-
 </html>
