@@ -16,7 +16,7 @@ using ProjectSS.Web.Helpers;
 
 namespace ProjectSS.Web.Controllers
 {
-    [Authorize]
+    [Authorize] 
     public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
