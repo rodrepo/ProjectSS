@@ -87,6 +87,10 @@ namespace ProjectSS.Web
                 "~/Scripts/demo/demo-datatable.js"
             ));
 
+            bundles.Add(new ScriptBundle("~/bundles/vue").Include(
+                "~/Resources/vue/vue.js"
+            ));
+
             bundles.Add(new ScriptBundle("~/bundles/demoFlot").Include(
                 "~/Scripts/demo/demo-flot.js"
             ));

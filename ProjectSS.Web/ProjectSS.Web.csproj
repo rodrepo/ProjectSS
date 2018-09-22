@@ -220,6 +220,7 @@
     <Compile Include="Controllers\ApprovalController.cs" />
     <Compile Include="Controllers\BudgetRequestController.cs" />
     <Compile Include="Controllers\CRMController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\RequestSummaryController.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
@@ -306,6 +307,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Resources\vue\vue.js" />
     <Content Include="Scripts\app\app.init.js" />
     <Content Include="Scripts\app\modules\bootstrap-start.js" />
     <Content Include="Scripts\app\modules\calendar.js" />
@@ -672,6 +674,7 @@
     <Content Include="Views\Home\_Comment.cshtml" />
     <Content Include="Views\RequestSummary\Index.cshtml" />
     <Content Include="Views\Inventory\_ChangeBorrower.cshtml" />
+    <Content Include="Views\Document\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

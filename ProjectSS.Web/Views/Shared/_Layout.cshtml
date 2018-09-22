@@ -51,6 +51,7 @@
     @if (IsSectionDefined("BodyArea"))
     {@RenderSection("BodyArea", required: false)}
     <!-- =============== VENDOR SCRIPTS ===============-->
+    @Scripts.Render("~/bundles/vue")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/matchMedia")
     @Scripts.Render("~/bundles/jquery")

@@ -27,11 +27,11 @@
                     <div class="item user-block">
                         <!-- User picture-->
                         @*<div class="user-block-picture">
-                                <div class="user-block-status">
-                                    <img src="~/Content/Images/user/02.jpg" alt="Avatar" width="60" height="60" class="img-thumbnail img-circle" />
-                                    <div class="circle circle-success circle-lg"></div>
-                                </div>
-                            </div>*@
+                        <div class="user-block-status">
+                            <img src="~/Content/Images/user/02.jpg" alt="Avatar" width="60" height="60" class="img-thumbnail img-circle" />
+                            <div class="circle circle-success circle-lg"></div>
+                        </div>
+                    </div>*@
                         <!-- Name and Job-->
                         <div class="user-block-info">
                             <span class="user-block-name">Hello, @currentUserName</span>
@@ -113,6 +113,12 @@
                 <a href="/BudgetRequest" data-animate="" data-target="#budgetRequest" data-play="pulse">
                     <em class="icon-tag"></em>
                     <span>Budget Request</span>
+                </a>
+            </li>
+            <li class="@Html.isActive(controller: "Document" , action: "Index")" id="document">
+                <a href="/Document" data-animate="" data-target="#document" data-play="pulse">
+                    <em class="icon-tag"></em>
+                    <span>Documents</span>
                 </a>
             </li>
             @if (canAccessOM || canAccessAH)
